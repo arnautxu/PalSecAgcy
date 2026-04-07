@@ -17,25 +17,31 @@ function ProjectCard({
   videoSrc?: string
 }) {
   const wrapRef = useRef<HTMLDivElement>(null)
+  const titleViewportRef = useRef<HTMLDivElement>(null)
   const titleTextRef = useRef<HTMLSpanElement>(null)
   const [hovered, setHovered] = useState(false)
   const [shiftPx, setShiftPx] = useState(0)
+  const [cardW, setCardW] = useState<number | null>(null)
 
   useLayoutEffect(() => {
     const wrap = wrapRef.current
+    const titleViewport = titleViewportRef.current
     const titleText = titleTextRef.current
-    if (!wrap || !titleText) return
+    if (!wrap || !titleViewport || !titleText) return
 
     const compute = () => {
       const cardW = wrap.getBoundingClientRect().width
       const textW = titleText.getBoundingClientRect().width
-      setShiftPx(Math.max(0, Math.floor(cardW - textW)))
+      setCardW(cardW)
+      // -2px guard to avoid sub-pixel overshoot on some cards/fonts
+      setShiftPx(Math.max(0, Math.floor(cardW - textW - 2)))
     }
 
     compute()
 
     const ro = new ResizeObserver(() => compute())
     ro.observe(wrap)
+    ro.observe(titleViewport)
     ro.observe(titleText)
     return () => ro.disconnect()
   }, [])
@@ -70,7 +76,11 @@ function ProjectCard({
         )}
       </div>
 
-      <div className="mt-[6px] overflow-hidden">
+      <div
+        ref={titleViewportRef}
+        className="mt-[6px] overflow-hidden"
+        style={cardW ? { width: `${cardW}px` } : undefined}
+      >
         <motion.span
           ref={titleTextRef}
           className="inline-block text-nav uppercase leading-[1.6] tracking-nav will-change-transform"
