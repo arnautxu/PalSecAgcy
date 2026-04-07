@@ -11,11 +11,15 @@ function ProjectCard({
   title,
   imageSrc,
   videoSrc,
+  fit = "cover",
+  padded = false,
 }: {
   slug: string
   title: string
   imageSrc: string
   videoSrc?: string
+  fit?: "cover" | "contain"
+  padded?: boolean
 }) {
   const wrapRef = useRef<HTMLDivElement>(null)
   const titleViewportRef = useRef<HTMLDivElement>(null)
@@ -23,6 +27,11 @@ function ProjectCard({
   const [hovered, setHovered] = useState(false)
   const [shiftPx, setShiftPx] = useState(0)
   const [cardW, setCardW] = useState<number | null>(null)
+  const mediaClass = [
+    "aspect-[3/4] w-full bg-white",
+    fit === "contain" ? "object-contain" : "object-cover",
+    padded ? "p-10" : "",
+  ].join(" ")
 
   useLayoutEffect(() => {
     const wrap = wrapRef.current
@@ -71,7 +80,7 @@ function ProjectCard({
           <img
             src={imageSrc}
             alt=""
-            className="aspect-[3/4] w-full object-cover"
+            className={mediaClass}
             loading="lazy"
           />
         )}
@@ -117,6 +126,8 @@ export function Projects() {
               ? publicUrl(p.localImages.thumb)
               : picsum(p.thumbSeed, 920, 518)
             const video = p.localImages?.thumbVideo ? publicUrl(p.localImages.thumbVideo) : undefined
+            const fit = p.localImages?.thumbFit ?? "cover"
+            const padded = p.localImages?.thumbPadded ?? false
 
             return (
               <ProjectCard
@@ -125,6 +136,8 @@ export function Projects() {
                 title={p.title}
                 imageSrc={src}
                 videoSrc={video}
+                fit={fit}
+                padded={padded}
               />
             )
           })}

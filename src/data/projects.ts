@@ -18,8 +18,12 @@ export type Project = {
   thumbSeed: string
   /** Optional local (public/) images for a project */
   localImages?: {
-    slides: string[]
-    thumb: string
+    slides?: string[]
+    thumb?: string
+    /** How to fit the thumb inside its frame */
+    thumbFit?: "cover" | "contain"
+    /** Add padding around the thumb (useful for logos) */
+    thumbPadded?: boolean
     /** Optional looping video thumb (public/) */
     thumbVideo?: string
   }
@@ -158,12 +162,20 @@ export const PROJECTS: Project[] = [
     title: "CMS",
     carouselSeeds: ["cms-1", "cms-2", "cms-3", "cms-4"],
     thumbSeed: "cms-thumb",
+    localImages: {
+      thumb: "/media/projects/cms/thumb.png",
+      thumbFit: "contain",
+      thumbPadded: true,
+    },
   },
   {
     slug: "estudi-dental-carrera",
     title: "ESTUDI DENTAL CARRERA",
     carouselSeeds: ["carrera-1", "carrera-2", "carrera-3", "carrera-4"],
     thumbSeed: "carrera-thumb",
+    localImages: {
+      thumbVideo: "/media/projects/estudi-dental-carrera/thumb.mp4",
+    },
   },
 ]
 
