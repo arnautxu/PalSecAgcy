@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react"
-import { motion, useSpring } from "framer-motion"
+import { useEffect, useRef, useState } from "react"
+import { motion, useAnimationControls, useSpring } from "framer-motion"
 
 export function CustomCursor() {
   const [visible, setVisible] = useState(false)
   const [overWhiteZone, setOverWhiteZone] = useState(false)
+  const [clicking, setClicking] = useState(false)
   const red = "#ff0000"
   const color = overWhiteZone ? "#ffffff" : red
 
@@ -13,6 +14,9 @@ export function CustomCursor() {
   // ring follows with more delay
   const ringX = useSpring(0, { stiffness: 220, damping: 28, mass: 0.9 })
   const ringY = useSpring(0, { stiffness: 220, damping: 28, mass: 0.9 })
+  const ringControls = useAnimationControls()
+  const clickTimer = useRef<number | null>(null)
+  const animatingClick = useRef(false)
 
   useEffect(() => {
     const move = (e: MouseEvent) => {
@@ -35,6 +39,39 @@ export function CustomCursor() {
       window.removeEventListener("mouseleave", leave)
     }
   }, [dotX, dotY, ringX, ringY])
+
+  useEffect(() => {
+    const onClick = async () => {
+      if (animatingClick.current) return
+      animatingClick.current = true
+
+      setClicking(true)
+      if (clickTimer.current != null) window.clearTimeout(clickTimer.current)
+
+      await ringControls.start({ rotate: 0, scale: 1, transition: { duration: 0 } })
+      await ringControls.start({
+        rotate: 360,
+        scale: 1.14,
+        transition: { duration: 0.42, ease: [0.22, 1, 0.36, 1] },
+      })
+      await ringControls.start({
+        rotate: 0,
+        scale: 1,
+        transition: { duration: 0.22, ease: [0.22, 1, 0.36, 1] },
+      })
+
+      clickTimer.current = window.setTimeout(() => {
+        setClicking(false)
+        animatingClick.current = false
+      }, 120)
+    }
+
+    window.addEventListener("mousedown", onClick, { passive: true })
+    return () => {
+      window.removeEventListener("mousedown", onClick)
+      if (clickTimer.current != null) window.clearTimeout(clickTimer.current)
+    }
+  }, [ringControls])
 
   // Hide on touch devices
   if (typeof window !== "undefined" && window.matchMedia?.("(pointer: coarse)")?.matches) {
@@ -71,12 +108,16 @@ export function CustomCursor() {
           opacity: visible ? 0.9 : 0,
         }}
       >
-        <div
-          className="h-[26px] w-[26px] rounded-full border"
-          style={{
-            borderColor: color,
-          }}
-        />
+        <motion.div animate={ringControls}>
+          <div
+            className="h-[26px] w-[26px] rounded-full border bg-transparent"
+            style={{
+              borderColor: color,
+              borderStyle: clicking ? "dotted" : "solid",
+              borderWidth: clicking ? 2 : 1,
+            }}
+          />
+        </motion.div>
       </motion.div>
     </div>
   )
