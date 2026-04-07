@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redirecting…</title>
+  </head>
+  <body>
+    <script>
+      // GitHub Pages serves 404.html for unknown paths.
+      // For SPAs, we redirect back to the root and encode the original path/query/hash
+      // so the app can restore it on load.
+      //
+      // Based on the widely used "spa-github-pages" pattern.
+      (function () {
+        var l = window.location
+        var redirect =
+          l.protocol +
+          '//' +
+          l.host +
+          '/?p=' +
+          encodeURIComponent(l.pathname) +
+          '&q=' +
+          encodeURIComponent(l.search) +
+          '&h=' +
+          encodeURIComponent(l.hash)
+        window.location.replace(redirect)
+      })()
+    </script>
+  </body>
+</html>
