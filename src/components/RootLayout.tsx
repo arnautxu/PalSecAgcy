@@ -3,24 +3,26 @@ import { Outlet, useLocation } from "react-router-dom"
 import { BottomNav } from "./BottomNav"
 import { CustomCursor } from "./CustomCursor"
 
+// "Tech" + fluid page transition: no clipPath wipe, just a clean
+// blur/fade + subtle depth so it feels fast and modern.
 const warp = {
   initial: {
     opacity: 0,
-    filter: "blur(10px)",
-    transform: "perspective(1200px) translateZ(-120px) scale(0.96) rotateY(10deg)",
-    clipPath: "circle(0% at 50% 50%)",
+    y: 14,
+    scale: 0.985,
+    filter: "blur(12px)",
   },
   animate: {
     opacity: 1,
+    y: 0,
+    scale: 1,
     filter: "blur(0px)",
-    transform: "perspective(1200px) translateZ(0px) scale(1) rotateY(0deg)",
-    clipPath: "circle(160% at 50% 50%)",
   },
   exit: {
     opacity: 0,
-    filter: "blur(12px)",
-    transform: "perspective(1200px) translateZ(-160px) scale(0.98) rotateY(-10deg)",
-    clipPath: "circle(0% at 50% 50%)",
+    y: -10,
+    scale: 1.01,
+    filter: "blur(10px)",
   },
 }
 
@@ -43,7 +45,7 @@ export function RootLayout() {
             initial="initial"
             animate="animate"
             exit="exit"
-            transition={{ duration: 0.55, ease: [0.4, 0.24, 0.4, 1] }}
+            transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
             className="absolute inset-0 overflow-hidden"
           >
             <Outlet />

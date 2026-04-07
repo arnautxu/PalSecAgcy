@@ -5,6 +5,7 @@ export type ProjectSlug =
   | "el-xiringuito"
   | "enteza"
   | "gent-gran-de-calonge-i-sant-antoni"
+  | "logoteca"
   | "cms"
   | "estudi-dental-carrera"
 
@@ -25,6 +26,39 @@ export type Project = {
 }
 
 export const PROJECTS: Project[] = [
+  {
+    slug: "logoteca",
+    title: "LOGOTECA",
+    carouselSeeds: Array.from({ length: 22 }, (_, i) => `logoteca-${i + 1}`),
+    thumbSeed: "logoteca-thumb",
+    localImages: {
+      slides: [
+        "/media/projects/logoteca/algo_2-01.jpg",
+        "/media/projects/logoteca/algo_2-02.jpg",
+        "/media/projects/logoteca/algo_2-03.jpg",
+        "/media/projects/logoteca/algo_2-04.jpg",
+        "/media/projects/logoteca/algo_2-05.jpg",
+        "/media/projects/logoteca/algo_2-06.jpg",
+        "/media/projects/logoteca/algo_2-07.jpg",
+        "/media/projects/logoteca/algo_2-08.jpg",
+        "/media/projects/logoteca/algo_2-09.jpg",
+        "/media/projects/logoteca/algo_2-10.jpg",
+        "/media/projects/logoteca/algo_2-11.jpg",
+        "/media/projects/logoteca/algo_2-12.jpg",
+        "/media/projects/logoteca/algo_2-13.jpg",
+        "/media/projects/logoteca/algo_2-14.jpg",
+        "/media/projects/logoteca/algo_2-15.jpg",
+        "/media/projects/logoteca/algo_2-16.jpg",
+        "/media/projects/logoteca/algo_2-17.jpg",
+        "/media/projects/logoteca/algo_2-19.jpg",
+        "/media/projects/logoteca/algo_2-20.jpg",
+        "/media/projects/logoteca/algo_2-21.jpg",
+        "/media/projects/logoteca/algo_2-22.jpg",
+        "/media/projects/logoteca/algo_2-23.jpg",
+      ],
+      thumb: "/media/projects/logoteca/thumb.gif",
+    },
+  },
   {
     slug: "vira",
     title: "VIRA",

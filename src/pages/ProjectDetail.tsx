@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
 import { Link, Navigate, useParams } from "react-router-dom"
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { PageFrame } from "@/components/PageFrame"
 import {
   PROJECTS,
@@ -21,6 +21,206 @@ function neighbors(current: ProjectSlug): { prev: Project; next: Project } {
 function imageSrc(keyOrPath: string, w: number, h: number) {
   if (keyOrPath.startsWith("/")) return publicUrl(keyOrPath)
   return picsum(keyOrPath, w, h)
+}
+
+function LogotecaGallery({
+  slides,
+  initialIndex = 0,
+  onIndexChange,
+}: {
+  slides: string[]
+  initialIndex?: number
+  onIndexChange: (idx: number) => void
+}) {
+  const [open, setOpen] = useState(false)
+  const [active, setActive] = useState(initialIndex)
+  const primary = slides.slice(0, 20)
+  const extras = slides.slice(20)
+  const scrollLock = useMemo(() => ({ locked: false }), [])
+  const prevOverflow = useState(() => ({ html: "", body: "" }))[0]
+
+  useEffect(() => {
+    setActive(initialIndex)
+  }, [initialIndex])
+
+  useEffect(() => {
+    const html = document.documentElement
+    const body = document.body
+
+    const lock = () => {
+      if (scrollLock.locked) return
+      scrollLock.locked = true
+      prevOverflow.html = html.style.overflow
+      prevOverflow.body = body.style.overflow
+      html.style.overflow = "hidden"
+      body.style.overflow = "hidden"
+    }
+
+    const unlock = () => {
+      if (!scrollLock.locked) return
+      scrollLock.locked = false
+      html.style.overflow = prevOverflow.html
+      body.style.overflow = prevOverflow.body
+    }
+
+    if (open) lock()
+    else unlock()
+
+    return () => {
+      unlock()
+    }
+  }, [open, prevOverflow, scrollLock])
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (!open) return
+      if (e.key === "Escape") setOpen(false)
+      if (e.key === "ArrowLeft") setActive((i) => (i - 1 + slides.length) % slides.length)
+      if (e.key === "ArrowRight") setActive((i) => (i + 1) % slides.length)
+    }
+    window.addEventListener("keydown", onKeyDown)
+    return () => window.removeEventListener("keydown", onKeyDown)
+  }, [open, slides.length])
+
+  useEffect(() => {
+    onIndexChange(active)
+  }, [active, onIndexChange])
+
+  const handleDragEnd = (_: unknown, info: { offset: { x: number }; velocity: { x: number } }) => {
+    const distanceThreshold = 90
+    const velocityThreshold = 520
+    if (info.offset.x <= -distanceThreshold || info.velocity.x <= -velocityThreshold) {
+      setActive((i) => (i + 1) % slides.length)
+    } else if (info.offset.x >= distanceThreshold || info.velocity.x >= velocityThreshold) {
+      setActive((i) => (i - 1 + slides.length) % slides.length)
+    }
+  }
+
+  return (
+    <>
+      {/* 4 x 5 grid on desktop */}
+      <div className="mx-auto w-full max-w-[1200px]">
+        <div className="mb-4 text-nav uppercase tracking-nav opacity-60">PROJECT</div>
+        <div className="mb-6 text-nav uppercase tracking-nav opacity-70">LOGOTECA</div>
+
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
+          {primary.map((s, i) => (
+            <button
+              key={s}
+              type="button"
+              onClick={() => {
+                setActive(i)
+                setOpen(true)
+              }}
+              className="group overflow-hidden rounded-[2px] border border-frame bg-white"
+              aria-label={`Open logo ${i + 1}`}
+            >
+              <img
+                src={imageSrc(s, 800, 800)}
+                alt=""
+                className="aspect-square w-full select-none object-contain bg-white p-4 transition-transform duration-200 group-hover:scale-[1.02]"
+                loading="lazy"
+                draggable={false}
+              />
+            </button>
+          ))}
+        </div>
+
+        {extras.length ? (
+          <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-2 md:gap-4">
+            {extras.map((s, j) => {
+              const idx = 20 + j
+              return (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => {
+                    setActive(idx)
+                    setOpen(true)
+                  }}
+                  className="group overflow-hidden rounded-[2px] border border-frame bg-white"
+                  aria-label={`Open logo ${idx + 1}`}
+                >
+                  <img
+                    src={imageSrc(s, 1200, 900)}
+                    alt=""
+                    className="aspect-[16/10] w-full select-none object-contain bg-white p-6 transition-transform duration-200 group-hover:scale-[1.01]"
+                    loading="lazy"
+                    draggable={false}
+                  />
+                </button>
+              )
+            })}
+          </div>
+        ) : null}
+      </div>
+
+      <AnimatePresence>
+        {open ? (
+          <motion.div
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setOpen(false)}
+            style={{ pointerEvents: open ? "auto" : "none" }}
+            aria-label="Close"
+            role="dialog"
+            aria-modal="true"
+          >
+            <motion.div
+              className="relative w-[min(92vw,1100px)] overflow-hidden rounded-[2px] border border-white/20 bg-white"
+              initial={{ y: 12, scale: 0.99, filter: "blur(8px)" }}
+              animate={{ y: 0, scale: 1, filter: "blur(0px)" }}
+              exit={{ y: 10, scale: 0.99, filter: "blur(8px)" }}
+              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <motion.div
+                key={`logoteca-${active}`}
+                className="w-full"
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.12}
+                onDragEnd={handleDragEnd}
+                whileTap={{ cursor: "grabbing" }}
+                style={{ touchAction: "pan-y", cursor: "grab" }}
+              >
+                <img
+                  src={imageSrc(slides[active]!, 1800, 1800)}
+                  alt=""
+                  className="h-[min(78vh,820px)] w-full select-none object-contain bg-white p-6"
+                  draggable={false}
+                />
+              </motion.div>
+
+              <div className="absolute inset-x-0 bottom-0 flex items-center justify-between px-4 py-3">
+                <button
+                  type="button"
+                  className="rounded-full border border-black/10 bg-white/80 px-3 py-2 text-[14px] uppercase tracking-nav text-ink backdrop-blur hover:bg-white"
+                  onClick={() => setActive((i) => (i - 1 + slides.length) % slides.length)}
+                  aria-label="Previous"
+                >
+                  ‹
+                </button>
+                <div className="text-[12px] uppercase tracking-nav text-ink/70">
+                  {active + 1} / {slides.length}
+                </div>
+                <button
+                  type="button"
+                  className="rounded-full border border-black/10 bg-white/80 px-3 py-2 text-[14px] uppercase tracking-nav text-ink backdrop-blur hover:bg-white"
+                  onClick={() => setActive((i) => (i + 1) % slides.length)}
+                  aria-label="Next"
+                >
+                  ›
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+    </>
+  )
 }
 
 function viraCopy() {
@@ -158,6 +358,16 @@ export function ProjectDetail() {
 
   const slides = project.localImages?.slides ?? project.carouselSeeds
   const safeIndex = ((index % slides.length) + slides.length) % slides.length
+  const goPrev = () => setIndex((i) => (i - 1 + slides.length) % slides.length)
+  const goNext = () => setIndex((i) => (i + 1) % slides.length)
+
+  const handleDragEnd = (_: unknown, info: { offset: { x: number }; velocity: { x: number } }) => {
+    // Tune for mouse + touch. Trigger on either distance or quick fling.
+    const distanceThreshold = 90
+    const velocityThreshold = 520
+    if (info.offset.x <= -distanceThreshold || info.velocity.x <= -velocityThreshold) goNext()
+    else if (info.offset.x >= distanceThreshold || info.velocity.x >= velocityThreshold) goPrev()
+  }
   const copy =
     project.slug === "vira"
       ? viraCopy()
@@ -184,123 +394,137 @@ export function ProjectDetail() {
     <PageFrame>
       <div className="flex h-full min-h-0 flex-col">
         <div className="min-h-0 flex-1 overflow-y-auto px-5 pb-10 pt-[92px]">
-          {twoCol ? (
-            <div className="mx-auto grid w-full max-w-[1200px] gap-8 md:grid-cols-2">
-              {/* LEFT: MEDIA */}
-              <div className="min-w-0">
+          {project.slug === "logoteca" ? (
+            <LogotecaGallery slides={slides} initialIndex={safeIndex} onIndexChange={setIndex} />
+          ) : (
+            twoCol ? (
+              <div className="mx-auto grid w-full max-w-[1200px] gap-8 md:grid-cols-2">
+                {/* LEFT: MEDIA */}
+                <div className="min-w-0">
+                  <motion.div
+                    key={`${project.slug}-${safeIndex}`}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, ease: "easeInOut" }}
+                    className="w-full overflow-hidden rounded-[2px] border border-frame bg-white"
+                    drag="x"
+                    dragConstraints={{ left: 0, right: 0 }}
+                    dragElastic={0.12}
+                    onDragEnd={handleDragEnd}
+                    whileTap={{ cursor: "grabbing" }}
+                    style={{ touchAction: "pan-y", cursor: "grab" }}
+                  >
+                    <img
+                      src={imageSrc(slides[safeIndex]!, 1600, 900)}
+                      alt=""
+                      className="block max-h-[70vh] w-full select-none object-contain bg-white"
+                      draggable={false}
+                    />
+                  </motion.div>
+
+                  <div className="mt-4 flex items-center justify-center gap-10 text-[18px] font-light leading-none text-ink">
+                    <button
+                      type="button"
+                      className="px-2 transition-opacity duration-200 hover:opacity-40"
+                      aria-label="Previous image"
+                      onClick={goPrev}
+                    >
+                      ‹
+                    </button>
+                    <button
+                      type="button"
+                      className="px-2 transition-opacity duration-200 hover:opacity-40"
+                      aria-label="Next image"
+                      onClick={goNext}
+                    >
+                      ›
+                    </button>
+                  </div>
+                </div>
+
+                {/* RIGHT: INFO */}
+                <div className="min-w-0">
+                  <div className="mb-3 text-nav uppercase tracking-nav opacity-60">PROJECT</div>
+                  <div className="mb-4 text-nav uppercase tracking-nav opacity-70">{project.title}</div>
+
+                  {copy ? (
+                    <div className="text-bodymd leading-[1.6] tracking-nav text-ink md:text-body">
+                      {copy.body.map((p) => (
+                        <p key={p} className="mb-3">
+                          {p}
+                        </p>
+                      ))}
+                    </div>
+                  ) : null}
+
+                  {copy ? (
+                    <ul className="mt-6 text-nav uppercase leading-[1.9] tracking-nav text-ink/70">
+                      {copy.bullets.map((b) => (
+                        <li key={b}>— {b}</li>
+                      ))}
+                    </ul>
+                  ) : null}
+
+                  <div className="mt-7 flex flex-wrap items-center gap-2">
+                    {slides.map((seed, i) => (
+                      <button
+                        key={seed}
+                        type="button"
+                        onClick={() => setIndex(i)}
+                        className={`h-[92px] overflow-hidden rounded-[2px] border bg-white ${
+                          i === safeIndex ? "border-ink opacity-100" : "border-frame opacity-60"
+                        }`}
+                        aria-label={`Image ${i + 1}`}
+                      >
+                        <img
+                          src={imageSrc(seed, 320, 180)}
+                          alt=""
+                          className="h-full w-auto object-contain bg-white"
+                        />
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="mt-10 flex items-center justify-between text-nav uppercase tracking-nav">
+                    <Link
+                      to={`/project/${prev.slug}`}
+                      className="transition-opacity duration-200 hover:opacity-40"
+                    >
+                      BACK
+                    </Link>
+                    <Link
+                      to={`/project/${next.slug}`}
+                      className="transition-opacity duration-200 hover:opacity-40"
+                    >
+                      NEXT
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center">
                 <motion.div
                   key={`${project.slug}-${safeIndex}`}
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, ease: "easeInOut" }}
-                  className="w-full overflow-hidden rounded-[2px] border border-frame bg-white"
+                  className="w-[75vw] max-w-[1200px] overflow-hidden rounded-[2px] border border-frame bg-white"
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.12}
+                  onDragEnd={handleDragEnd}
+                  whileTap={{ cursor: "grabbing" }}
+                  style={{ touchAction: "pan-y", cursor: "grab" }}
                 >
                   <img
                     src={imageSrc(slides[safeIndex]!, 1600, 900)}
                     alt=""
-                    className="block max-h-[70vh] w-full object-contain bg-white"
+                    className="aspect-video w-full select-none object-cover"
+                    draggable={false}
                   />
                 </motion.div>
-
-                <div className="mt-4 flex items-center justify-center gap-10 text-[18px] font-light leading-none text-ink">
-                  <button
-                    type="button"
-                    className="px-2 transition-opacity duration-200 hover:opacity-40"
-                    aria-label="Previous image"
-                    onClick={() => setIndex((i) => (i - 1 + slides.length) % slides.length)}
-                  >
-                    ‹
-                  </button>
-                  <button
-                    type="button"
-                    className="px-2 transition-opacity duration-200 hover:opacity-40"
-                    aria-label="Next image"
-                    onClick={() => setIndex((i) => (i + 1) % slides.length)}
-                  >
-                    ›
-                  </button>
-                </div>
               </div>
-
-              {/* RIGHT: INFO */}
-              <div className="min-w-0">
-                <div className="mb-3 text-nav uppercase tracking-nav opacity-60">
-                  PROJECT
-                </div>
-                <div className="mb-4 text-nav uppercase tracking-nav opacity-70">
-                  {project.title}
-                </div>
-
-                {copy ? (
-                  <div className="text-bodymd leading-[1.6] tracking-nav text-ink md:text-body">
-                    {copy.body.map((p) => (
-                      <p key={p} className="mb-3">
-                        {p}
-                      </p>
-                    ))}
-                  </div>
-                ) : null}
-
-                {copy ? (
-                  <ul className="mt-6 text-nav uppercase leading-[1.9] tracking-nav text-ink/70">
-                    {copy.bullets.map((b) => (
-                      <li key={b}>— {b}</li>
-                    ))}
-                  </ul>
-                ) : null}
-
-                <div className="mt-7 flex flex-wrap items-center gap-2">
-                  {slides.map((seed, i) => (
-                    <button
-                      key={seed}
-                      type="button"
-                      onClick={() => setIndex(i)}
-                      className={`h-[92px] overflow-hidden rounded-[2px] border bg-white ${
-                        i === safeIndex ? "border-ink opacity-100" : "border-frame opacity-60"
-                      }`}
-                      aria-label={`Image ${i + 1}`}
-                    >
-                      <img
-                        src={imageSrc(seed, 320, 180)}
-                        alt=""
-                        className="h-full w-auto object-contain bg-white"
-                      />
-                    </button>
-                  ))}
-                </div>
-
-                <div className="mt-10 flex items-center justify-between text-nav uppercase tracking-nav">
-                  <Link
-                    to={`/project/${prev.slug}`}
-                    className="transition-opacity duration-200 hover:opacity-40"
-                  >
-                    BACK
-                  </Link>
-                  <Link
-                    to={`/project/${next.slug}`}
-                    className="transition-opacity duration-200 hover:opacity-40"
-                  >
-                    NEXT
-                  </Link>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="flex flex-col items-center">
-              <motion.div
-                key={`${project.slug}-${safeIndex}`}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, ease: "easeInOut" }}
-                className="w-[75vw] max-w-[1200px] overflow-hidden rounded-[2px] border border-frame bg-white"
-              >
-                <img
-                  src={imageSrc(slides[safeIndex]!, 1600, 900)}
-                  alt=""
-                  className="aspect-video w-full object-cover"
-                />
-              </motion.div>
-            </div>
+            )
           )}
         </div>
 

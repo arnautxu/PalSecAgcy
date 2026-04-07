@@ -1,4 +1,5 @@
 import { motion } from "framer-motion"
+import { useEffect, useRef, useState } from "react"
 import { NavLink } from "react-router-dom"
 
 function Sep() {
@@ -8,6 +9,31 @@ function Sep() {
 }
 
 export function BottomNav() {
+  const [isScrolling, setIsScrolling] = useState(false)
+  const scrollIdleTimer = useRef<number | null>(null)
+
+  useEffect(() => {
+    const onScroll = () => {
+      setIsScrolling(true)
+      if (scrollIdleTimer.current != null) {
+        window.clearTimeout(scrollIdleTimer.current)
+      }
+      scrollIdleTimer.current = window.setTimeout(() => {
+        setIsScrolling(false)
+      }, 170)
+    }
+
+    // Body has `overflow: hidden`; pages scroll inside nested `overflow-y-auto` containers.
+    // The `scroll` event doesn't bubble, so we listen in capture phase to catch descendant scrolls.
+    document.addEventListener("scroll", onScroll, { passive: true, capture: true })
+    return () => {
+      document.removeEventListener("scroll", onScroll, { capture: true } as AddEventListenerOptions)
+      if (scrollIdleTimer.current != null) {
+        window.clearTimeout(scrollIdleTimer.current)
+      }
+    }
+  }, [])
+
   const linkClass = (active: boolean) =>
     [
       "text-nav uppercase tracking-nav transition-[opacity,color] duration-200",
@@ -30,7 +56,12 @@ export function BottomNav() {
         "bg-[#ff0000]/90 border-white/20",
       ].join(" ")}
       aria-label="Primary"
-      transition={{ duration: 0.55, ease: [0.4, 0.24, 0.4, 1] }}
+      animate={{
+        opacity: isScrolling ? 0 : 1,
+        y: isScrolling ? 14 : 0,
+      }}
+      transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+      style={{ pointerEvents: isScrolling ? "none" : "auto" }}
     >
         <NavLink
           to="/"
