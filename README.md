@@ -1,20 +1,40 @@
-# Portfolio template (blank starter)
+# THEON KALLISTRATOS — Film director portfolio
 
-Simple, no-build portfolio starter using plain HTML/CSS/JS.
+Multi-page editorial portfolio built with **React**, **Vite**, **TypeScript**, **Tailwind CSS**, **Framer Motion**, and **React Router v6**.
 
-## Run locally
-
-- Open `index.html` in your browser, or run a tiny server:
+## Scripts
 
 ```bash
-python3 -m http.server 5173
+npm install
+npm run dev
 ```
 
-Then visit `http://localhost:5173`.
+```bash
+npm run build
+npm run preview
+```
 
-## Customize
+## Routes
 
-- Edit content in `index.html`
-- Tweak theme + layout in `styles.css`
-- Update projects + interactions in `main.js`
+| Path | Page |
+| --- | --- |
+| `/` | Home (full-viewport cinematic background) |
+| `/films` | Films list |
+| `/index` | Index table |
+| `/photography` | Photography grid |
+| `/info` | Bio / contact |
+| `/project/:slug` | Project detail (carousel + filmstrip) |
 
+### Project slugs
+
+`dust-of-dawn`, `vory-mechanica`, `unfurnished-dreams`, `anima-in-transit`, `glass-haze`, `obsidian-garden`, `zero-meridian`, `flicker-motel`
+
+## Stack
+
+- Vite 6 + React 18 + TypeScript
+- Tailwind CSS 3 (pixel values via theme + arbitrary classes)
+- Framer Motion (page transitions + micro-animations)
+- React Router 6
+- Fonts: Geist Mono + Caveat (Google Fonts)
+
+Placeholder imagery uses [picsum.photos](https://picsum.photos/) with fixed seeds so layouts stay stable.
