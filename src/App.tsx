@@ -1,10 +1,9 @@
 import { Route, Routes } from "react-router-dom"
 import { RootLayout } from "./components/RootLayout"
-import { Films } from "./pages/Films"
+import { AboutUs } from "./pages/AboutUs"
 import { Home } from "./pages/Home"
-import { IndexPage } from "./pages/IndexPage"
-import { Info } from "./pages/Info"
-import { Photography } from "./pages/Photography"
+import { Projects } from "./pages/Projects"
+import { Services } from "./pages/Services"
 import { ProjectDetail } from "./pages/ProjectDetail"
 
 export default function App() {
@@ -12,10 +11,9 @@ export default function App() {
     <Routes>
       <Route element={<RootLayout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/films" element={<Films />} />
-        <Route path="/index" element={<IndexPage />} />
-        <Route path="/photography" element={<Photography />} />
-        <Route path="/info" element={<Info />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/projects" element={<Projects />} />
+        <Route path="/about-us" element={<AboutUs />} />
         <Route path="/project/:slug" element={<ProjectDetail />} />
       </Route>
     </Routes>

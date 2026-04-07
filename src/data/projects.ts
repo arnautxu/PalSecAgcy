@@ -1,12 +1,12 @@
 export type ProjectSlug =
-  | "dust-of-dawn"
-  | "vory-mechanica"
-  | "unfurnished-dreams"
-  | "anima-in-transit"
-  | "glass-haze"
-  | "obsidian-garden"
-  | "zero-meridian"
-  | "flicker-motel"
+  | "vira"
+  | "arkuos"
+  | "galeon"
+  | "el-xiringuito"
+  | "enteza"
+  | "gent-gran-de-calonge-i-sant-antoni"
+  | "cms"
+  | "estudi-dental-carrera"
 
 export type Project = {
   slug: ProjectSlug
@@ -15,56 +15,92 @@ export type Project = {
   carouselSeeds: string[]
   /** seed for filmstrip thumb */
   thumbSeed: string
+  /** Optional local (public/) images for a project */
+  localImages?: {
+    slides: string[]
+    thumb: string
+    /** Optional looping video thumb (public/) */
+    thumbVideo?: string
+  }
 }
 
 export const PROJECTS: Project[] = [
   {
-    slug: "dust-of-dawn",
-    title: "DUST OF DAWN",
-    carouselSeeds: ["dd-main", "dd-2", "dd-3", "dd-4", "dd-5"],
-    thumbSeed: "dd-strip",
+    slug: "vira",
+    title: "VIRA",
+    carouselSeeds: ["vira-1", "vira-2", "vira-3", "vira-4"],
+    thumbSeed: "vira-thumb",
+    localImages: {
+      slides: [
+        "/projects/vira/01.png",
+        "/projects/vira/02.png",
+        "/projects/vira/03.png",
+        "/projects/vira/04.png",
+      ],
+      thumb: "/projects/vira/02.png",
+    },
   },
   {
-    slug: "vory-mechanica",
-    title: "VORY MECHANICA",
-    carouselSeeds: ["vm-1", "vm-2", "vm-3", "vm-4"],
-    thumbSeed: "vm-strip",
+    slug: "arkuos",
+    title: "ARKUOS",
+    carouselSeeds: ["arkuos-1", "arkuos-2", "arkuos-3", "arkuos-4"],
+    thumbSeed: "arkuos-thumb",
+    localImages: {
+      slides: [
+        "/projects/arkuos/1.png",
+        "/projects/arkuos/2.png",
+        "/projects/arkuos/3.png",
+        "/projects/arkuos/4.png",
+        "/projects/arkuos/5.png",
+      ],
+      thumb: "/projects/arkuos/1.jpg",
+    },
   },
   {
-    slug: "unfurnished-dreams",
-    title: "UNFURNISHED DREAMS",
-    carouselSeeds: ["ud-1", "ud-2", "ud-3", "ud-4", "ud-5"],
-    thumbSeed: "ud-strip",
+    slug: "galeon",
+    title: "GALEÓN",
+    carouselSeeds: ["galeon-1", "galeon-2", "galeon-3", "galeon-4"],
+    thumbSeed: "galeon-thumb",
+    localImages: {
+      slides: [
+        "/projects/galeon/01.png",
+        "/projects/galeon/02.png",
+        "/projects/galeon/03.png",
+        "/projects/galeon/04.png",
+      ],
+      thumb: "/projects/galeon/02.png",
+      thumbVideo: "/projects/galeon/thumb.mp4",
+    },
   },
   {
-    slug: "anima-in-transit",
-    title: "ANIMA IN TRANSIT",
-    carouselSeeds: ["ait-1", "ait-2", "ait-3"],
-    thumbSeed: "ait-strip",
+    slug: "el-xiringuito",
+    title: "EL XIRINGUITO",
+    carouselSeeds: ["xiringuito-1", "xiringuito-2", "xiringuito-3", "xiringuito-4"],
+    thumbSeed: "xiringuito-thumb",
   },
   {
-    slug: "glass-haze",
-    title: "GLASS HAZE",
-    carouselSeeds: ["gh-1", "gh-2", "gh-3", "gh-4"],
-    thumbSeed: "gh-strip",
+    slug: "enteza",
+    title: "ENTEZA",
+    carouselSeeds: ["enteza-1", "enteza-2", "enteza-3", "enteza-4"],
+    thumbSeed: "enteza-thumb",
   },
   {
-    slug: "obsidian-garden",
-    title: "OBSIDIAN GARDEN",
-    carouselSeeds: ["og-1", "og-2", "og-3", "og-4", "og-5"],
-    thumbSeed: "og-strip",
+    slug: "gent-gran-de-calonge-i-sant-antoni",
+    title: "GENT GRAN DE CALONGE I SANT ANTONI",
+    carouselSeeds: ["gentgran-1", "gentgran-2", "gentgran-3", "gentgran-4"],
+    thumbSeed: "gentgran-thumb",
   },
   {
-    slug: "zero-meridian",
-    title: "ZERO MERIDIAN",
-    carouselSeeds: ["zm-1", "zm-2", "zm-3"],
-    thumbSeed: "zm-strip",
+    slug: "cms",
+    title: "CMS",
+    carouselSeeds: ["cms-1", "cms-2", "cms-3", "cms-4"],
+    thumbSeed: "cms-thumb",
   },
   {
-    slug: "flicker-motel",
-    title: "FLICKER MOTEL",
-    carouselSeeds: ["fm-1", "fm-2", "fm-3", "fm-4"],
-    thumbSeed: "fm-strip",
+    slug: "estudi-dental-carrera",
+    title: "ESTUDI DENTAL CARRERA",
+    carouselSeeds: ["carrera-1", "carrera-2", "carrera-3", "carrera-4"],
+    thumbSeed: "carrera-thumb",
   },
 ]
 
@@ -76,18 +112,6 @@ export function picsum(seed: string, w: number, h: number): string {
   return `https://picsum.photos/seed/${encodeURIComponent(seed)}/${w}/${h}`
 }
 
-/** Films list page order */
-export const FILMS_ORDER: ProjectSlug[] = [
-  "dust-of-dawn",
-  "unfurnished-dreams",
-  "glass-haze",
-  "flicker-motel",
-  "vory-mechanica",
-  "anima-in-transit",
-  "obsidian-garden",
-  "zero-meridian",
-]
-
 export type IndexRow = {
   project: string
   direction: string
@@ -98,69 +122,34 @@ export type IndexRow = {
 }
 
 export const INDEX_ROWS: IndexRow[] = [
+  { project: "VIRA", direction: "WEBSITE", client: "PALSEC", year: "2026", no: "001", slug: "vira" },
+  { project: "ARKUOS", direction: "WEBSITE", client: "PALSEC", year: "2026", no: "002", slug: "arkuos" },
+  { project: "GALEÓN", direction: "WEBSITE", client: "PALSEC", year: "2026", no: "003", slug: "galeon" },
   {
-    project: "DUST OF DAWN",
-    direction: "DOCUMENTARY",
-    client: "LAMODA",
-    year: "2025",
-    no: "001",
-    slug: "dust-of-dawn",
-  },
-  {
-    project: "VORY MECHANICA",
-    direction: "SHORT FILMS",
-    client: "BLUE ORIGINE",
-    year: "2025",
-    no: "002",
-    slug: "vory-mechanica",
-  },
-  {
-    project: "UNFURNISHED DREAMS",
-    direction: "EXPERIMENTAL VIDEO",
-    client: "PRISM ROOM",
-    year: "2024",
-    no: "003",
-    slug: "unfurnished-dreams",
-  },
-  {
-    project: "ANIMA IN TRANSIT",
-    direction: "INSTALLATION",
-    client: "GLASS HAZE",
-    year: "2024",
+    project: "EL XIRINGUITO",
+    direction: "WEBSITE",
+    client: "PALSEC",
+    year: "2026",
     no: "004",
-    slug: "anima-in-transit",
+    slug: "el-xiringuito",
   },
+  { project: "ENTEZA", direction: "WEBSITE", client: "PALSEC", year: "2026", no: "005", slug: "enteza" },
   {
-    project: "GLASS HAZE",
-    direction: "VIDEO ESSAY",
-    client: "VOID & VELVET",
-    year: "2023",
-    no: "005",
-    slug: "glass-haze",
-  },
-  {
-    project: "OBSIDIAN GARDEN",
-    direction: "MUSIC VIDEO",
-    client: "ECHO CURATIONS",
-    year: "2023",
+    project: "GENT GRAN DE CALONGE I SANT ANTONI",
+    direction: "WEBSITE",
+    client: "PALSEC",
+    year: "2026",
     no: "006",
-    slug: "obsidian-garden",
+    slug: "gent-gran-de-calonge-i-sant-antoni",
   },
+  { project: "CMS", direction: "WEBSITE", client: "PALSEC", year: "2026", no: "007", slug: "cms" },
   {
-    project: "ZERO MERIDIAN",
-    direction: "TRAILER",
-    client: "HORIZON PARLOR",
-    year: "2022",
-    no: "007",
-    slug: "zero-meridian",
-  },
-  {
-    project: "FLICKER MOTEL",
-    direction: "TRAILER",
-    client: "HORIZON PARLOR",
-    year: "2022",
+    project: "ESTUDI DENTAL CARRERA",
+    direction: "WEBSITE",
+    client: "PALSEC",
+    year: "2026",
     no: "008",
-    slug: "flicker-motel",
+    slug: "estudi-dental-carrera",
   },
 ]
 
@@ -171,11 +160,16 @@ export type PhotoCell = {
 }
 
 export const PHOTO_GRID: PhotoCell[] = [
-  { label: "DUST OF DAWN", slug: "dust-of-dawn", seed: "photo-dd-1" },
-  { label: "DUST OF DAWN", slug: "dust-of-dawn", seed: "photo-dd-2" },
-  { label: "UNFURNISHED DREAMS", slug: "unfurnished-dreams", seed: "photo-ud-1" },
-  { label: "GLASS HAZE", slug: "glass-haze", seed: "photo-gh-1" },
-  { label: "GLASS HAZE", slug: "glass-haze", seed: "photo-gh-2" },
-  { label: "FLICKER MOTEL", slug: "flicker-motel", seed: "photo-fm-1" },
-  { label: "FLICKER MOTEL", slug: "flicker-motel", seed: "photo-fm-2" },
+  { label: "VIRA", slug: "vira", seed: "photo-vira-1" },
+  { label: "ARKUOS", slug: "arkuos", seed: "photo-arkuos-1" },
+  { label: "GALEÓN", slug: "galeon", seed: "photo-galeon-1" },
+  { label: "EL XIRINGUITO", slug: "el-xiringuito", seed: "photo-xiringuito-1" },
+  { label: "ENTEZA", slug: "enteza", seed: "photo-enteza-1" },
+  {
+    label: "GENT GRAN DE CALONGE I SANT ANTONI",
+    slug: "gent-gran-de-calonge-i-sant-antoni",
+    seed: "photo-gentgran-1",
+  },
+  { label: "CMS", slug: "cms", seed: "photo-cms-1" },
+  { label: "ESTUDI DENTAL CARRERA", slug: "estudi-dental-carrera", seed: "photo-carrera-1" },
 ]
