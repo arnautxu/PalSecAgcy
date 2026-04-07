@@ -18,6 +18,7 @@ export function BottomNav() {
   return (
     <motion.nav
       layoutId="nav-pill"
+      data-cursor="white"
       className={[
         "pointer-events-auto",
         "text-nav uppercase tracking-nav",

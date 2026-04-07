@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { PageFrame } from "@/components/PageFrame"
 import { BrandWatermark } from "@/components/BrandWatermark"
 import { PROJECTS, picsum } from "@/data/projects"
+import { publicUrl } from "@/utils/publicUrl"
 
 function ProjectCard({
   slug,
@@ -112,8 +113,10 @@ export function Projects() {
         </div>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {PROJECTS.map((p) => {
-            const src = p.localImages?.thumb ? p.localImages.thumb : picsum(p.thumbSeed, 920, 518)
-            const video = p.localImages?.thumbVideo
+            const src = p.localImages?.thumb
+              ? publicUrl(p.localImages.thumb)
+              : picsum(p.thumbSeed, 920, 518)
+            const video = p.localImages?.thumbVideo ? publicUrl(p.localImages.thumbVideo) : undefined
 
             return (
               <ProjectCard

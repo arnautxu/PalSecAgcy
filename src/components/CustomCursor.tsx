@@ -3,7 +3,9 @@ import { motion, useSpring } from "framer-motion"
 
 export function CustomCursor() {
   const [visible, setVisible] = useState(false)
+  const [overWhiteZone, setOverWhiteZone] = useState(false)
   const red = "#ff0000"
+  const color = overWhiteZone ? "#ffffff" : red
 
   const dotX = useSpring(0, { stiffness: 900, damping: 45, mass: 0.2 })
   const dotY = useSpring(0, { stiffness: 900, damping: 45, mass: 0.2 })
@@ -19,6 +21,9 @@ export function CustomCursor() {
       dotY.set(e.clientY)
       ringX.set(e.clientX)
       ringY.set(e.clientY)
+
+      const el = document.elementFromPoint(e.clientX, e.clientY) as HTMLElement | null
+      setOverWhiteZone(!!el?.closest?.('[data-cursor="white"]'))
     }
 
     const leave = () => setVisible(false)
@@ -51,7 +56,7 @@ export function CustomCursor() {
         <div
           className="h-[9px] w-[9px] rounded-full"
           style={{
-            backgroundColor: red,
+            backgroundColor: color,
           }}
         />
       </motion.div>
@@ -69,7 +74,7 @@ export function CustomCursor() {
         <div
           className="h-[26px] w-[26px] rounded-full border"
           style={{
-            borderColor: red,
+            borderColor: color,
           }}
         />
       </motion.div>

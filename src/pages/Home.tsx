@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react"
+import { publicUrl } from "@/utils/publicUrl"
 
 /** Served from `public/hero-home.mp4` (copied from Desktop `Comp 1.mp4`) */
-const VIDEO_SRC = "/hero-home.mp4"
+const VIDEO_SRC = publicUrl("/hero-home.mp4")
 
 export function Home() {
   const videoRef = useRef<HTMLVideoElement>(null)

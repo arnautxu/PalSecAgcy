@@ -1,5 +1,6 @@
 import { PageFrame } from "@/components/PageFrame"
 import { BrandWatermark } from "@/components/BrandWatermark"
+import { publicUrl } from "@/utils/publicUrl"
 
 export function AboutUs() {
   return (
@@ -21,7 +22,7 @@ export function AboutUs() {
         <div className="mt-8 flex flex-1 items-center justify-center md:mt-0">
           <div className="w-[min(44vw,520px)] overflow-hidden rounded-[2px] border border-frame bg-white">
             <img
-              src="/brand/palsec-positive.jpg"
+              src={publicUrl("/brand/palsec-positive.jpg")}
               alt=""
               className="aspect-[2/1] w-full object-cover opacity-90"
               loading="lazy"

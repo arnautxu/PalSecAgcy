@@ -9,6 +9,7 @@ import {
   type Project,
   type ProjectSlug,
 } from "@/data/projects"
+import { publicUrl } from "@/utils/publicUrl"
 
 function neighbors(current: ProjectSlug): { prev: Project; next: Project } {
   const idx = PROJECTS.findIndex((p) => p.slug === current)
@@ -18,7 +19,7 @@ function neighbors(current: ProjectSlug): { prev: Project; next: Project } {
 }
 
 function imageSrc(keyOrPath: string, w: number, h: number) {
-  if (keyOrPath.startsWith("/")) return keyOrPath
+  if (keyOrPath.startsWith("/")) return publicUrl(keyOrPath)
   return picsum(keyOrPath, w, h)
 }
 
@@ -309,14 +310,14 @@ export function ProjectDetail() {
               <Link
                 key={p.slug}
                 to={`/project/${p.slug}`}
-                className="w-[230px] shrink-0"
+                className="w-[76px] shrink-0"
                 onClick={() => setIndex(0)}
               >
                 <div className="overflow-hidden rounded-[2px] border border-frame bg-white">
                   <img
                     src={
                       p.localImages?.thumb
-                        ? p.localImages.thumb
+                        ? publicUrl(p.localImages.thumb)
                         : picsum(p.thumbSeed, 460, 259)
                     }
                     alt=""
@@ -324,7 +325,7 @@ export function ProjectDetail() {
                     loading="lazy"
                   />
                 </div>
-                <p className="mt-[6px] text-nav uppercase leading-[1.6] tracking-nav text-ink">
+                <p className="mt-[6px] text-[7px] uppercase leading-[1.4] tracking-nav text-ink">
                   {p.title}
                 </p>
               </Link>

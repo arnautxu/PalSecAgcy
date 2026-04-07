@@ -1,10 +1,13 @@
+import { publicUrl } from "@/utils/publicUrl"
+
 type Props = {
   variant: "dark" | "light"
 }
 
 export function BrandWatermark({ variant }: Props) {
-  const src =
-    variant === "dark" ? "/brand/palsec-negative.png" : "/brand/palsec-positive.jpg"
+  const src = publicUrl(
+    variant === "dark" ? "/brand/palsec-negative.png" : "/brand/palsec-positive.jpg",
+  )
 
   return (
     <div className="pointer-events-none absolute left-6 top-6 z-10 select-none">
