@@ -5,8 +5,9 @@ export default {
     extend: {
       colors: {
         ink: "#282828",
-        frame: "#f5e6e2",
+        frame: "#f2f2f2",
         page: "#ffffff",
+        accent: "#ff1a1a",
       },
       fontFamily: {
         mono: ['"Geist Mono"', "ui-monospace", "monospace"],

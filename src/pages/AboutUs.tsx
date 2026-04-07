@@ -5,7 +5,7 @@ export function AboutUs() {
   return (
     <PageFrame className="relative">
       <BrandWatermark variant="light" />
-      <div className="flex h-full min-h-0 flex-col px-6 py-8 md:flex-row md:gap-10">
+      <div className="flex h-full min-h-0 flex-col px-6 pb-8 pt-[92px] md:flex-row md:gap-10">
         <div className="w-full md:w-[40%]">
           <p className="mb-4 text-nav opacity-60">ABOUT US</p>
           <p className="text-bodymd leading-[1.6] tracking-nav text-ink md:text-body">
@@ -14,7 +14,7 @@ export function AboutUs() {
           </p>
           <div className="my-5 h-px w-full bg-frame" />
           <p className="text-bodymd leading-[1.6] tracking-nav text-ink/70 md:text-body">
-            BASED IN BARCELONA · AVAILABLE WORLDWIDE · HELLO@PALSECAGCY.COM
+            BASED IN BARCELONA · AVAILABLE WORLDWIDE · INFO@PALSEC.AGENCY
           </p>
         </div>
 

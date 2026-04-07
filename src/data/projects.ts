@@ -32,12 +32,12 @@ export const PROJECTS: Project[] = [
     thumbSeed: "vira-thumb",
     localImages: {
       slides: [
-        "/projects/vira/01.png",
-        "/projects/vira/02.png",
-        "/projects/vira/03.png",
-        "/projects/vira/04.png",
+        "/media/projects/vira/01.png",
+        "/media/projects/vira/02.png",
+        "/media/projects/vira/03.png",
+        "/media/projects/vira/04.png",
       ],
-      thumb: "/projects/vira/02.png",
+      thumb: "/media/projects/vira/02.png",
     },
   },
   {
@@ -47,13 +47,13 @@ export const PROJECTS: Project[] = [
     thumbSeed: "arkuos-thumb",
     localImages: {
       slides: [
-        "/projects/arkuos/1.png",
-        "/projects/arkuos/2.png",
-        "/projects/arkuos/3.png",
-        "/projects/arkuos/4.png",
-        "/projects/arkuos/5.png",
+        "/media/projects/arkuos/1.png",
+        "/media/projects/arkuos/2.png",
+        "/media/projects/arkuos/3.png",
+        "/media/projects/arkuos/4.png",
+        "/media/projects/arkuos/5.png",
       ],
-      thumb: "/projects/arkuos/1.jpg",
+      thumb: "/media/projects/arkuos/1.jpg",
     },
   },
   {
@@ -63,13 +63,13 @@ export const PROJECTS: Project[] = [
     thumbSeed: "galeon-thumb",
     localImages: {
       slides: [
-        "/projects/galeon/01.png",
-        "/projects/galeon/02.png",
-        "/projects/galeon/03.png",
-        "/projects/galeon/04.png",
+        "/media/projects/galeon/01.png",
+        "/media/projects/galeon/02.png",
+        "/media/projects/galeon/03.png",
+        "/media/projects/galeon/04.png",
       ],
-      thumb: "/projects/galeon/02.png",
-      thumbVideo: "/projects/galeon/thumb.mp4",
+      thumb: "/media/projects/galeon/02.png",
+      thumbVideo: "/media/projects/galeon/thumb.mp4",
     },
   },
   {
@@ -77,18 +77,47 @@ export const PROJECTS: Project[] = [
     title: "EL XIRINGUITO",
     carouselSeeds: ["xiringuito-1", "xiringuito-2", "xiringuito-3", "xiringuito-4"],
     thumbSeed: "xiringuito-thumb",
+    localImages: {
+      slides: [
+        "/media/projects/el-xiringuito/1.png",
+        "/media/projects/el-xiringuito/2.png",
+        "/media/projects/el-xiringuito/3.png",
+        "/media/projects/el-xiringuito/4.png",
+        "/media/projects/el-xiringuito/5.png",
+      ],
+      thumb: "/media/projects/el-xiringuito/1.png",
+    },
   },
   {
     slug: "enteza",
     title: "ENTEZA",
     carouselSeeds: ["enteza-1", "enteza-2", "enteza-3", "enteza-4"],
     thumbSeed: "enteza-thumb",
+    localImages: {
+      slides: [
+        "/media/projects/enteza/1.png",
+        "/media/projects/enteza/2.png",
+        "/media/projects/enteza/3.png",
+        "/media/projects/enteza/4.png",
+        "/media/projects/enteza/5.png",
+      ],
+      thumb: "/media/projects/enteza/2.jpg",
+    },
   },
   {
     slug: "gent-gran-de-calonge-i-sant-antoni",
     title: "GENT GRAN DE CALONGE I SANT ANTONI",
     carouselSeeds: ["gentgran-1", "gentgran-2", "gentgran-3", "gentgran-4"],
     thumbSeed: "gentgran-thumb",
+    localImages: {
+      slides: [
+        "/media/projects/gent-gran/01.png",
+        "/media/projects/gent-gran/02.png",
+        "/media/projects/gent-gran/03.png",
+      ],
+      thumb: "/media/projects/gent-gran/01.png",
+      thumbVideo: "/media/projects/gent-gran/thumb.mp4",
+    },
   },
   {
     slug: "cms",

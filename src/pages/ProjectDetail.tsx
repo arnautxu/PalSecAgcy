@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom"
+import { Link, Navigate, useParams } from "react-router-dom"
 import { motion } from "framer-motion"
 import { PageFrame } from "@/components/PageFrame"
 import {
@@ -16,9 +16,6 @@ function neighbors(current: ProjectSlug): { prev: Project; next: Project } {
   const next = PROJECTS[(idx + 1) % PROJECTS.length]!
   return { prev, next }
 }
-
-const miniLink =
-  "text-nav uppercase tracking-nav text-ink transition-opacity duration-200 hover:opacity-40"
 
 function imageSrc(keyOrPath: string, w: number, h: number) {
   if (keyOrPath.startsWith("/")) return keyOrPath
@@ -80,9 +77,63 @@ function arkuosCopy() {
   }
 }
 
+function xiringuitoCopy() {
+  return {
+    label: "PROJECT",
+    title: "EL XIRINGUITO",
+    body: [
+      "EL XIRINGUITO ÉS UNA IDENTITAT COMPLETA PER A UN RESTAURANT DE COSTA, PENSADA PER TRANSMETRE UNA ESTÈTICA MEDITERRÀNIA, LLEUGERA I LLUMINOSA.",
+      "EL SISTEMA GRÀFIC JUGA AMB COLOR, TIPOGRAFIA I COMPOSICIÓ EN CAPES PER CAPTURAR LA SENSACIÓ D’ESTIU: SAL, SORRA, OMBRA I RITME.",
+      "S’HA DESPLEGAT L’IDENTITAT EN APLICACIONS REIALS: MENÚS, CARTES, POSAVASOS, RETOLACIÓ I PECES PER A COMUNICACIÓ DIGITAL, MANTENINT COHERÈNCIA I PERSONALITAT.",
+    ],
+    bullets: [
+      "BRAND IDENTITY",
+      "MENU SYSTEM",
+      "PRINT & SIGNAGE",
+      "DIGITAL ASSETS",
+    ],
+  }
+}
+
+function entezaCopy() {
+  return {
+    label: "PROJECT",
+    title: "ENTEZA",
+    body: [
+      "ENTEZA ÉS UNA MARCA ORIENTADA A LLOGUER DE MOBILIARI I PARAMENT PER A ESDEVENIMENTS, AMB UN ENFOC EN DISSENY, ELEGÀNCIA I QUALITAT.",
+      "LA IDENTITAT I EL SISTEMA VISUAL S’APLIQUEN A CATÀLEG, COMUNICACIÓ DIGITAL I PRESENTACIÓ DE PRODUCTE, PER FER L’OFERTA CLARA I DESITJABLE.",
+      "AMB UNA COL·LECCIÓ AMPLIA I ESCALABLE, EL PROJECTE ORGANITZA CATEGORIES I SÈRIES PER FACILITAR LA SELECCIÓ I MUNTATGE DE QUALSEVOL TIPUS D’ESDEVENIMENT.",
+    ],
+    bullets: [
+      "BRAND SYSTEM",
+      "CATALOG STRUCTURE",
+      "DIGITAL DESIGN",
+      "PRODUCT PRESENTATION",
+    ],
+    source: "ENTEZA.COM",
+  }
+}
+
+function gentGranCopy() {
+  return {
+    label: "PROJECT",
+    title: "GENT GRAN",
+    body: [
+      "PROJECTE DESENVOLUPAT PER A LA REGIDORIA DE SERVEIS SOCIALS DEL MUNICIPI, AMB L’OBJECTIU DE DONAR VISIBILITAT I COHESIÓ A LES ACTIVITATS ADREÇADES A LES PERSONES GRANS.",
+      "LA IDENTITAT DEFINEIX UN TO PROPER I POSITIU, AMB UN SISTEMA GRÀFIC SIMPLE I MEMORABLE QUE FUNCIONA EN CARTELLERIA, XARXES I MATERIALS INFORMATIUS.",
+      "UN LLENGUATGE VISUAL PENSAT PER SER ACCESSIBLE, CLAR I FÀCILMENT REPRODUÏBLE EN CONTEXTOS INSTITUCIONALS.",
+    ],
+    bullets: [
+      "PUBLIC SECTOR",
+      "BRAND IDENTITY",
+      "COMMUNICATION SYSTEM",
+      "PRINT & DIGITAL",
+    ],
+  }
+}
+
 export function ProjectDetail() {
   const { slug } = useParams()
-  const navigate = useNavigate()
   const project = slug ? projectBySlug(slug) : undefined
   const [index, setIndex] = useState(0)
 
@@ -113,35 +164,25 @@ export function ProjectDetail() {
         ? galeonCopy()
         : project.slug === "arkuos"
           ? arkuosCopy()
+          : project.slug === "el-xiringuito"
+            ? xiringuitoCopy()
+            : project.slug === "enteza"
+              ? entezaCopy()
+              : project.slug === "gent-gran-de-calonge-i-sant-antoni"
+                ? gentGranCopy()
           : null
-  const twoCol = project.slug === "vira" || project.slug === "galeon" || project.slug === "arkuos"
+  const twoCol =
+    project.slug === "vira" ||
+    project.slug === "galeon" ||
+    project.slug === "arkuos" ||
+    project.slug === "el-xiringuito" ||
+    project.slug === "enteza" ||
+    project.slug === "gent-gran-de-calonge-i-sant-antoni"
 
   return (
     <PageFrame>
-      <div className="flex h-full min-h-0 flex-col pb-14">
-        <header className="flex flex-wrap items-center justify-center gap-x-2 gap-y-2 px-5 pt-6 text-nav uppercase tracking-nav">
-          <Link to="/" className={miniLink}>
-            PALSEC AGCY
-          </Link>
-          <span className="opacity-40">·</span>
-          <Link to="/services" className={miniLink}>
-            SERVICES
-          </Link>
-          <span className="opacity-40">·</span>
-          <Link to="/projects" className={miniLink}>
-            PROJECTS
-          </Link>
-          <span className="opacity-40">·</span>
-          <Link to="/about-us" className={miniLink}>
-            ABOUT US
-          </Link>
-          <span className="opacity-40">·</span>
-          <button type="button" className={miniLink} onClick={() => navigate(-1)}>
-            EXIT
-          </button>
-        </header>
-
-        <div className="min-h-0 flex-1 overflow-y-auto px-5 pb-10 pt-8">
+      <div className="flex h-full min-h-0 flex-col">
+        <div className="min-h-0 flex-1 overflow-y-auto px-5 pb-10 pt-[92px]">
           {twoCol ? (
             <div className="mx-auto grid w-full max-w-[1200px] gap-8 md:grid-cols-2">
               {/* LEFT: MEDIA */}
@@ -178,26 +219,6 @@ export function ProjectDetail() {
                     ›
                   </button>
                 </div>
-
-                <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
-                  {slides.map((seed, i) => (
-                    <button
-                      key={seed}
-                      type="button"
-                      onClick={() => setIndex(i)}
-                      className={`overflow-hidden rounded-[2px] border bg-white h-[92px] ${
-                        i === safeIndex ? "border-ink opacity-100" : "border-frame opacity-60"
-                      }`}
-                      aria-label={`Image ${i + 1}`}
-                    >
-                      <img
-                        src={imageSrc(seed, 320, 180)}
-                        alt=""
-                        className="h-full w-auto object-contain bg-white"
-                      />
-                    </button>
-                  ))}
-                </div>
               </div>
 
               {/* RIGHT: INFO */}
@@ -226,6 +247,26 @@ export function ProjectDetail() {
                     ))}
                   </ul>
                 ) : null}
+
+                <div className="mt-7 flex flex-wrap items-center gap-2">
+                  {slides.map((seed, i) => (
+                    <button
+                      key={seed}
+                      type="button"
+                      onClick={() => setIndex(i)}
+                      className={`h-[92px] overflow-hidden rounded-[2px] border bg-white ${
+                        i === safeIndex ? "border-ink opacity-100" : "border-frame opacity-60"
+                      }`}
+                      aria-label={`Image ${i + 1}`}
+                    >
+                      <img
+                        src={imageSrc(seed, 320, 180)}
+                        alt=""
+                        className="h-full w-auto object-contain bg-white"
+                      />
+                    </button>
+                  ))}
+                </div>
 
                 <div className="mt-10 flex items-center justify-between text-nav uppercase tracking-nav">
                   <Link
@@ -262,7 +303,7 @@ export function ProjectDetail() {
           )}
         </div>
 
-        <div className="border-t border-frame px-4 py-4">
+        <div className="mt-auto shrink-0 border-t border-frame px-4 py-4">
           <div className="flex gap-4 overflow-x-auto pb-1">
             {others.map((p) => (
               <Link
@@ -279,7 +320,7 @@ export function ProjectDetail() {
                         : picsum(p.thumbSeed, 460, 259)
                     }
                     alt=""
-                    className="aspect-video w-full object-cover"
+                    className="aspect-[3/4] w-full object-contain bg-white"
                     loading="lazy"
                   />
                 </div>

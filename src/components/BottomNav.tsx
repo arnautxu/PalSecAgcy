@@ -1,44 +1,36 @@
-import { NavLink, useLocation } from "react-router-dom"
+import { motion } from "framer-motion"
+import { NavLink } from "react-router-dom"
 
-function Sep({ dark }: { dark: boolean }) {
+function Sep() {
   return (
-    <span className={`mx-[6px] ${dark ? "text-white/50" : "text-ink/50"}`}>·</span>
+    <span className="mx-[6px] text-white/60">·</span>
   )
 }
 
 export function BottomNav() {
-  const location = useLocation()
-  const dark = location.pathname === "/"
-
   const linkClass = (active: boolean) =>
     [
       "text-nav uppercase tracking-nav transition-[opacity,color] duration-200",
-      dark
-        ? "text-white hover:text-[#ff1a1a] hover:opacity-100"
-        : "text-ink hover:opacity-40",
-      active ? "opacity-40" : "opacity-100",
+      "text-white hover:text-ink hover:opacity-100",
+      active ? "opacity-70" : "opacity-100",
     ].join(" ")
 
   return (
-    <nav
+    <motion.nav
+      layoutId="nav-pill"
       className={[
-        "pointer-events-auto fixed bottom-0 left-1/2 z-50 -translate-x-1/2 pb-[18px]",
+        "pointer-events-auto",
         "text-nav uppercase tracking-nav",
+        "flex items-center justify-center",
+        "px-4 py-[10px]",
+        "border",
+        "backdrop-blur-[10px]",
+        "rounded-full",
+        "bg-[#ff0000]/90 border-white/20",
       ].join(" ")}
       aria-label="Primary"
+      transition={{ duration: 0.55, ease: [0.4, 0.24, 0.4, 1] }}
     >
-      <div
-        className={[
-          "flex items-center justify-center",
-          "px-4 py-[10px]",
-          "border",
-          "backdrop-blur-[10px]",
-          "rounded-full",
-          dark
-            ? "bg-black/35 border-white/20"
-            : "bg-[#f5e6e2]/85 border-[#f5e6e2]",
-        ].join(" ")}
-      >
         <NavLink
           to="/"
           className={[
@@ -49,19 +41,39 @@ export function BottomNav() {
         >
           PALSEC AGCY
         </NavLink>
-        <Sep dark={dark} />
+        <Sep />
         <NavLink to="/services" className={({ isActive }) => linkClass(isActive)}>
           SERVICES
         </NavLink>
-        <Sep dark={dark} />
+        <Sep />
         <NavLink to="/projects" className={({ isActive }) => linkClass(isActive)}>
           PROJECTS
         </NavLink>
-        <Sep dark={dark} />
+        <Sep />
         <NavLink to="/about-us" className={({ isActive }) => linkClass(isActive)}>
           ABOUT US
         </NavLink>
-      </div>
-    </nav>
+        <Sep />
+
+        <motion.a
+          href="mailto:info@palsec.agency?subject=PARLEM%20DEL%20TEU%20PROJECTE%3F"
+          className={[
+            "ml-[2px] inline-flex items-center",
+            "rounded-full border px-3 py-[6px]",
+            "text-nav uppercase tracking-nav",
+            "transition-[opacity,color,background-color,border-color] duration-200",
+            "border-white/35 bg-white/10 text-white hover:text-ink",
+          ].join(" ")}
+          initial={false}
+          animate={{
+            boxShadow: "0 0 0 0 rgba(0,0,0,0)",
+          }}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.99 }}
+          aria-label="Parlem del teu projecte? Escriu-nos a info@palsec.agency"
+        >
+          PARLEM DEL TEU PROJECTE?
+        </motion.a>
+    </motion.nav>
   )
 }

@@ -15,14 +15,14 @@
     font-family: "Geist Mono", ui-monospace, monospace;
     text-transform: uppercase;
     line-height: 1.6;
-    cursor: default;
+    cursor: none;
     overflow: hidden;
     -webkit-font-smoothing: antialiased;
   }
 
   a,
   button {
-    cursor: pointer;
+    cursor: none;
   }
 
   * {
