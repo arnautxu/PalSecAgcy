@@ -1,6 +1,7 @@
 import { motion } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
 import { NavLink } from "react-router-dom"
+import { CONTACT_EMAIL, mailtoProjectInquiryHref } from "@/constants/contact"
 
 function Sep() {
   return (
@@ -88,7 +89,7 @@ export function BottomNav() {
         <Sep />
 
         <motion.a
-          href="mailto:info@palsec.agency?subject=PARLEM%20DEL%20TEU%20PROJECTE%3F"
+          href={mailtoProjectInquiryHref()}
           className={[
             "ml-[2px] inline-flex items-center",
             "rounded-full border px-3 py-[6px]",
@@ -102,7 +103,7 @@ export function BottomNav() {
           }}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.99 }}
-          aria-label="Parlem del teu projecte? Escriu-nos a info@palsec.agency"
+          aria-label={`Parlem del teu projecte? Escriu-nos a ${CONTACT_EMAIL}`}
         >
           PARLEM DEL TEU PROJECTE?
         </motion.a>

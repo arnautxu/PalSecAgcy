@@ -1,5 +1,6 @@
 import { PageFrame } from "@/components/PageFrame"
 import { BrandWatermark } from "@/components/BrandWatermark"
+import { mailtoProjectInquiryHref } from "@/constants/contact"
 
 export function Services() {
   return (
@@ -21,7 +22,14 @@ export function Services() {
             ESCALABLES. TAMBÉ DESPLEGUEM IDENTITATS EN PECES IMPRESES I MATERIALS D’ESPAI.
           </p>
           <p className="opacity-70">
-            SI TENS UNA IDEA O UNA MARCA EN EVOLUCIÓ, PARLEM DEL TEU PROJECTE.
+            SI TENS UNA IDEA O UNA MARCA EN EVOLUCIÓ,{" "}
+            <a
+              href={mailtoProjectInquiryHref()}
+              className="underline underline-offset-4 transition-opacity duration-200 hover:opacity-60"
+            >
+              PARLEM DEL TEU PROJECTE
+            </a>
+            .
           </p>
         </div>
       </div>

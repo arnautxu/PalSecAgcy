@@ -1,5 +1,6 @@
 import { PageFrame } from "@/components/PageFrame"
 import { BrandWatermark } from "@/components/BrandWatermark"
+import { CONTACT_EMAIL, mailtoProjectInquiryHref } from "@/constants/contact"
 import { publicUrl } from "@/utils/publicUrl"
 
 export function AboutUs() {
@@ -28,7 +29,13 @@ export function AboutUs() {
 
           <div className="my-5 h-px w-full bg-frame" />
           <p className="text-bodymd leading-[1.6] tracking-nav text-ink/70 md:text-body">
-            BASED IN BARCELONA · AVAILABLE WORLDWIDE · INFO@PALSEC.AGENCY
+            BASED IN BARCELONA · AVAILABLE WORLDWIDE ·{" "}
+            <a
+              href={mailtoProjectInquiryHref()}
+              className="underline underline-offset-4 transition-opacity duration-200 hover:opacity-60"
+            >
+              {CONTACT_EMAIL.toUpperCase()}
+            </a>
           </p>
         </div>
       </div>

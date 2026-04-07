@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { Link, Navigate, useParams } from "react-router-dom"
 import { AnimatePresence, motion } from "framer-motion"
 import { PageFrame } from "@/components/PageFrame"
@@ -36,8 +36,8 @@ function LogotecaGallery({
   const [active, setActive] = useState(initialIndex)
   const primary = slides.slice(0, 20)
   const extras = slides.slice(20)
-  const scrollLock = useMemo(() => ({ locked: false }), [])
-  const prevOverflow = useState(() => ({ html: "", body: "" }))[0]
+  const scrollLockRef = useRef(false)
+  const prevOverflowRef = useRef({ html: "", body: "" })
 
   useEffect(() => {
     setActive(initialIndex)
@@ -48,19 +48,19 @@ function LogotecaGallery({
     const body = document.body
 
     const lock = () => {
-      if (scrollLock.locked) return
-      scrollLock.locked = true
-      prevOverflow.html = html.style.overflow
-      prevOverflow.body = body.style.overflow
+      if (scrollLockRef.current) return
+      scrollLockRef.current = true
+      prevOverflowRef.current = { html: html.style.overflow, body: body.style.overflow }
       html.style.overflow = "hidden"
       body.style.overflow = "hidden"
     }
 
     const unlock = () => {
-      if (!scrollLock.locked) return
-      scrollLock.locked = false
-      html.style.overflow = prevOverflow.html
-      body.style.overflow = prevOverflow.body
+      if (!scrollLockRef.current) return
+      scrollLockRef.current = false
+      const { html: h, body: b } = prevOverflowRef.current
+      html.style.overflow = h
+      body.style.overflow = b
     }
 
     if (open) lock()
@@ -69,7 +69,7 @@ function LogotecaGallery({
     return () => {
       unlock()
     }
-  }, [open, prevOverflow, scrollLock])
+  }, [open])
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -353,7 +353,7 @@ export function ProjectDetail() {
   }, [slug])
 
   if (!slug || !project) {
-    return <Navigate to="/films" replace />
+    return <Navigate to="/projects" replace />
   }
 
   const slides = project.localImages?.slides ?? project.carouselSeeds
@@ -538,16 +538,28 @@ export function ProjectDetail() {
                 onClick={() => setIndex(0)}
               >
                 <div className="overflow-hidden rounded-[2px] border border-frame bg-white">
-                  <img
-                    src={
-                      p.localImages?.thumb
-                        ? publicUrl(p.localImages.thumb)
-                        : picsum(p.thumbSeed, 460, 259)
-                    }
-                    alt=""
-                    className="aspect-[3/4] w-full object-contain bg-white"
-                    loading="lazy"
-                  />
+                  {p.localImages?.thumbVideo ? (
+                    <video
+                      className="aspect-[3/4] w-full object-cover"
+                      src={publicUrl(p.localImages.thumbVideo)}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                    />
+                  ) : (
+                    <img
+                      src={
+                        p.localImages?.thumb
+                          ? publicUrl(p.localImages.thumb)
+                          : picsum(p.thumbSeed, 460, 259)
+                      }
+                      alt=""
+                      className="aspect-[3/4] w-full object-contain bg-white"
+                      loading="lazy"
+                    />
+                  )}
                 </div>
                 <p className="mt-[6px] text-[7px] uppercase leading-[1.4] tracking-nav text-ink">
                   {p.title}

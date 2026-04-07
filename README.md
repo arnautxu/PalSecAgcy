@@ -1,6 +1,6 @@
-# THEON KALLISTRATOS — Film director portfolio
+# PALSEC AGCY
 
-Multi-page editorial portfolio built with **React**, **Vite**, **TypeScript**, **Tailwind CSS**, **Framer Motion**, and **React Router v6**.
+Multi-page portfolio built with **React**, **Vite**, **TypeScript**, **Tailwind CSS**, **Framer Motion**, and **React Router v6**.
 
 ## Scripts
 
@@ -18,23 +18,23 @@ npm run preview
 
 | Path | Page |
 | --- | --- |
-| `/` | Home (full-viewport cinematic background) |
-| `/films` | Films list |
-| `/index` | Index table |
-| `/photography` | Photography grid |
-| `/info` | Bio / contact |
-| `/project/:slug` | Project detail (carousel + filmstrip) |
+| `/` | Home (showreel) |
+| `/services` | Services |
+| `/projects` | Projects grid |
+| `/about-us` | About |
+| `/project/:slug` | Project detail |
+| `*` | 404 (unknown paths) |
 
 ### Project slugs
 
-`dust-of-dawn`, `vory-mechanica`, `unfurnished-dreams`, `anima-in-transit`, `glass-haze`, `obsidian-garden`, `zero-meridian`, `flicker-motel`
+See `ProjectSlug` in [`src/data/projects.ts`](src/data/projects.ts).
 
 ## Stack
 
 - Vite 6 + React 18 + TypeScript
-- Tailwind CSS 3 (pixel values via theme + arbitrary classes)
-- Framer Motion (page transitions + micro-animations)
+- Tailwind CSS 3
+- Framer Motion
 - React Router 6
 - Fonts: Geist Mono + Caveat (Google Fonts)
 
-Placeholder imagery uses [picsum.photos](https://picsum.photos/) with fixed seeds so layouts stay stable.
+Placeholder imagery uses [picsum.photos](https://picsum.photos/) with fixed seeds where no local assets are set.
