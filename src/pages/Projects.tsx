@@ -5,6 +5,8 @@ import { PageFrame } from "@/components/PageFrame"
 import { BrandWatermark } from "@/components/BrandWatermark"
 import { PROJECTS, picsum } from "@/data/projects"
 import { publicUrl } from "@/utils/publicUrl"
+import { useLang } from "@/i18n/useLang"
+import { t } from "@/i18n/strings"
 
 function ProjectCard({
   slug,
@@ -13,6 +15,7 @@ function ProjectCard({
   videoSrc,
   fit = "cover",
   padded = false,
+  lang,
 }: {
   slug: string
   title: string
@@ -20,6 +23,7 @@ function ProjectCard({
   videoSrc?: string
   fit?: "cover" | "contain"
   padded?: boolean
+  lang: string
 }) {
   const wrapRef = useRef<HTMLDivElement>(null)
   const titleViewportRef = useRef<HTMLDivElement>(null)
@@ -58,7 +62,7 @@ function ProjectCard({
 
   return (
     <Link
-      to={`/project/${slug}`}
+      to={`/${lang}/project/${slug}`}
       className="block"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -111,14 +115,14 @@ function ProjectCard({
 }
 
 export function Projects() {
+  const lang = useLang()
   return (
     <PageFrame className="relative">
       <BrandWatermark variant="light" />
       <div className="h-full w-full overflow-y-auto px-6 pb-8 pt-[92px]">
-        <div className="mb-2 text-nav opacity-60">PROJECTS</div>
+        <div className="mb-2 text-nav opacity-60">{t(lang, "projects.title")}</div>
         <div className="mb-6 max-w-[640px] text-bodymd leading-[1.6] tracking-nav text-ink/70 md:text-body">
-          SELECCIÓ DE PROJECTES EN BRANDING, PRODUCTE DIGITAL I SISTEMES VISUALS. SI VOLS QUE HO
-          MIREM JUNTS, PARLEM DEL TEU PROJECTE.
+          {t(lang, "projects.lead")}
         </div>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {PROJECTS.map((p) => {
@@ -138,6 +142,7 @@ export function Projects() {
                 videoSrc={video}
                 fit={fit}
                 padded={padded}
+                lang={lang}
               />
             )
           })}

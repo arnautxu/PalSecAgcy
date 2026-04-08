@@ -2,17 +2,19 @@ import { PageFrame } from "@/components/PageFrame"
 import { BrandWatermark } from "@/components/BrandWatermark"
 import { CONTACT_EMAIL, mailtoProjectInquiryHref } from "@/constants/contact"
 import { publicUrl } from "@/utils/publicUrl"
+import { useLang } from "@/i18n/useLang"
+import { t } from "@/i18n/strings"
 
 export function AboutUs() {
+  const lang = useLang()
   return (
     <PageFrame className="relative">
       <BrandWatermark variant="light" />
       <div className="flex h-full min-h-0 flex-col px-6 pb-8 pt-[92px] md:flex-row md:gap-10">
         <div className="w-full md:w-[40%]">
-          <p className="mb-4 text-nav opacity-60">ABOUT US</p>
+          <p className="mb-4 text-nav opacity-60">{t(lang, "about.title")}</p>
           <p className="text-bodymd leading-[1.6] tracking-nav text-ink md:text-body">
-            PALSEC AGCY IS A DESIGN-LED STUDIO WORKING ACROSS BRAND, DIGITAL, AND VISUAL SYSTEMS.
-            WE BUILD PRECISE, MINIMAL, HIGH-CONTRAST EXPERIENCES.
+            {t(lang, "about.p1")} {t(lang, "about.p2")}
           </p>
 
           <div className="mt-6">
@@ -29,9 +31,9 @@ export function AboutUs() {
 
           <div className="my-5 h-px w-full bg-frame" />
           <p className="text-bodymd leading-[1.6] tracking-nav text-ink/70 md:text-body">
-            BASED IN BARCELONA · AVAILABLE WORLDWIDE ·{" "}
+            {t(lang, "about.contactPrefix")}{" "}
             <a
-              href={mailtoProjectInquiryHref()}
+              href={mailtoProjectInquiryHref(lang)}
               className="underline underline-offset-4 transition-opacity duration-200 hover:opacity-60"
             >
               {CONTACT_EMAIL.toUpperCase()}

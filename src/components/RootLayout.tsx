@@ -2,6 +2,7 @@ import { AnimatePresence, LayoutGroup, motion } from "framer-motion"
 import { Outlet, useLocation } from "react-router-dom"
 import { BottomNav } from "./BottomNav"
 import { CustomCursor } from "./CustomCursor"
+import { isLang } from "@/i18n/lang"
 
 // "Tech" + fluid page transition: no clipPath wipe, just a clean
 // blur/fade + subtle depth so it feels fast and modern.
@@ -28,11 +29,13 @@ const warp = {
 
 export function RootLayout() {
   const location = useLocation()
+  const pathnameSegs = location.pathname.split("/").filter(Boolean)
+  const restPath = isLang(pathnameSegs[0]) ? `/${pathnameSegs.slice(1).join("/")}` : location.pathname
   const navOnTop =
-    location.pathname === "/projects" ||
-    location.pathname === "/services" ||
-    location.pathname === "/about-us" ||
-    location.pathname.startsWith("/project/")
+    restPath === "/projects" ||
+    restPath === "/services" ||
+    restPath === "/about-us" ||
+    restPath.startsWith("/project/")
 
   return (
     <div className="relative h-full w-full overflow-hidden bg-page">

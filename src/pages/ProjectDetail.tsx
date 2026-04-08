@@ -10,6 +10,9 @@ import {
   type ProjectSlug,
 } from "@/data/projects"
 import { publicUrl } from "@/utils/publicUrl"
+import { useLang } from "@/i18n/useLang"
+import { t } from "@/i18n/strings"
+import type { Lang } from "@/i18n/lang"
 
 function neighbors(current: ProjectSlug): { prev: Project; next: Project } {
   const idx = PROJECTS.findIndex((p) => p.slug === current)
@@ -27,10 +30,12 @@ function LogotecaGallery({
   slides,
   initialIndex = 0,
   onIndexChange,
+  lang,
 }: {
   slides: string[]
   initialIndex?: number
   onIndexChange: (idx: number) => void
+  lang: Lang
 }) {
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState(initialIndex)
@@ -100,8 +105,8 @@ function LogotecaGallery({
     <>
       {/* 4 x 5 grid on desktop */}
       <div className="mx-auto w-full max-w-[1200px]">
-        <div className="mb-4 text-nav uppercase tracking-nav opacity-60">PROJECT</div>
-        <div className="mb-6 text-nav uppercase tracking-nav opacity-70">LOGOTECA</div>
+        <div className="mb-4 text-nav uppercase tracking-nav opacity-60">{t(lang, "project.label")}</div>
+        <div className="mb-6 text-nav uppercase tracking-nav opacity-70">{t(lang, "logoteca.title")}</div>
 
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
           {primary.map((s, i) => (
@@ -223,117 +228,170 @@ function LogotecaGallery({
   )
 }
 
-function viraCopy() {
+type ProjectCopy = {
+  title: string
+  body: string[]
+  bullets: string[]
+}
+
+function viraCopy(lang: Lang): ProjectCopy {
+  const body =
+    lang === "en"
+      ? [
+          "VIRA IS AN APP DESIGNED TO HELP ADDRESS THE MAIN CHALLENGES FACED BY TEENAGERS WITH ADHD.",
+          "THE SYSTEM TURNS HABITS, TASKS, AND EMOTIONAL REGULATION INTO CLEAR MICRO-ACTIONS, WITH IMMEDIATE FEEDBACK AND A FRIENDLY TONE.",
+          "BEYOND THE DIGITAL PRODUCT, THE BRAND WAS ALSO DESIGNED: IDENTITY, PALETTE, ILLUSTRATION, AND A CONSISTENT VISUAL LANGUAGE TO MAKE IT APPROACHABLE AND MEMORABLE.",
+        ]
+      : lang === "es"
+        ? [
+            "VIRA ES UNA APP DISEÑADA PARA AYUDAR A RESOLVER LOS PRINCIPALES RETOS DE LOS ADOLESCENTES CON TDAH.",
+            "EL SISTEMA CONVIERTE HÁBITOS, TAREAS Y REGULACIÓN EMOCIONAL EN MICRO-ACCIONES CLARAS, CON FEEDBACK INMEDIATO Y UN TONO AMABLE.",
+            "ADEMÁS DEL PRODUCTO DIGITAL, SE DISEÑÓ LA MARCA: IDENTIDAD, PALETA, ILUSTRACIÓN Y UN LENGUAJE VISUAL CONSISTENTE PARA HACERLA CERCANA Y MEMORABLE.",
+          ]
+        : [
+            "VIRA ÉS UNA APP DISSENYADA PER AJUDAR A SOLVENTAR ELS PRINCIPALS PROBLEMES DELS ADOLESCENTS AMB TDAH.",
+            "EL SISTEMA CONVERTEIX HÀBITS, TASQUES I REGULACIÓ EMOCIONAL EN MICRO-ACCIONS CLARES, AMB FEEDBACK IMMEDIAT I UN TO AMABLE.",
+            "A MÉS DEL PRODUCTE DIGITAL, S’HA DISSENYAT LA MARCA: IDENTITAT, PALETA, IL·LUSTRACIÓ I UN LLENGUATGE VISUAL CONSISTENT PER FER-LA PROPERA I MEMORABLE.",
+          ]
   return {
-    label: "PROJECT",
     title: "VIRA",
-    body: [
-      "VIRA ÉS UNA APP DISSENYADA PER AJUDAR A SOLVENTAR ELS PRINCIPALS PROBLEMES DELS ADOLESCENTS AMB TDAH.",
-      "EL SISTEMA CONVERTEIX HÀBITS, TASQUES I REGULACIÓ EMOCIONAL EN MICRO-ACCIONS CLARES, AMB FEEDBACK IMMEDIAT I UN TO AMABLE.",
-      "A MÉS DEL PRODUCTE DIGITAL, S’HA DISSENYAT LA MARCA: IDENTITAT, PALETA, IL·LUSTRACIÓ I UN LLENGUATGE VISUAL CONSISTENT PER FER-LA PROPERA I MEMORABLE.",
-    ],
-    bullets: [
-      "UX/UI MOBILE",
-      "BRAND IDENTITY",
-      "VISUAL SYSTEM",
-      "DESIGN LANGUAGE",
-    ],
+    body,
+    bullets: ["UX/UI MOBILE", "BRAND IDENTITY", "VISUAL SYSTEM", "DESIGN LANGUAGE"],
   }
 }
 
-function galeonCopy() {
+function galeonCopy(lang: Lang): ProjectCopy {
+  const body =
+    lang === "en"
+      ? [
+          "GALEÓN IS AN INTERACTIVE APPLICATION THAT ALLOWS YOU TO TRAVEL THROUGH THE HISTORY OF THE SPANISH MONARCHY VIA THE ROYAL COLLECTIONS.",
+          "THE PRODUCT CONNECTS CONTENT, CHARACTERS, AND CONTEXTS TO TURN HISTORY INTO NAVIGATION AND HERITAGE INTO EXPERIENCE.",
+          "BUILT TO EXPLORE A WIDE SELECTION OF HISTORIC BUILDINGS AND NATURAL SPACES MANAGED BY PATRIMONIO NACIONAL, WITH PRECISE VISUAL STORYTELLING AND A CLEAR INTERACTION SYSTEM.",
+        ]
+      : lang === "es"
+        ? [
+            "GALEÓN ES UNA APLICACIÓN INTERACTIVA QUE PERMITE RECORRER LA HISTORIA DE LA MONARQUÍA ESPAÑOLA A TRAVÉS DE LAS COLECCIONES REALES.",
+            "EL PRODUCTO CONECTA CONTENIDOS, PERSONAJES Y CONTEXTOS PARA TRANSFORMAR LA HISTORIA EN NAVEGACIÓN Y EL PATRIMONIO EN EXPERIENCIA.",
+            "CONCEBIDA PARA EXPLORAR UNA AMPLIA SELECCIÓN DE EDIFICIOS HISTÓRICOS Y ESPACIOS NATURALES GESTIONADOS POR PATRIMONIO NACIONAL, CON UNA NARRATIVA VISUAL PRECISA Y UN SISTEMA DE INTERACCIÓN CLARO.",
+          ]
+        : [
+            "GALEÓN ÉS UNA APLICACIÓ INTERACTIVA QUE PERMET RECÓRRER LA HISTÒRIA DE LA MONARQUIA ESPANYOLA A TRAVÉS DE LES COL·LECCIONS REIALS.",
+            "EL PRODUCTE CONNECTA CONTINGUTS, PERSONATGES I CONTEXTOS PER TRANSFORMAR LA HISTÒRIA EN NAVEGACIÓ I EL PATRIMONI EN EXPERIÈNCIA.",
+            "CONCEBUT PER EXPLORAR UNA ÀMPLIA SELECCIÓ D’EDIFICIS HISTÒRICS I ESPAIS NATURALS GESTIONATS PER PATRIMONIO NACIONAL, AMB UNA NARRATIVA VISUAL PRECISA I UN SISTEMA D’INTERACCIÓ CLAR.",
+          ]
   return {
-    label: "PROJECT",
     title: "GALEÓN",
-    body: [
-      "GALEÓN ÉS UNA APLICACIÓ INTERACTIVA QUE PERMET RECÓRRER LA HISTÒRIA DE LA MONARQUIA ESPANYOLA A TRAVÉS DE LES COL·LECCIONS REIALS.",
-      "EL PRODUCTE CONNECTA CONTINGUTS, PERSONATGES I CONTEXTOS PER TRANSFORMAR LA HISTÒRIA EN NAVEGACIÓ I EL PATRIMONI EN EXPERIÈNCIA.",
-      "CONCEBUT PER EXPLORAR UNA ÀMPLIA SELECCIÓ D’EDIFICIS HISTÒRICS I ESPAIS NATURALS GESTIONATS PER PATRIMONIO NACIONAL, AMB UNA NARRATIVA VISUAL PRECISA I UN SISTEMA D’INTERACCIÓ CLAR.",
-    ],
-    bullets: [
-      "PRODUCT DESIGN",
-      "UX/UI",
-      "VISUAL SYSTEM",
-      "INTERACTIVE CONTENT",
-    ],
+    body,
+    bullets: ["PRODUCT DESIGN", "UX/UI", "VISUAL SYSTEM", "INTERACTIVE CONTENT"],
   }
 }
 
-function arkuosCopy() {
+function arkuosCopy(lang: Lang): ProjectCopy {
+  const body =
+    lang === "en"
+      ? [
+          "ARKUOS IS A SOCIO-EDUCATIONAL ACTION SPACE AND A CREATIVE ENVIRONMENT FOR CHILDREN, TEENAGERS, AND YOUNG PEOPLE TO CREATE, EXPERIMENT, AND LEARN.",
+          "A LIVING, ADAPTIVE CENTER FOCUSED ON DEVELOPING CREATIVITY AND TALENT THROUGH ACTIVE PROJECTS, WITH GUIDANCE AND MENTORSHIP.",
+          "THE SPACE SYSTEM IS ORGANIZED INTO DIFFERENT EQUIPPED “DISTRICTS”, DESIGNED TO CONNECT THE TANGIBLE, INTANGIBLE, AND SOCIAL WORLDS, ENCOURAGING COLLABORATION AND NETWORKED WORK.",
+        ]
+      : lang === "es"
+        ? [
+            "ARKUOS ES UN ESPACIO DE ACCIÓN SOCIOEDUCATIVA Y UN ENTORNO DE CREACIÓN, EXPERIMENTACIÓN Y APRENDIZAJE PARA NIÑOS, ADOLESCENTES Y JÓVENES.",
+            "UN CENTRO VIVO Y ADAPTATIVO ORIENTADO A DESARROLLAR CREATIVIDAD Y TALENTO A TRAVÉS DE PROYECTOS ACTIVOS, CON ACOMPAÑAMIENTO Y MENTORÍA.",
+            "EL SISTEMA DE ESPACIOS SE ORGANIZA EN DISTINTOS “DISTRITOS” DE TRABAJO EQUIPADOS, PENSADOS PARA CONECTAR EL MUNDO TANGIBLE, INTANGIBLE Y SOCIAL, Y PARA FAVORECER LA COLABORACIÓN Y EL TRABAJO EN RED.",
+          ]
+        : [
+            "ARKUOS ÉS UN ESPAI D’ACCIÓ SOCIO-EDUCATIVA I UN ENTORN DE CREACIÓ, EXPERIMENTACIÓ I APRENENTATGE PER A INFANTS, ADOLESCENTS I JOVES.",
+            "UN CENTRE VIU I ADAPTATIU ORIENTAT A DESENVOLUPAR CREATIVITAT I TALENT A TRAVÉS DE PROJECTES ACTIUS, AMB ACOMPANYAMENT I MENTORIA.",
+            "EL SISTEMA D’ESPAIS S’ORGANITZA EN DIFERENTS “DISTRICTES” DE TREBALL EQUIPATS, PENSATS PER CONNECTAR EL MÓN TANGIBLE, INTANGIBLE I SOCIAL, I PER AFAVORIR LA COL·LABORACIÓ I EL TREBALL EN XARXA.",
+          ]
   return {
-    label: "PROJECT",
     title: "ARKUOS",
-    body: [
-      "ARKUOS ÉS UN ESPAI D’ACCIÓ SOCIO-EDUCATIVA I UN ENTORN DE CREACIÓ, EXPERIMENTACIÓ I APRENENTATGE PER A INFANTS, ADOLESCENTS I JOVES.",
-      "UN CENTRE VIU I ADAPTATIU ORIENTAT A DESENVOLUPAR CREATIVITAT I TALENT A TRAVÉS DE PROJECTES ACTIUS, AMB ACOMPANYAMENT I MENTORIA.",
-      "EL SISTEMA D’ESPAIS S’ORGANITZA EN DIFERENTS “DISTRICTES” DE TREBALL EQUIPATS, PENSATS PER CONNECTAR EL MÓN TANGIBLE, INTANGIBLE I SOCIAL, I PER AFAVORIR LA COL·LABORACIÓ I EL TREBALL EN XARXA.",
-    ],
-    bullets: [
-      "BRAND APPLICATION",
-      "DESIGN SYSTEM",
-      "COMMUNICATION PIECES",
-      "VISUAL LANGUAGE",
-    ],
-    source: "ARKUOS.ORG",
+    body,
+    bullets: ["BRAND APPLICATION", "DESIGN SYSTEM", "COMMUNICATION PIECES", "VISUAL LANGUAGE"],
   }
 }
 
-function xiringuitoCopy() {
+function xiringuitoCopy(lang: Lang): ProjectCopy {
+  const body =
+    lang === "en"
+      ? [
+          "EL XIRINGUITO IS A COMPLETE IDENTITY FOR A COASTAL RESTAURANT, DESIGNED TO CONVEY A LIGHT, BRIGHT MEDITERRANEAN AESTHETIC.",
+          "THE GRAPHIC SYSTEM PLAYS WITH COLOR, TYPOGRAPHY, AND LAYERED COMPOSITION TO CAPTURE THE FEELING OF SUMMER: SALT, SAND, SHADE, AND RHYTHM.",
+          "THE IDENTITY WAS DEPLOYED ACROSS REAL-WORLD APPLICATIONS: MENUS, CARDS, COASTERS, SIGNAGE, AND DIGITAL COMMUNICATION PIECES—MAINTAINING COHERENCE AND PERSONALITY.",
+        ]
+      : lang === "es"
+        ? [
+            "EL XIRINGUITO ES UNA IDENTIDAD COMPLETA PARA UN RESTAURANTE DE COSTA, PENSADA PARA TRANSMITIR UNA ESTÉTICA MEDITERRÁNEA, LIGERA Y LUMINOSA.",
+            "EL SISTEMA GRÁFICO JUEGA CON COLOR, TIPOGRAFÍA Y COMPOSICIÓN EN CAPAS PARA CAPTURAR LA SENSACIÓN DE VERANO: SAL, ARENA, SOMBRA Y RITMO.",
+            "SE DESPLEGÓ LA IDENTIDAD EN APLICACIONES REALES: MENÚS, CARTAS, POSAVASOS, ROTULACIÓN Y PIEZAS PARA COMUNICACIÓN DIGITAL, MANTENIENDO COHERENCIA Y PERSONALIDAD.",
+          ]
+        : [
+            "EL XIRINGUITO ÉS UNA IDENTITAT COMPLETA PER A UN RESTAURANT DE COSTA, PENSADA PER TRANSMETRE UNA ESTÈTICA MEDITERRÀNIA, LLEUGERA I LLUMINOSA.",
+            "EL SISTEMA GRÀFIC JUGA AMB COLOR, TIPOGRAFIA I COMPOSICIÓ EN CAPES PER CAPTURAR LA SENSACIÓ D’ESTIU: SAL, SORRA, OMBRA I RITME.",
+            "S’HA DESPLEGAT L’IDENTITAT EN APLICACIONS REIALS: MENÚS, CARTES, POSAVASOS, RETOLACIÓ I PECES PER A COMUNICACIÓ DIGITAL, MANTENINT COHERÈNCIA I PERSONALITAT.",
+          ]
   return {
-    label: "PROJECT",
     title: "EL XIRINGUITO",
-    body: [
-      "EL XIRINGUITO ÉS UNA IDENTITAT COMPLETA PER A UN RESTAURANT DE COSTA, PENSADA PER TRANSMETRE UNA ESTÈTICA MEDITERRÀNIA, LLEUGERA I LLUMINOSA.",
-      "EL SISTEMA GRÀFIC JUGA AMB COLOR, TIPOGRAFIA I COMPOSICIÓ EN CAPES PER CAPTURAR LA SENSACIÓ D’ESTIU: SAL, SORRA, OMBRA I RITME.",
-      "S’HA DESPLEGAT L’IDENTITAT EN APLICACIONS REIALS: MENÚS, CARTES, POSAVASOS, RETOLACIÓ I PECES PER A COMUNICACIÓ DIGITAL, MANTENINT COHERÈNCIA I PERSONALITAT.",
-    ],
-    bullets: [
-      "BRAND IDENTITY",
-      "MENU SYSTEM",
-      "PRINT & SIGNAGE",
-      "DIGITAL ASSETS",
-    ],
+    body,
+    bullets: ["BRAND IDENTITY", "MENU SYSTEM", "PRINT & SIGNAGE", "DIGITAL ASSETS"],
   }
 }
 
-function entezaCopy() {
+function entezaCopy(lang: Lang): ProjectCopy {
+  const body =
+    lang === "en"
+      ? [
+          "ENTEZA IS A BRAND FOCUSED ON FURNITURE AND TABLEWARE RENTALS FOR EVENTS, WITH AN EMPHASIS ON DESIGN, ELEGANCE, AND QUALITY.",
+          "THE IDENTITY AND VISUAL SYSTEM APPLY ACROSS THE CATALOG, DIGITAL COMMUNICATION, AND PRODUCT PRESENTATION—MAKING THE OFFER CLEAR AND DESIRABLE.",
+          "WITH A BROAD, SCALABLE COLLECTION, THE PROJECT ORGANIZES CATEGORIES AND SERIES TO MAKE SELECTION AND SETUP EASY FOR ANY TYPE OF EVENT.",
+        ]
+      : lang === "es"
+        ? [
+            "ENTEZA ES UNA MARCA ORIENTADA AL ALQUILER DE MOBILIARIO Y MENAJE PARA EVENTOS, CON UN ENFOQUE EN DISEÑO, ELEGANCIA Y CALIDAD.",
+            "LA IDENTIDAD Y EL SISTEMA VISUAL SE APLICAN EN CATÁLOGO, COMUNICACIÓN DIGITAL Y PRESENTACIÓN DE PRODUCTO, PARA HACER LA OFERTA CLARA Y DESEABLE.",
+            "CON UNA COLECCIÓN AMPLIA Y ESCALABLE, EL PROYECTO ORGANIZA CATEGORÍAS Y SERIES PARA FACILITAR LA SELECCIÓN Y EL MONTAJE DE CUALQUIER TIPO DE EVENTO.",
+          ]
+        : [
+            "ENTEZA ÉS UNA MARCA ORIENTADA A LLOGUER DE MOBILIARI I PARAMENT PER A ESDEVENIMENTS, AMB UN ENFOC EN DISSENY, ELEGÀNCIA I QUALITAT.",
+            "LA IDENTITAT I EL SISTEMA VISUAL S’APLIQUEN A CATÀLEG, COMUNICACIÓ DIGITAL I PRESENTACIÓ DE PRODUCTE, PER FER L’OFERTA CLARA I DESITJABLE.",
+            "AMB UNA COL·LECCIÓ AMPLIA I ESCALABLE, EL PROJECTE ORGANITZA CATEGORIES I SÈRIES PER FACILITAR LA SELECCIÓ I MUNTATGE DE QUALSEVOL TIPUS D’ESDEVENIMENT.",
+          ]
   return {
-    label: "PROJECT",
     title: "ENTEZA",
-    body: [
-      "ENTEZA ÉS UNA MARCA ORIENTADA A LLOGUER DE MOBILIARI I PARAMENT PER A ESDEVENIMENTS, AMB UN ENFOC EN DISSENY, ELEGÀNCIA I QUALITAT.",
-      "LA IDENTITAT I EL SISTEMA VISUAL S’APLIQUEN A CATÀLEG, COMUNICACIÓ DIGITAL I PRESENTACIÓ DE PRODUCTE, PER FER L’OFERTA CLARA I DESITJABLE.",
-      "AMB UNA COL·LECCIÓ AMPLIA I ESCALABLE, EL PROJECTE ORGANITZA CATEGORIES I SÈRIES PER FACILITAR LA SELECCIÓ I MUNTATGE DE QUALSEVOL TIPUS D’ESDEVENIMENT.",
-    ],
-    bullets: [
-      "BRAND SYSTEM",
-      "CATALOG STRUCTURE",
-      "DIGITAL DESIGN",
-      "PRODUCT PRESENTATION",
-    ],
-    source: "ENTEZA.COM",
+    body,
+    bullets: ["BRAND SYSTEM", "CATALOG STRUCTURE", "DIGITAL DESIGN", "PRODUCT PRESENTATION"],
   }
 }
 
-function gentGranCopy() {
+function gentGranCopy(lang: Lang): ProjectCopy {
+  const body =
+    lang === "en"
+      ? [
+          "A PROJECT DEVELOPED FOR THE MUNICIPAL SOCIAL SERVICES DEPARTMENT, AIMED AT GIVING VISIBILITY AND COHESION TO ACTIVITIES FOR OLDER ADULTS.",
+          "THE IDENTITY DEFINES A FRIENDLY, POSITIVE TONE, WITH A SIMPLE AND MEMORABLE GRAPHIC SYSTEM THAT WORKS ACROSS POSTERS, SOCIAL MEDIA, AND INFORMATION MATERIALS.",
+          "A VISUAL LANGUAGE DESIGNED TO BE ACCESSIBLE, CLEAR, AND EASY TO REPRODUCE IN INSTITUTIONAL CONTEXTS.",
+        ]
+      : lang === "es"
+        ? [
+            "PROYECTO DESARROLLADO PARA LA CONCEJALÍA DE SERVICIOS SOCIALES DEL MUNICIPIO, CON EL OBJETIVO DE DAR VISIBILIDAD Y COHESIÓN A LAS ACTIVIDADES DIRIGIDAS A LAS PERSONAS MAYORES.",
+            "LA IDENTIDAD DEFINE UN TONO CERCANO Y POSITIVO, CON UN SISTEMA GRÁFICO SIMPLE Y MEMORABLE QUE FUNCIONA EN CARTELERÍA, REDES Y MATERIALES INFORMATIVOS.",
+            "UN LENGUAJE VISUAL PENSADO PARA SER ACCESIBLE, CLARO Y FÁCILMENTE REPRODUCIBLE EN CONTEXTOS INSTITUCIONALES.",
+          ]
+        : [
+            "PROJECTE DESENVOLUPAT PER A LA REGIDORIA DE SERVEIS SOCIALS DEL MUNICIPI, AMB L’OBJECTIU DE DONAR VISIBILITAT I COHESIÓ A LES ACTIVITATS ADREÇADES A LES PERSONES GRANS.",
+            "LA IDENTITAT DEFINEIX UN TO PROPER I POSITIU, AMB UN SISTEMA GRÀFIC SIMPLE I MEMORABLE QUE FUNCIONA EN CARTELLERIA, XARXES I MATERIALS INFORMATIUS.",
+            "UN LLENGUATGE VISUAL PENSAT PER SER ACCESSIBLE, CLAR I FÀCILMENT REPRODUÏBLE EN CONTEXTOS INSTITUCIONALS.",
+          ]
   return {
-    label: "PROJECT",
     title: "GENT GRAN",
-    body: [
-      "PROJECTE DESENVOLUPAT PER A LA REGIDORIA DE SERVEIS SOCIALS DEL MUNICIPI, AMB L’OBJECTIU DE DONAR VISIBILITAT I COHESIÓ A LES ACTIVITATS ADREÇADES A LES PERSONES GRANS.",
-      "LA IDENTITAT DEFINEIX UN TO PROPER I POSITIU, AMB UN SISTEMA GRÀFIC SIMPLE I MEMORABLE QUE FUNCIONA EN CARTELLERIA, XARXES I MATERIALS INFORMATIUS.",
-      "UN LLENGUATGE VISUAL PENSAT PER SER ACCESSIBLE, CLAR I FÀCILMENT REPRODUÏBLE EN CONTEXTOS INSTITUCIONALS.",
-    ],
-    bullets: [
-      "PUBLIC SECTOR",
-      "BRAND IDENTITY",
-      "COMMUNICATION SYSTEM",
-      "PRINT & DIGITAL",
-    ],
+    body,
+    bullets: ["PUBLIC SECTOR", "BRAND IDENTITY", "COMMUNICATION SYSTEM", "PRINT & DIGITAL"],
   }
 }
 
 export function ProjectDetail() {
+  const lang = useLang()
   const { slug } = useParams()
   const project = slug ? projectBySlug(slug) : undefined
   const [index, setIndex] = useState(0)
@@ -353,7 +411,7 @@ export function ProjectDetail() {
   }, [slug])
 
   if (!slug || !project) {
-    return <Navigate to="/projects" replace />
+    return <Navigate to={`/${lang}/projects`} replace />
   }
 
   const slides = project.localImages?.slides ?? project.carouselSeeds
@@ -370,17 +428,17 @@ export function ProjectDetail() {
   }
   const copy =
     project.slug === "vira"
-      ? viraCopy()
+      ? viraCopy(lang)
       : project.slug === "galeon"
-        ? galeonCopy()
+        ? galeonCopy(lang)
         : project.slug === "arkuos"
-          ? arkuosCopy()
+          ? arkuosCopy(lang)
           : project.slug === "el-xiringuito"
-            ? xiringuitoCopy()
+            ? xiringuitoCopy(lang)
             : project.slug === "enteza"
-              ? entezaCopy()
+              ? entezaCopy(lang)
               : project.slug === "gent-gran-de-calonge-i-sant-antoni"
-                ? gentGranCopy()
+                ? gentGranCopy(lang)
           : null
   const twoCol =
     project.slug === "vira" ||
@@ -395,7 +453,7 @@ export function ProjectDetail() {
       <div className="flex h-full min-h-0 flex-col">
         <div className="min-h-0 flex-1 overflow-y-auto px-5 pb-10 pt-[92px]">
           {project.slug === "logoteca" ? (
-            <LogotecaGallery slides={slides} initialIndex={safeIndex} onIndexChange={setIndex} />
+            <LogotecaGallery slides={slides} initialIndex={safeIndex} onIndexChange={setIndex} lang={lang} />
           ) : (
             twoCol ? (
               <div className="mx-auto grid w-full max-w-[1200px] gap-8 md:grid-cols-2">
@@ -444,7 +502,7 @@ export function ProjectDetail() {
 
                 {/* RIGHT: INFO */}
                 <div className="min-w-0">
-                  <div className="mb-3 text-nav uppercase tracking-nav opacity-60">PROJECT</div>
+                  <div className="mb-3 text-nav uppercase tracking-nav opacity-60">{t(lang, "project.label")}</div>
                   <div className="mb-4 text-nav uppercase tracking-nav opacity-70">{project.title}</div>
 
                   {copy ? (
@@ -487,16 +545,16 @@ export function ProjectDetail() {
 
                   <div className="mt-10 flex items-center justify-between text-nav uppercase tracking-nav">
                     <Link
-                      to={`/project/${prev.slug}`}
+                      to={`/${lang}/project/${prev.slug}`}
                       className="transition-opacity duration-200 hover:opacity-40"
                     >
-                      BACK
+                      {t(lang, "project.back")}
                     </Link>
                     <Link
-                      to={`/project/${next.slug}`}
+                      to={`/${lang}/project/${next.slug}`}
                       className="transition-opacity duration-200 hover:opacity-40"
                     >
-                      NEXT
+                      {t(lang, "project.next")}
                     </Link>
                   </div>
                 </div>
@@ -533,7 +591,7 @@ export function ProjectDetail() {
             {others.map((p) => (
               <Link
                 key={p.slug}
-                to={`/project/${p.slug}`}
+                to={`/${lang}/project/${p.slug}`}
                 className="w-[76px] shrink-0"
                 onClick={() => setIndex(0)}
               >

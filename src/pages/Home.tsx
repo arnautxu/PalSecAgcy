@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState } from "react"
 import { publicUrl } from "@/utils/publicUrl"
+import { useLang } from "@/i18n/useLang"
+import { t } from "@/i18n/strings"
 
 /** Served from `public/hero-home.mp4` (copied from Desktop `Comp 1.mp4`) */
 const VIDEO_SRC = publicUrl("/hero-home.mp4")
 
 export function Home() {
+  const lang = useLang()
   const videoRef = useRef<HTMLVideoElement>(null)
   const [paused, setPaused] = useState(false)
 
@@ -49,7 +52,7 @@ export function Home() {
         className="text-nav fixed bottom-[52px] left-6 z-[60] uppercase tracking-nav text-white/90 transition-opacity duration-200 hover:opacity-40"
         onClick={() => setPaused((p) => !p)}
       >
-        {paused ? "PLAY" : "PAUSE"}
+        {paused ? t(lang, "home.play") : t(lang, "home.pause")}
       </button>
     </div>
   )
