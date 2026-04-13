@@ -2,6 +2,7 @@ import { AnimatePresence, LayoutGroup, motion } from "framer-motion"
 import { Outlet, useLocation } from "react-router-dom"
 import { BottomNav } from "./BottomNav"
 import { CustomCursor } from "./CustomCursor"
+import { ErrorBoundary } from "./ErrorBoundary"
 import { isLang } from "@/i18n/lang"
 
 // "Tech" + fluid page transition: no clipPath wipe, just a clean
@@ -41,9 +42,9 @@ export function RootLayout() {
     <div className="relative h-full w-full overflow-hidden bg-page">
       <CustomCursor />
       <LayoutGroup>
-        <AnimatePresence mode="wait" initial={false}>
+        <AnimatePresence mode="sync" initial={false}>
           <motion.div
-            key={location.pathname}
+            key={location.key ?? location.pathname}
             variants={warp}
             initial="initial"
             animate="animate"
@@ -51,7 +52,9 @@ export function RootLayout() {
             transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
             className="absolute inset-0 overflow-hidden"
           >
-            <Outlet />
+            <ErrorBoundary>
+              <Outlet />
+            </ErrorBoundary>
           </motion.div>
         </AnimatePresence>
 
