@@ -8,19 +8,19 @@ import { Services } from "./pages/Services"
 import { ProjectDetail } from "./pages/ProjectDetail"
 import { detectLang, isLang, langPath } from "@/i18n/lang"
 
+function RootRedirect() {
+  return <Navigate to={`/${detectLang()}`} replace />
+}
+
+function LegacyPathRedirect() {
+  const { pathname, search, hash } = useLocation()
+  const seg = pathname.split("/").filter(Boolean)[0]
+  if (isLang(seg)) return <Navigate to={pathname + search + hash} replace />
+  const lang = detectLang()
+  return <Navigate to={langPath(lang, pathname) + search + hash} replace />
+}
+
 export default function App() {
-  function RootRedirect() {
-    return <Navigate to={`/${detectLang()}`} replace />
-  }
-
-  function LegacyPathRedirect() {
-    const { pathname, search, hash } = useLocation()
-    const seg = pathname.split("/").filter(Boolean)[0]
-    if (isLang(seg)) return <Navigate to={pathname + search + hash} replace />
-    const lang = detectLang()
-    return <Navigate to={langPath(lang, pathname) + search + hash} replace />
-  }
-
   return (
     <Routes>
       <Route path="/" element={<RootRedirect />} />

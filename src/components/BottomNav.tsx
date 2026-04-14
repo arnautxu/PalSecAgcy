@@ -33,7 +33,7 @@ export function BottomNav() {
     // The `scroll` event doesn't bubble, so we listen in capture phase to catch descendant scrolls.
     document.addEventListener("scroll", onScroll, { passive: true, capture: true })
     return () => {
-      document.removeEventListener("scroll", onScroll, { capture: true } as AddEventListenerOptions)
+      document.removeEventListener("scroll", onScroll, { capture: true })
       if (scrollIdleTimer.current != null) {
         window.clearTimeout(scrollIdleTimer.current)
       }

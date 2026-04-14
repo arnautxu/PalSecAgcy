@@ -467,7 +467,7 @@ export function ProjectDetail() {
                 ? gentGranCopy(lang)
                 : project.slug === "cms"
                   ? bonDiaVeinatCopy(lang)
-          : null
+                  : null
   const twoCol =
     project.slug === "vira" ||
     project.slug === "galeon" ||
@@ -475,7 +475,8 @@ export function ProjectDetail() {
     project.slug === "el-xiringuito" ||
     project.slug === "enteza" ||
     project.slug === "gent-gran-de-calonge-i-sant-antoni" ||
-    project.slug === "cms"
+    project.slug === "cms" ||
+    project.slug === "estudi-dental-carrera"
 
   return (
     <PageFrame>
