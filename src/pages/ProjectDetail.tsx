@@ -390,6 +390,32 @@ function gentGranCopy(lang: Lang): ProjectCopy {
   }
 }
 
+function bonDiaVeinatCopy(lang: Lang): ProjectCopy {
+  const body =
+    lang === "en"
+      ? [
+          "BON DIA VEÏNAT IS A CIVIC PROJECT FOR THE AJUNTAMENT DE BARCELONA DESIGNED TO IMPROVE COOPERATION BETWEEN NEIGHBORS.",
+          "IT CONNECTS PEOPLE, NEEDS, AND LOCAL RESOURCES TO MAKE HELP REQUESTS, COMMUNITY ANNOUNCEMENTS, AND SHARED INITIATIVES EASY TO ORGANIZE.",
+          "THE SYSTEM PRIORITIZES CLARITY, TRUST, AND ACCESSIBILITY, WITH A SIMPLE FLOW FOR POSTING, DISCOVERING, AND COORDINATING NEIGHBORHOOD ACTIONS.",
+        ]
+      : lang === "es"
+        ? [
+            "BON DIA VEÏNAT ES UN PROYECTO CÍVICO PARA EL AJUNTAMENT DE BARCELONA PENSADO PARA MEJORAR LA COOPERACIÓN ENTRE VECINOS.",
+            "CONECTA PERSONAS, NECESIDADES Y RECURSOS LOCALES PARA FACILITAR PETICIONES DE AYUDA, AVISOS COMUNITARIOS E INICIATIVAS COMPARTIDAS.",
+            "EL SISTEMA PRIORIZA CLARIDAD, CONFIANZA Y ACCESIBILIDAD, CON UN FLUJO SIMPLE PARA PUBLICAR, DESCUBRIR Y COORDINAR ACCIONES EN EL BARRIO.",
+          ]
+        : [
+            "BON DIA VEÏNAT ÉS UN PROJECTE CÍVIC PER A L’AJUNTAMENT DE BARCELONA PENSAT PER MILLORAR LA COOPERACIÓ ENTRE VEÏNS.",
+            "CONNECTA PERSONES, NECESSITATS I RECURSOS LOCALS PER FACILITAR PETICIONS D’AJUDA, AVISOS COMUNITARIS I INICIATIVES COMPARTIDES.",
+            "EL SISTEMA PRIORITZA CLAREDAT, CONFIANÇA I ACCESSIBILITAT, AMB UN FLUX SIMPLE PER PUBLICAR, DESCOBRIR I COORDINAR ACCIONS AL BARRI.",
+          ]
+  return {
+    title: "BON DIA VEÏNAT",
+    body,
+    bullets: ["PUBLIC SECTOR", "SERVICE DESIGN", "UX/UI", "ACCESSIBILITY"],
+  }
+}
+
 export function ProjectDetail() {
   const lang = useLang()
   const { slug } = useParams()
@@ -439,6 +465,8 @@ export function ProjectDetail() {
               ? entezaCopy(lang)
               : project.slug === "gent-gran-de-calonge-i-sant-antoni"
                 ? gentGranCopy(lang)
+                : project.slug === "cms"
+                  ? bonDiaVeinatCopy(lang)
           : null
   const twoCol =
     project.slug === "vira" ||
@@ -446,7 +474,8 @@ export function ProjectDetail() {
     project.slug === "arkuos" ||
     project.slug === "el-xiringuito" ||
     project.slug === "enteza" ||
-    project.slug === "gent-gran-de-calonge-i-sant-antoni"
+    project.slug === "gent-gran-de-calonge-i-sant-antoni" ||
+    project.slug === "cms"
 
   return (
     <PageFrame>

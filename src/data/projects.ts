@@ -159,13 +159,22 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "cms",
-    title: "CMS",
+    title: "BON DIA VEÏNAT",
     carouselSeeds: ["cms-1", "cms-2", "cms-3", "cms-4"],
     thumbSeed: "cms-thumb",
     localImages: {
-      thumb: "/media/projects/cms/thumb.png",
-      thumbFit: "contain",
-      thumbPadded: true,
+      slides: [
+        "/media/projects/cms/01-mupi.png",
+        "/media/projects/cms/02-mockup-pedralbes.png",
+        "/media/projects/cms/03-mockup-wall.png",
+        "/media/projects/cms/04-mockup-sagrada.png",
+        "/media/projects/cms/05-instagram.png",
+        "/media/projects/cms/06-ara.png",
+        "/media/projects/cms/07-el-pais.png",
+      ],
+      thumb: "/media/projects/cms/01-mupi.png",
+      thumbFit: "cover",
+      thumbPadded: false,
     },
   },
   {
@@ -217,7 +226,14 @@ export const INDEX_ROWS: IndexRow[] = [
     no: "006",
     slug: "gent-gran-de-calonge-i-sant-antoni",
   },
-  { project: "CMS", direction: "WEBSITE", client: "PALSEC", year: "2026", no: "007", slug: "cms" },
+  {
+    project: "BON DIA VEÏNAT",
+    direction: "CIVIC PLATFORM",
+    client: "AJUNTAMENT DE BARCELONA",
+    year: "2026",
+    no: "007",
+    slug: "cms",
+  },
   {
     project: "ESTUDI DENTAL CARRERA",
     direction: "WEBSITE",
@@ -245,6 +261,6 @@ export const PHOTO_GRID: PhotoCell[] = [
     slug: "gent-gran-de-calonge-i-sant-antoni",
     seed: "photo-gentgran-1",
   },
-  { label: "CMS", slug: "cms", seed: "photo-cms-1" },
+  { label: "BON DIA VEÏNAT", slug: "cms", seed: "photo-cms-1" },
   { label: "ESTUDI DENTAL CARRERA", slug: "estudi-dental-carrera", seed: "photo-carrera-1" },
 ]
