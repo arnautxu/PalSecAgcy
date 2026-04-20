@@ -51,7 +51,7 @@ export const STRINGS: Record<Lang, Dict> = {
     "about.p1":
       "PALSEC AGCY IS A DESIGN-LED STUDIO WORKING ACROSS BRAND, DIGITAL, AND VISUAL SYSTEMS.",
     "about.p2": "WE BUILD PRECISE, MINIMAL, HIGH-CONTRAST EXPERIENCES.",
-    "about.contactPrefix": "BASED IN BARCELONA · AVAILABLE WORLDWIDE ·",
+    "about.contactPrefix": "BASED IN COSTA BRAVA · AVAILABLE WORLDWIDE ·",
     "notfound.title": "404",
     "notfound.body": "THIS PAGE DOESN’T EXIST.",
     "notfound.backHome": "BACK HOME",
@@ -82,7 +82,7 @@ export const STRINGS: Record<Lang, Dict> = {
     "about.p1":
       "PALSEC AGCY ÉS UN ESTUDI ORIENTAT AL DISSENY QUE TREBALLA EN MARCA, DIGITAL I SISTEMES VISUALS.",
     "about.p2": "CONSTRUÏM EXPERIÈNCIES PRECÍSES, MINIMALS I D’ALT CONTRAST.",
-    "about.contactPrefix": "BASATS A BARCELONA · DISPONIBLES ARREU ·",
+    "about.contactPrefix": "BASATS A LA COSTA BRAVA · DISPONIBLES ARREU ·",
     "notfound.title": "404",
     "notfound.body": "AQUESTA PÀGINA NO EXISTEIX.",
     "notfound.backHome": "TORNAR A L’INICI",
@@ -113,7 +113,7 @@ export const STRINGS: Record<Lang, Dict> = {
     "about.p1":
       "PALSEC AGCY ES UN ESTUDIO ORIENTADO AL DISEÑO QUE TRABAJA EN MARCA, DIGITAL Y SISTEMAS VISUALES.",
     "about.p2": "CREAMOS EXPERIENCIAS PRECISAS, MÍNIMAS Y DE ALTO CONTRASTE.",
-    "about.contactPrefix": "CON BASE EN BARCELONA · DISPONIBLES EN TODO EL MUNDO ·",
+    "about.contactPrefix": "CON BASE EN COSTA BRAVA · DISPONIBLES EN TODO EL MUNDO ·",
     "notfound.title": "404",
     "notfound.body": "ESTA PÁGINA NO EXISTE.",
     "notfound.backHome": "VOLVER AL INICIO",

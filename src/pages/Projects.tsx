@@ -15,6 +15,7 @@ function ProjectCard({
   videoSrc,
   fit = "cover",
   padded = false,
+  comingSoon = false,
   lang,
 }: {
   slug: string
@@ -23,6 +24,7 @@ function ProjectCard({
   videoSrc?: string
   fit?: "cover" | "contain"
   padded?: boolean
+  comingSoon?: boolean
   lang: string
 }) {
   const wrapRef = useRef<HTMLDivElement>(null)
@@ -38,6 +40,7 @@ function ProjectCard({
   ].join(" ")
 
   useLayoutEffect(() => {
+    if (comingSoon) return
     const wrap = wrapRef.current
     const titleViewport = titleViewportRef.current
     const titleText = titleTextRef.current
@@ -47,7 +50,6 @@ function ProjectCard({
       const cardW = wrap.getBoundingClientRect().width
       const textW = titleText.getBoundingClientRect().width
       setCardW(cardW)
-      // -2px guard to avoid sub-pixel overshoot on some cards/fonts
       setShiftPx(Math.max(0, Math.floor(cardW - textW - 2)))
     }
 
@@ -58,7 +60,54 @@ function ProjectCard({
     ro.observe(titleViewport)
     ro.observe(titleText)
     return () => ro.disconnect()
-  }, [])
+  }, [comingSoon])
+
+  const media = (
+    <div ref={wrapRef} className="relative overflow-hidden rounded-[2px] border border-frame bg-white">
+      {videoSrc ? (
+        <video
+          className="aspect-[3/4] w-full object-cover"
+          src={videoSrc}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+        />
+      ) : (
+        <img
+          src={imageSrc}
+          alt=""
+          className={mediaClass}
+          loading="lazy"
+        />
+      )}
+      {comingSoon && (
+        <div className="absolute inset-0 flex items-end justify-center pb-5 pointer-events-none">
+          <span className={[
+            "rounded-full border px-3 py-[6px]",
+            "text-nav uppercase tracking-nav",
+            "border-white/40 bg-black/30 text-white backdrop-blur-[6px]",
+          ].join(" ")}>
+            COMING SOON
+          </span>
+        </div>
+      )}
+    </div>
+  )
+
+  if (comingSoon) {
+    return (
+      <div className="cursor-default select-none">
+        {media}
+        <div className="mt-[6px]">
+          <span className="text-nav uppercase leading-[1.6] tracking-nav text-ink/40">
+            {title}
+          </span>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <Link
@@ -69,27 +118,7 @@ function ProjectCard({
       onFocus={() => setHovered(true)}
       onBlur={() => setHovered(false)}
     >
-      <div ref={wrapRef} className="overflow-hidden rounded-[2px] border border-frame bg-white">
-        {videoSrc ? (
-          <video
-            className="aspect-[3/4] w-full object-cover"
-            src={videoSrc}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-          />
-        ) : (
-          <img
-            src={imageSrc}
-            alt=""
-            className={mediaClass}
-            loading="lazy"
-          />
-        )}
-      </div>
-
+      {media}
       <div
         ref={titleViewportRef}
         className="mt-[6px] overflow-hidden"
@@ -103,7 +132,7 @@ function ProjectCard({
             color: hovered ? "#ff1a1a" : "#282828",
           }}
           transition={{
-            duration: 0.42,
+            duration: 0.7,
             ease: [0.4, 0.24, 0.4, 1],
           }}
         >
@@ -142,6 +171,7 @@ export function Projects() {
                 videoSrc={video}
                 fit={fit}
                 padded={padded}
+                comingSoon={p.comingSoon}
                 lang={lang}
               />
             )

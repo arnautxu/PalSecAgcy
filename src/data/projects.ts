@@ -16,6 +16,8 @@ export type Project = {
   carouselSeeds: string[]
   /** seed for filmstrip thumb */
   thumbSeed: string
+  /** If true, card is not clickable and shows a "coming soon" badge */
+  comingSoon?: boolean
   /** Optional local (public/) images for a project */
   localImages?: {
     slides?: string[]
@@ -159,22 +161,13 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "cms",
-    title: "BON DIA VEÏNAT",
-    carouselSeeds: ["cms-1", "cms-2", "cms-3", "cms-4"],
-    thumbSeed: "cms-thumb",
+    title: "PALSEC AI LAB",
+    carouselSeeds: [],
+    thumbSeed: "ai-lab-thumb",
+    comingSoon: true,
     localImages: {
-      slides: [
-        "/media/projects/cms/01-mupi.png",
-        "/media/projects/cms/02-mockup-pedralbes.png",
-        "/media/projects/cms/03-mockup-wall.png",
-        "/media/projects/cms/04-mockup-sagrada.png",
-        "/media/projects/cms/05-instagram.png",
-        "/media/projects/cms/06-ara.png",
-        "/media/projects/cms/07-el-pais.png",
-      ],
-      thumb: "/media/projects/cms/01-mupi.png",
+      thumb: "/media/projects/ai-lab/thumb.jpg",
       thumbFit: "cover",
-      thumbPadded: false,
     },
   },
   {
