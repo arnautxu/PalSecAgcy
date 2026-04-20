@@ -68,72 +68,107 @@ export function BottomNav() {
         {menuOpen && (
           <motion.div
             className="fixed inset-x-0 bottom-[72px] z-50 flex justify-center px-6 pointer-events-auto md:hidden"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 8 }}
-            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+            style={{ transformOrigin: "bottom center" }}
+            initial={{ opacity: 0, scaleY: 0.25, scaleX: 0.85, y: 28, filter: "blur(6px)" }}
+            animate={{ opacity: 1, scaleY: 1, scaleX: 1, y: 0, filter: "blur(0px)" }}
+            exit={{ opacity: 0, scaleY: 0.25, scaleX: 0.85, y: 28, filter: "blur(6px)" }}
+            transition={{ type: "spring", stiffness: 380, damping: 28, mass: 0.9 }}
           >
-            <div className={[
-              "flex flex-col items-center gap-[14px]",
-              "px-8 py-6 rounded-2xl",
-              "bg-[#ff0000]/90 border border-white/20 backdrop-blur-[10px]",
-              "text-nav uppercase tracking-nav",
-            ].join(" ")}>
-              <NavLink to={`/${lang}/services`} className={({ isActive }) => linkClass(isActive)}>
-                {t(lang, "nav.services")}
-              </NavLink>
-              <NavLink to={`/${lang}/projects`} className={({ isActive }) => linkClass(isActive)}>
-                {t(lang, "nav.projects")}
-              </NavLink>
-              <NavLink to={`/${lang}/about-us`} className={({ isActive }) => linkClass(isActive)}>
-                {t(lang, "nav.about")}
-              </NavLink>
+            <motion.div
+              className={[
+                "flex flex-col items-center gap-6",
+                "px-12 py-10 rounded-2xl w-full max-w-xs",
+                "bg-[#ff0000]/90 border border-white/20 backdrop-blur-[10px]",
+              ].join(" ")}
+              variants={{
+                show: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } },
+                hide: { transition: { staggerChildren: 0.04, staggerDirection: -1 } },
+              }}
+              initial="hide"
+              animate="show"
+              exit="hide"
+            >
+              {[
+                { to: `/${lang}/services`, label: t(lang, "nav.services") },
+                { to: `/${lang}/projects`, label: t(lang, "nav.projects") },
+                { to: `/${lang}/about-us`, label: t(lang, "nav.about") },
+              ].map(({ to, label }) => (
+                <motion.div
+                  key={to}
+                  variants={{
+                    show: { opacity: 1, y: 0, filter: "blur(0px)" },
+                    hide: { opacity: 0, y: 14, filter: "blur(4px)" },
+                  }}
+                  transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <NavLink
+                    to={to}
+                    className={({ isActive }) => [
+                      "text-[16px] uppercase tracking-[0.1em] font-normal",
+                      "transition-[opacity,color] duration-200 text-white hover:text-ink hover:opacity-100",
+                      isActive ? "opacity-70" : "opacity-100",
+                    ].join(" ")}
+                  >
+                    {label}
+                  </NavLink>
+                </motion.div>
+              ))}
 
-              <div className="h-px w-full bg-white/20" />
+              <motion.div
+                className="h-px w-full bg-white/20"
+                variants={{ show: { opacity: 1, scaleX: 1 }, hide: { opacity: 0, scaleX: 0.4 } }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              />
 
               {/* Language selector */}
-              <div className="inline-flex items-center rounded-full border border-white/25 bg-white/5 px-2 py-[6px] text-white/90">
+              <motion.div
+                variants={{ show: { opacity: 1, y: 0, filter: "blur(0px)" }, hide: { opacity: 0, y: 14, filter: "blur(4px)" } }}
+                transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+                className="inline-flex items-center rounded-full border border-white/25 bg-white/5 px-4 py-2.5 text-white/90"
+              >
                 <Link
                   to={langLink("en")}
-                  className={["px-1 transition-opacity duration-200 hover:opacity-60", lang === "en" ? "opacity-100" : "opacity-60"].join(" ")}
+                  className={["px-1.5 text-[14px] uppercase tracking-[0.08em] transition-opacity duration-200 hover:opacity-60", lang === "en" ? "opacity-100" : "opacity-60"].join(" ")}
                   aria-label="Switch language to English"
                 >
                   EN
                 </Link>
-                <span className="mx-[6px] text-white/40">·</span>
+                <span className="mx-2 text-white/40">·</span>
                 <Link
                   to={langLink("ca")}
-                  className={["px-1 transition-opacity duration-200 hover:opacity-60", lang === "ca" ? "opacity-100" : "opacity-60"].join(" ")}
+                  className={["px-1.5 text-[14px] uppercase tracking-[0.08em] transition-opacity duration-200 hover:opacity-60", lang === "ca" ? "opacity-100" : "opacity-60"].join(" ")}
                   aria-label="Canvia l'idioma a català"
                 >
                   CA
                 </Link>
-                <span className="mx-[6px] text-white/40">·</span>
+                <span className="mx-2 text-white/40">·</span>
                 <Link
                   to={langLink("es")}
-                  className={["px-1 transition-opacity duration-200 hover:opacity-60", lang === "es" ? "opacity-100" : "opacity-60"].join(" ")}
+                  className={["px-1.5 text-[14px] uppercase tracking-[0.08em] transition-opacity duration-200 hover:opacity-60", lang === "es" ? "opacity-100" : "opacity-60"].join(" ")}
                   aria-label="Cambiar idioma a español"
                 >
                   ES
                 </Link>
-              </div>
+              </motion.div>
 
               <motion.a
                 href={mailtoProjectInquiryHref(lang)}
                 className={[
                   "inline-flex items-center",
-                  "rounded-full border px-3 py-[6px]",
-                  "text-nav uppercase tracking-nav",
+                  "rounded-full border px-6 py-2.5",
+                  "text-[14px] uppercase tracking-[0.1em]",
                   "transition-[opacity,color,background-color,border-color] duration-200",
                   "border-white/35 bg-white/10 text-white hover:text-ink",
                 ].join(" ")}
+                variants={{ show: { opacity: 1, y: 0, filter: "blur(0px)" }, hide: { opacity: 0, y: 14, filter: "blur(4px)" } }}
+                transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.99 }}
                 aria-label={`${t(lang, "nav.cta")} ${CONTACT_EMAIL}`}
               >
                 {t(lang, "nav.cta")}
               </motion.a>
-            </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
