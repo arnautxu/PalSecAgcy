@@ -28,21 +28,52 @@ function makeSpriteTex(): THREE.CanvasTexture {
   return new THREE.CanvasTexture(c)
 }
 
-/** Sample points along a path's outline (and hole outlines) */
+function rndZ() { return (Math.random() - 0.5) * Z_SPREAD * 2 }
+
+/** Point-in-polygon ray cast against a sampled polygon */
+function insidePoly(poly: THREE.Vector2[], x: number, y: number): boolean {
+  let inside = false
+  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+    const xi = poly[i].x, yi = poly[i].y
+    const xj = poly[j].x, yj = poly[j].y
+    if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) {
+      inside = !inside
+    }
+  }
+  return inside
+}
+
+/** Dense outline + grid fill interior for each shape in a path */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function samplePath(path: any, outlineCount: number): THREE.Vector3[] {
+function samplePath(path: any, outlineCount: number, fillSpacing: number): THREE.Vector3[] {
   const pts: THREE.Vector3[] = []
   const shapes = SVGLoader.createShapes(path)
   shapes.forEach((shape) => {
+    // Outline
     shape.getSpacedPoints(outlineCount).forEach((p) => {
-      pts.push(new THREE.Vector3(p.x, p.y, (Math.random() - 0.5) * Z_SPREAD * 2))
+      pts.push(new THREE.Vector3(p.x, p.y, rndZ()))
     })
-    // Preserve hole outlines (letter counters like P, A, a, g)
+    // Hole outlines (counters of P, A, a, g…)
     shape.holes.forEach((hole) => {
-      hole.getSpacedPoints(Math.floor(outlineCount * 0.35)).forEach((p) => {
-        pts.push(new THREE.Vector3(p.x, p.y, (Math.random() - 0.5) * Z_SPREAD * 2))
+      hole.getSpacedPoints(Math.floor(outlineCount * 0.4)).forEach((p) => {
+        pts.push(new THREE.Vector3(p.x, p.y, rndZ()))
       })
     })
+    // Grid fill — precompute sampled polygons for fast hit-testing
+    const outerPoly = shape.getPoints(120)
+    const holePoly = shape.holes.map((h) => h.getPoints(60))
+    const box = new THREE.Box2()
+    outerPoly.forEach((p) => box.expandByPoint(p))
+    for (let x = box.min.x; x <= box.max.x; x += fillSpacing) {
+      for (let y = box.min.y; y <= box.max.y; y += fillSpacing) {
+        if (
+          insidePoly(outerPoly, x, y) &&
+          !holePoly.some((hole) => insidePoly(hole, x, y))
+        ) {
+          pts.push(new THREE.Vector3(x, y, rndZ()))
+        }
+      }
+    }
   })
   return pts
 }
@@ -83,9 +114,10 @@ function ParticleMesh({
 
     data.paths.forEach((path) => {
       const isRed = (path.color as THREE.Color).r > 0.5
-      // PALSEC paths are larger → more samples; agcy. paths are smaller
-      const count = isRed ? 220 : 130
-      const pts = samplePath(path, count)
+      // outline count + fill grid spacing (SVG units)
+      const outline = isRed ? 500 : 300
+      const spacing = isRed ? 4 : 5
+      const pts = samplePath(path, outline, spacing)
       if (isRed) red.push(...pts)
       else dark.push(...pts)
     })
@@ -123,7 +155,7 @@ function ParticleMesh({
       <points geometry={redGeo}>
         <pointsMaterial
           color="#ff1a1a"
-          size={0.030}
+          size={0.022}
           sizeAttenuation
           map={tex}
           transparent
@@ -136,7 +168,7 @@ function ParticleMesh({
       <points geometry={darkGeo}>
         <pointsMaterial
           color="#282828"
-          size={0.026}
+          size={0.018}
           sizeAttenuation
           map={tex}
           transparent
