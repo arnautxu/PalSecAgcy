@@ -6,8 +6,8 @@ import { publicUrl } from "@/utils/publicUrl"
 
 const SVG_W = 413.2
 const SVG_H = 169.1
-// Scale: logo ~2.4 world-units wide — fits comfortably in any canvas aspect ratio
-const SCALE = 0.006
+// Scale: logo ~3.7 world-units wide
+const SCALE = 0.009
 // Depth scatter in SVG units — creates the cloud depth when rotating
 const Z_SPREAD = 20
 
