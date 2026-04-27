@@ -58,7 +58,7 @@ export function BottomNav() {
     "text-nav uppercase tracking-nav",
     "flex items-center",
     "border backdrop-blur-[10px] rounded-full",
-    "bg-[#ff0000]/90 border-white/20",
+    "bg-[#ff1a1a]/90 border-white/20",
   ].join(" ")
 
   return (
@@ -78,7 +78,7 @@ export function BottomNav() {
               className={[
                 "flex flex-col items-center gap-6",
                 "px-12 py-10 rounded-2xl w-full max-w-xs",
-                "bg-[#ff0000]/90 border border-white/20 backdrop-blur-[10px]",
+                "bg-[#ff1a1a]/90 border border-white/20 backdrop-blur-[10px]",
               ].join(" ")}
               variants={{
                 show: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } },
@@ -176,7 +176,6 @@ export function BottomNav() {
       {/* Nav pill */}
       <motion.nav
         layoutId="nav-pill"
-        data-cursor="white"
         className={pillBase}
         aria-label="Primary"
         animate={{
@@ -195,9 +194,10 @@ export function BottomNav() {
           >
             PALSEC AGCY
           </NavLink>
+          {/* Touch target extended via negative margin trick */}
           <button
             onClick={() => setMenuOpen((o) => !o)}
-            className="inline-flex items-center justify-center w-6 h-6 text-white/80 hover:text-white transition-colors duration-200"
+            className="relative inline-flex items-center justify-center w-6 h-6 text-white/80 hover:text-white transition-colors duration-200 before:absolute before:content-[''] before:-inset-[10px]"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
           >
@@ -269,9 +269,7 @@ export function BottomNav() {
               "border-white/35 bg-white/10 text-white hover:text-ink",
             ].join(" ")}
             initial={false}
-            animate={{
-              boxShadow: "0 0 0 0 rgba(0,0,0,0)",
-            }}
+            animate={{ boxShadow: "0 0 0 0 rgba(0,0,0,0)" }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.99 }}
             aria-label={`${t(lang, "nav.cta")} ${CONTACT_EMAIL}`}

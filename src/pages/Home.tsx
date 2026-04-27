@@ -3,7 +3,6 @@ import { publicUrl } from "@/utils/publicUrl"
 import { useLang } from "@/i18n/useLang"
 import { t } from "@/i18n/strings"
 
-/** Served from `public/hero-home.mp4` (copied from Desktop `Comp 1.mp4`) */
 const VIDEO_SRC = publicUrl("/hero-home.mp4")
 
 export function Home() {
@@ -32,7 +31,7 @@ export function Home() {
 
   return (
     <div className="relative h-full w-full overflow-hidden bg-black">
-      {/* Fallback while the asset loads */}
+      {/* Static gradient fallback while video loads */}
       <div className="hero-home absolute inset-0 h-full w-full" aria-hidden />
 
       <video
@@ -43,13 +42,34 @@ export function Home() {
         muted
         loop
         playsInline
-        preload="auto"
+        preload="metadata"
         aria-label="Showreel"
       />
 
+      {/* Gradient overlay — ensures text legibility over video */}
+      <div
+        className="absolute inset-x-0 bottom-0 z-[2] h-[50%] pointer-events-none"
+        style={{ background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%)" }}
+        aria-hidden
+      />
+
+      {/* Value proposition */}
+      <div className="fixed bottom-[90px] left-6 z-[60] max-w-[min(360px,calc(100vw-80px))]">
+        <p className="mb-2 text-nav uppercase tracking-nav text-white/50">
+          PALSEC AGCY
+        </p>
+        <p
+          className="normal-case text-white/90 leading-[1.35]"
+          style={{ fontSize: "clamp(13px, 2vw, 20px)", letterSpacing: "0.01em" }}
+        >
+          {t(lang, "home.tagline")}
+        </p>
+      </div>
+
+      {/* Play/pause — extended touch target via pseudo-element */}
       <button
         type="button"
-        className="text-nav fixed bottom-[52px] left-6 z-[60] uppercase tracking-nav text-white/90 transition-opacity duration-200 hover:opacity-40"
+        className="relative text-nav fixed bottom-[58px] left-6 z-[60] uppercase tracking-nav text-white/50 transition-opacity duration-200 hover:text-white/90 before:absolute before:content-[''] before:-inset-3"
         onClick={() => setPaused((p) => !p)}
       >
         {paused ? t(lang, "home.play") : t(lang, "home.pause")}

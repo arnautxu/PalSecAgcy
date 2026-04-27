@@ -1,18 +1,16 @@
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion"
 import { Outlet, useLocation } from "react-router-dom"
 import { BottomNav } from "./BottomNav"
-import { CustomCursor } from "./CustomCursor"
 import { ErrorBoundary } from "./ErrorBoundary"
 import { isLang } from "@/i18n/lang"
 
-// "Tech" + fluid page transition: no clipPath wipe, just a clean
-// blur/fade + subtle depth so it feels fast and modern.
+// Page transition: blur/fade + subtle depth
 const warp = {
   initial: {
     opacity: 0,
     y: 14,
     scale: 0.985,
-    filter: "blur(12px)",
+    filter: "blur(8px)",
   },
   animate: {
     opacity: 1,
@@ -24,7 +22,7 @@ const warp = {
     opacity: 0,
     y: -10,
     scale: 1.01,
-    filter: "blur(10px)",
+    filter: "blur(6px)",
   },
 }
 
@@ -40,7 +38,14 @@ export function RootLayout() {
 
   return (
     <div className="relative h-full w-full overflow-hidden bg-page">
-      <CustomCursor />
+      {/* Skip link — keyboard accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[9999] focus:rounded focus:bg-[#ff1a1a] focus:px-3 focus:py-2 focus:text-nav focus:uppercase focus:tracking-nav focus:text-white"
+      >
+        Skip to main content
+      </a>
+
       <LayoutGroup>
         <AnimatePresence mode="sync" initial={false}>
           <motion.div
@@ -51,9 +56,12 @@ export function RootLayout() {
             exit="exit"
             transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
             className="absolute inset-0 overflow-hidden"
+            style={{ willChange: "filter, transform, opacity" }}
           >
             <ErrorBoundary>
-              <Outlet />
+              <div id="main-content" className="h-full">
+                <Outlet />
+              </div>
             </ErrorBoundary>
           </motion.div>
         </AnimatePresence>

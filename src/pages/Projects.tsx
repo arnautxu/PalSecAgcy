@@ -2,7 +2,6 @@ import { useLayoutEffect, useRef, useState } from "react"
 import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
 import { PageFrame } from "@/components/PageFrame"
-import { BrandWatermark } from "@/components/BrandWatermark"
 import { PROJECTS, picsum } from "@/data/projects"
 import { publicUrl } from "@/utils/publicUrl"
 import { useLang } from "@/i18n/useLang"
@@ -147,12 +146,11 @@ export function Projects() {
   const lang = useLang()
   return (
     <PageFrame className="relative">
-      <BrandWatermark variant="light" />
       <div className="h-full w-full overflow-y-auto px-6 pb-8 pt-[92px]">
-        <div className="mb-2 text-nav opacity-60">{t(lang, "projects.title")}</div>
-        <div className="mb-6 max-w-[640px] text-bodymd leading-[1.6] tracking-nav text-ink/70 md:text-body">
+        <h1 className="mb-2 text-nav uppercase tracking-nav opacity-60">{t(lang, "projects.title")}</h1>
+        <p className="mb-6 max-w-[640px] normal-case text-bodymd leading-[1.6] tracking-nav text-ink/70 md:text-body">
           {t(lang, "projects.lead")}
-        </div>
+        </p>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {PROJECTS.map((p) => {
             const src = p.localImages?.thumb
