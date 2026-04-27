@@ -1,14 +1,25 @@
+import { lazy, Suspense } from "react"
 import { PageFrame } from "@/components/PageFrame"
 import { CONTACT_EMAIL, mailtoProjectInquiryHref } from "@/constants/contact"
-import { publicUrl } from "@/utils/publicUrl"
 import { useLang } from "@/i18n/useLang"
 import { t } from "@/i18n/strings"
+
+// Lazy-load Three.js — only pulled in when About Us is visited
+const Logo3D = lazy(() =>
+  import("@/components/Logo3D").then((m) => ({ default: m.Logo3D }))
+)
+
+const prefersReducedMotion =
+  typeof window !== "undefined" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
 export function AboutUs() {
   const lang = useLang()
   return (
     <PageFrame className="relative">
       <div className="flex h-full min-h-0 flex-col px-6 pb-8 pt-[92px] md:flex-row md:gap-10">
+
+        {/* ── Left: text content ── */}
         <div className="w-full md:w-[40%]">
           <h1 className="mb-4 text-nav uppercase tracking-nav opacity-80">
             {t(lang, "about.title")}
@@ -17,16 +28,11 @@ export function AboutUs() {
             {t(lang, "about.p1")} {t(lang, "about.p2")}
           </p>
 
-          <div className="mt-6">
-            <div className="w-[min(60vw,260px)] overflow-hidden rounded-[2px] border border-frame bg-white">
-              <img
-                src={publicUrl("/brand/palsec-positive.jpg")}
-                alt="Palsec Agcy logo"
-                className="w-full object-contain p-6 opacity-90"
-                loading="lazy"
-                draggable={false}
-              />
-            </div>
+          {/* Mobile-only 3D logo — sits between body text and contact */}
+          <div className="mt-6 md:hidden rounded-[2px] border border-frame" style={{ height: "200px" }}>
+            <Suspense fallback={null}>
+              <Logo3D reduced={prefersReducedMotion} />
+            </Suspense>
           </div>
 
           <div className="my-5 h-px w-full bg-frame" />
@@ -40,6 +46,14 @@ export function AboutUs() {
             </a>
           </p>
         </div>
+
+        {/* ── Right: 3D logo (desktop only) ── */}
+        <div className="hidden md:flex md:flex-1 md:items-center md:justify-center">
+          <Suspense fallback={null}>
+            <Logo3D reduced={prefersReducedMotion} />
+          </Suspense>
+        </div>
+
       </div>
     </PageFrame>
   )
