@@ -6,8 +6,8 @@ import { publicUrl } from "@/utils/publicUrl"
 
 const SVG_W = 413.2
 const SVG_H = 169.1
-// Scale: logo ~3.7 world-units wide
-const SCALE = 0.009
+// Scale: logo ~5 world-units wide
+const SCALE = 0.012
 // Depth scatter in SVG units — creates the cloud depth when rotating
 const Z_SPREAD = 20
 
@@ -123,7 +123,7 @@ function ParticleMesh({
       <points geometry={redGeo}>
         <pointsMaterial
           color="#ff1a1a"
-          size={0.024}
+          size={0.030}
           sizeAttenuation
           map={tex}
           transparent
@@ -136,7 +136,7 @@ function ParticleMesh({
       <points geometry={darkGeo}>
         <pointsMaterial
           color="#282828"
-          size={0.020}
+          size={0.026}
           sizeAttenuation
           map={tex}
           transparent

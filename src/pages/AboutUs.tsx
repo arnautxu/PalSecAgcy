@@ -50,7 +50,7 @@ export function AboutUs() {
         {/* ── Right: 3D logo (desktop only) ── */}
         {/* Fixed height keeps the canvas landscape so the wide logo never clips */}
         <div className="hidden md:flex md:flex-1 md:items-center md:justify-center">
-          <div style={{ width: "100%", height: "260px" }}>
+          <div style={{ width: "100%", height: "320px" }}>
             <Suspense fallback={null}>
               <Logo3D reduced={prefersReducedMotion} />
             </Suspense>
