@@ -115,8 +115,8 @@ function ParticleMesh({
     data.paths.forEach((path) => {
       const isRed = (path.color as THREE.Color).r > 0.5
       // outline count + fill grid spacing (SVG units)
-      const outline = isRed ? 500 : 300
-      const spacing = isRed ? 4 : 5
+      const outline = isRed ? 900 : 550
+      const spacing = isRed ? 2 : 3
       const pts = samplePath(path, outline, spacing)
       if (isRed) red.push(...pts)
       else dark.push(...pts)
