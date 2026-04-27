@@ -24,6 +24,11 @@ export default {
       transitionTimingFunction: {
         page: "cubic-bezier(0.40, 0.24, 0.40, 1)",
       },
+      zIndex: {
+        nav: "50",
+        overlay: "60",
+        skip: "9999",
+      },
     },
   },
   plugins: [],

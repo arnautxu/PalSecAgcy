@@ -10,7 +10,7 @@ export function AboutUs() {
     <PageFrame className="relative">
       <div className="flex h-full min-h-0 flex-col px-6 pb-8 pt-[92px] md:flex-row md:gap-10">
         <div className="w-full md:w-[40%]">
-          <h1 className="mb-4 text-nav uppercase tracking-nav opacity-60">
+          <h1 className="mb-4 text-nav uppercase tracking-nav opacity-80">
             {t(lang, "about.title")}
           </h1>
           <p className="normal-case text-bodymd leading-[1.6] tracking-nav text-ink md:text-body">

@@ -69,6 +69,8 @@ export function Home() {
       {/* Play/pause — extended touch target via pseudo-element */}
       <button
         type="button"
+        aria-pressed={paused}
+        aria-label={paused ? t(lang, "home.play") : t(lang, "home.pause")}
         className="relative text-nav fixed bottom-[58px] left-6 z-[60] uppercase tracking-nav text-white/50 transition-opacity duration-200 hover:text-white/90 before:absolute before:content-[''] before:-inset-3"
         onClick={() => setPaused((p) => !p)}
       >

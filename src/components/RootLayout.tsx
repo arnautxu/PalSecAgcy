@@ -41,7 +41,7 @@ export function RootLayout() {
       {/* Skip link — keyboard accessibility */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[9999] focus:rounded focus:bg-[#ff1a1a] focus:px-3 focus:py-2 focus:text-nav focus:uppercase focus:tracking-nav focus:text-white"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[9999] focus:rounded focus:bg-accent focus:px-3 focus:py-2 focus:text-nav focus:uppercase focus:tracking-nav focus:text-white"
       >
         Skip to main content
       </a>
@@ -59,9 +59,9 @@ export function RootLayout() {
             style={{ willChange: "filter, transform, opacity" }}
           >
             <ErrorBoundary>
-              <div id="main-content" className="h-full">
+              <main id="main-content" className="h-full">
                 <Outlet />
-              </div>
+              </main>
             </ErrorBoundary>
           </motion.div>
         </AnimatePresence>

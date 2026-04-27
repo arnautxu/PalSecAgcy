@@ -7,6 +7,9 @@ import { publicUrl } from "@/utils/publicUrl"
 import { useLang } from "@/i18n/useLang"
 import { t } from "@/i18n/strings"
 
+const COLOR_ACTIVE = "#ff1a1a"
+const COLOR_REST = "#282828"
+
 function ProjectCard({
   slug,
   title,
@@ -128,7 +131,7 @@ function ProjectCard({
           className="inline-block text-nav uppercase leading-[1.6] tracking-nav will-change-transform"
           animate={{
             x: hovered ? shiftPx : 0,
-            color: hovered ? "#ff1a1a" : "#282828",
+            color: hovered ? COLOR_ACTIVE : COLOR_REST,
           }}
           transition={{
             duration: 0.7,
@@ -147,7 +150,7 @@ export function Projects() {
   return (
     <PageFrame className="relative">
       <div className="h-full w-full overflow-y-auto px-6 pb-8 pt-[92px]">
-        <h1 className="mb-2 text-nav uppercase tracking-nav opacity-60">{t(lang, "projects.title")}</h1>
+        <h1 className="mb-2 text-nav uppercase tracking-nav opacity-80">{t(lang, "projects.title")}</h1>
         <p className="mb-6 max-w-[640px] normal-case text-bodymd leading-[1.6] tracking-nav text-ink/70 md:text-body">
           {t(lang, "projects.lead")}
         </p>

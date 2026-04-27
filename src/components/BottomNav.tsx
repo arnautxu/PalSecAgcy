@@ -58,7 +58,7 @@ export function BottomNav() {
     "text-nav uppercase tracking-nav",
     "flex items-center",
     "border backdrop-blur-[10px] rounded-full",
-    "bg-[#ff1a1a]/90 border-white/20",
+    "bg-accent/90 border-white/20",
   ].join(" ")
 
   return (
@@ -78,7 +78,7 @@ export function BottomNav() {
               className={[
                 "flex flex-col items-center gap-6",
                 "px-12 py-10 rounded-2xl w-full max-w-xs",
-                "bg-[#ff1a1a]/90 border border-white/20 backdrop-blur-[10px]",
+                "bg-accent/90 border border-white/20 backdrop-blur-[10px]",
               ].join(" ")}
               variants={{
                 show: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } },
@@ -104,7 +104,7 @@ export function BottomNav() {
                   <NavLink
                     to={to}
                     className={({ isActive }) => [
-                      "text-[16px] uppercase tracking-[0.1em] font-normal",
+                      "block py-3 text-[16px] uppercase tracking-[0.1em] font-normal",
                       "transition-[opacity,color] duration-200 text-white hover:text-ink hover:opacity-100",
                       isActive ? "opacity-70" : "opacity-100",
                     ].join(" ")}
@@ -154,7 +154,7 @@ export function BottomNav() {
               <motion.a
                 href={mailtoProjectInquiryHref(lang)}
                 className={[
-                  "inline-flex items-center",
+                  "inline-flex items-center min-h-[44px]",
                   "rounded-full border px-6 py-2.5",
                   "text-[14px] uppercase tracking-[0.1em]",
                   "transition-[opacity,color,background-color,border-color] duration-200",

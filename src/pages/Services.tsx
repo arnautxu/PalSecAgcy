@@ -9,7 +9,7 @@ export function Services() {
     <PageFrame className="relative">
       <div className="h-full w-full overflow-y-auto px-6 pb-8 pt-[92px]">
         <div className="max-w-[520px]">
-          <h1 className="mb-4 text-nav uppercase tracking-nav opacity-60">
+          <h1 className="mb-4 text-nav uppercase tracking-nav opacity-80">
             {t(lang, "services.title")}
           </h1>
           <div className="normal-case text-bodymd leading-[1.6] tracking-nav text-ink md:text-body">
