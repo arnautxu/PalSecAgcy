@@ -1,31 +1,46 @@
 <!doctype html>
-<html lang="en">
+<html lang="ca">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Redirecting…</title>
+    <meta name="robots" content="noindex" />
+    <title>404 — PALSEC AGCY</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root { color-scheme: light; }
+      html, body { margin: 0; height: 100%; background: #fff; color: #111; }
+      body {
+        font-family: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        display: flex; align-items: center; justify-content: center;
+        padding: 24px;
+      }
+      main { max-width: 560px; width: 100%; }
+      .eyebrow { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.6; margin: 0 0 16px; }
+      h1 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.85; margin: 0 0 16px; font-weight: 500; }
+      p { font-size: 14px; line-height: 1.6; margin: 0 0 12px; opacity: 0.85; }
+      ul { list-style: none; padding: 0; margin: 24px 0 0; display: flex; flex-wrap: wrap; gap: 12px; }
+      a { color: #111; text-decoration: none; border: 1px solid currentColor; border-radius: 999px; padding: 8px 14px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; transition: opacity 0.2s; }
+      a:hover { opacity: 0.6; }
+    </style>
   </head>
   <body>
-    <script>
-      // GitHub Pages serves 404.html for unknown paths.
-      // For SPAs, we redirect back to the root and encode the original path/query/hash
-      // so the app can restore it on load.
-      //
-      // Based on the widely used "spa-github-pages" pattern.
-      (function () {
-        var l = window.location
-        var redirect =
-          l.protocol +
-          '//' +
-          l.host +
-          '/?p=' +
-          encodeURIComponent(l.pathname) +
-          '&q=' +
-          encodeURIComponent(l.search) +
-          '&h=' +
-          encodeURIComponent(l.hash)
-        window.location.replace(redirect)
-      })()
-    </script>
+    <main>
+      <p class="eyebrow">PALSEC AGCY · 404</p>
+      <h1>Pàgina no trobada / Page not found / Página no encontrada</h1>
+      <p>No hem pogut trobar aquesta pàgina. — We couldn't find this page. — No hemos podido encontrar esta página.</p>
+      <ul>
+        <li><a href="/ca">CA · Inici</a></li>
+        <li><a href="/en">EN · Home</a></li>
+        <li><a href="/es">ES · Inicio</a></li>
+        <li><a href="/ca/projects">Projectes</a></li>
+        <li><a href="mailto:info@palsec.agency">info@palsec.agency</a></li>
+      </ul>
+    </main>
   </body>
 </html>
