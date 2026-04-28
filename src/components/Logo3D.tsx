@@ -6,7 +6,7 @@ import { publicUrl } from "@/utils/publicUrl"
 
 const SVG_W = 413.2
 const SVG_H = 169.1
-const SCALE = 0.012
+const SCALE = 0.016
 const Z_SPREAD = 20
 
 // Particle physics constants (in SVG units)
