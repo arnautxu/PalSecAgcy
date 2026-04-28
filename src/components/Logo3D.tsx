@@ -139,7 +139,7 @@ function ParticleMesh({
 
     data.paths.forEach((path) => {
       const isRed = (path.color as THREE.Color).r > 0.5
-      const pts   = samplePath(path, isRed ? 900 : 550, isRed ? 2 : 3)
+      const pts   = samplePath(path, isRed ? 1400 : 800, isRed ? 1.2 : 1.8)
       if (isRed) red.push(...pts)
       else       dark.push(...pts)
     })
@@ -195,7 +195,7 @@ function ParticleMesh({
       </points>
       <points geometry={darkGeo}>
         <pointsMaterial color="#282828" size={0.018} sizeAttenuation
-          map={tex} transparent opacity={0.65} depthWrite={false} alphaTest={0.01} />
+          map={tex} transparent opacity={0.80} depthWrite={false} alphaTest={0.01} />
       </points>
     </group>
   )
