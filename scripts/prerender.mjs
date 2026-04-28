@@ -190,15 +190,19 @@ const PROJECT_META = {
     year: "2026",
   },
   cms: {
+    // comingSoon: true in projects.ts. ProjectDetail.tsx redirects this to /:lang/projects.
+    // We still emit a static file because the SPA carousel links here, but mark it noindex
+    // so search engines don't waste budget on a redirect target.
     displayTitle: "PALSEC AI LAB",
     firstImage: "/media/projects/ai-lab/thumb.jpg",
     descriptions: {
-      en: "BON DIA VEÏNAT IS A CIVIC PROJECT FOR THE AJUNTAMENT DE BARCELONA DESIGNED TO IMPROVE COOPERATION BETWEEN NEIGHBORS.",
-      ca: "BON DIA VEÏNAT ÉS UN PROJECTE CÍVIC PER A L'AJUNTAMENT DE BARCELONA PENSAT PER MILLORAR LA COOPERACIÓ ENTRE VEÏNS.",
-      es: "BON DIA VEÏNAT ES UN PROYECTO CÍVICO PARA EL AJUNTAMENT DE BARCELONA PENSADO PARA MEJORAR LA COOPERACIÓN ENTRE VECINOS.",
+      en: "PALSEC AI LAB — work in progress. See current projects at palsec.agency/en/projects.",
+      ca: "PALSEC AI LAB — en construcció. Mira els projectes actuals a palsec.agency/ca/projects.",
+      es: "PALSEC AI LAB — en construcción. Mira los proyectos actuales en palsec.agency/es/projects.",
     },
-    client: "AJUNTAMENT DE BARCELONA",
+    client: "PALSEC",
     year: "2026",
+    noindex: true,
   },
   "estudi-dental-carrera": {
     displayTitle: "ESTUDI DENTAL CARRERA",
@@ -337,8 +341,12 @@ function buildHeadBlock(route) {
 
   const ogType = kind === "project" ? "article" : "website"
 
+  const robotsTag = route.noindex
+    ? `\n  <meta name="robots" content="noindex,follow">`
+    : ""
+
   return `  <title>${escapedTitle}</title>
-  <meta name="description" content="${escapedDesc}">
+  <meta name="description" content="${escapedDesc}">${robotsTag}
   <link rel="canonical" href="${escapedCanonical}">
 ${hreflangLines}
   <link rel="alternate" hrefLang="x-default" href="${xDefaultHref}">
@@ -428,6 +436,7 @@ function buildAllRoutes() {
         description: desc,
         canonicalUrl: `${BASE_URL}/${lang}/project/${slug}`,
         ogImage,
+        noindex: meta.noindex === true,
       })
     }
   }
