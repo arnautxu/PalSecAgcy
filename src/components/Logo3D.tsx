@@ -1,5 +1,6 @@
 import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber"
 import { Suspense, useRef, useMemo } from "react"
+import { Text } from "@react-three/drei"
 import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader.js"
 import * as THREE from "three"
 import { publicUrl } from "@/utils/publicUrl"
@@ -14,6 +15,10 @@ const REPEL_RADIUS = 16   // how far the cursor influence reaches
 const REPEL_FORCE = 6.0   // repulsion impulse strength
 const SPRING = 0.10       // fraction pulled back to origin per frame
 const DAMPING = 0.84      // velocity multiplier per frame
+
+// Orbit
+const ORBIT_BASE_TILT = 0.32   // ~18° inclination — natural planet-like angle
+const ORBIT_SPEED     = 0.0032 // radians / frame — slow, elegant
 
 /** Soft gaussian sprite texture */
 function makeSpriteTex(): THREE.CanvasTexture {
@@ -79,13 +84,12 @@ function tickPhysics(
     let cx = curr[i3], cy = curr[i3 + 1], cz = curr[i3 + 2]
     let vx = vel[i3],  vy = vel[i3 + 1],  vz = vel[i3 + 2]
 
-    // Repulsion from cursor
     if (hovered) {
       const dx = cx - svgMouseX
       const dy = cy - svgMouseY
       const dist = Math.sqrt(dx * dx + dy * dy)
       if (dist < REPEL_RADIUS && dist > 0.1) {
-        const t = 1 - dist / REPEL_RADIUS       // 0→1 as we get closer
+        const t = 1 - dist / REPEL_RADIUS
         const f = (REPEL_FORCE * t) / dist
         vx += dx * f
         vy += dy * f
@@ -93,14 +97,11 @@ function tickPhysics(
       }
     }
 
-    // Spring back to original position
     vx += (ox - cx) * SPRING
     vy += (oy - cy) * SPRING
     vz += (oz - cz) * SPRING
 
-    // Damping
     vx *= DAMPING; vy *= DAMPING; vz *= DAMPING
-
     cx += vx; cy += vy; cz += vz
 
     curr[i3] = cx; curr[i3 + 1] = cy; curr[i3 + 2] = cz
@@ -110,6 +111,84 @@ function tickPhysics(
   }
   return anyActive
 }
+
+// ─── Orbiting "A" ────────────────────────────────────────────────────────────
+
+function OrbitingA({
+  mouseRef,
+}: {
+  mouseRef: React.MutableRefObject<{ x: number; y: number }>
+}) {
+  const { size, camera } = useThree()
+  const groupRef  = useRef<THREE.Group>(null)
+  const textRef   = useRef<THREE.Object3D>(null)
+  const angleRef  = useRef(Math.PI * 0.65) // start position (not at 0 so it's visible immediately)
+
+  // Orbit dimensions — recomputed on canvas resize so the ellipse always
+  // fits just inside the viewport regardless of aspect ratio.
+  const orbitDims = useRef({ rx: 4, ry: 1.5 })
+
+  const traceLine = useMemo(() => {
+    const cam = camera as THREE.PerspectiveCamera
+    const halfH = Math.tan((cam.fov * Math.PI) / 180 / 2) * cam.position.z
+    const halfW = halfH * (size.width / size.height)
+    // keep orbit comfortably inside the frustum (85 % H, 80 % W)
+    const rx = halfW * 0.80
+    const ry = halfH * 0.85
+    orbitDims.current = { rx, ry }
+
+    const pts: THREE.Vector3[] = []
+    for (let i = 0; i <= 160; i++) {
+      const a = (i / 160) * Math.PI * 2
+      pts.push(new THREE.Vector3(Math.cos(a) * rx, Math.sin(a) * ry, 0))
+    }
+    const geo = new THREE.BufferGeometry().setFromPoints(pts)
+    const mat = new THREE.LineBasicMaterial({
+      color: "#ea0029",
+      transparent: true,
+      opacity: 0.14,
+    })
+    return new THREE.Line(geo, mat)
+  }, [size.width, size.height, camera])
+
+  useFrame(() => {
+    if (!groupRef.current || !textRef.current) return
+
+    angleRef.current += ORBIT_SPEED
+    const a = angleRef.current
+    const { rx, ry } = orbitDims.current
+
+    // Move the letter along the ellipse
+    textRef.current.position.set(Math.cos(a) * rx, Math.sin(a) * ry, 0)
+
+    // Mouse tilts the orbit plane — feels like you can grab it
+    groupRef.current.rotation.x = ORBIT_BASE_TILT + mouseRef.current.y * 0.18
+    groupRef.current.rotation.y = mouseRef.current.x * 0.12
+  })
+
+  return (
+    <group ref={groupRef} rotation={[ORBIT_BASE_TILT, 0, 0]}>
+      {/* Orbit trace — faint red ellipse */}
+      <primitive object={traceLine} />
+
+      {/* The orbiting letter */}
+      <Text
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ref={textRef as any}
+        font={publicUrl("/fonts/MovaviGrotesque-Black.ttf")}
+        fontSize={0.46}
+        anchorX="center"
+        anchorY="middle"
+        fillOpacity={0.88}
+        color="#ea0029"
+      >
+        A
+      </Text>
+    </group>
+  )
+}
+
+// ─── Particle logo ────────────────────────────────────────────────────────────
 
 function ParticleMesh({
   mouseRef,
@@ -123,7 +202,6 @@ function ParticleMesh({
   const data = useLoader(SVGLoader, publicUrl("/brand/logo.svg"))
   const { size, camera } = useThree()
 
-  // Live position/velocity buffers — mutated each frame
   const redOrig = useRef<Float32Array>(new Float32Array(0))
   const redCurr = useRef<Float32Array>(new Float32Array(0))
   const redVel  = useRef<Float32Array>(new Float32Array(0))
@@ -144,7 +222,6 @@ function ParticleMesh({
       else       dark.push(...pts)
     })
 
-    // Build flat Float32Arrays and share with physics refs
     const toF32 = (pts: THREE.Vector3[]) => {
       const a = new Float32Array(pts.length * 3)
       pts.forEach((p, i) => { a[i*3]=p.x; a[i*3+1]=p.y; a[i*3+2]=p.z })
@@ -166,13 +243,11 @@ function ParticleMesh({
     const hovered = isHoveredRef.current
     if (!hovered && !activeRef.current) return
 
-    // Convert mouse NDC → SVG space
     const cam = camera as THREE.PerspectiveCamera
     const halfH = Math.tan((cam.fov * Math.PI) / 180 / 2) * cam.position.z
     const halfW = halfH * (size.width / size.height)
     const worldX = mouseRef.current.x * halfW
     const worldY = mouseRef.current.y * halfH
-    // group: scale (SCALE, -SCALE, SCALE), pos ((-W/2)*S, (H/2)*S, 0)
     const svgX = worldX / SCALE + SVG_W / 2
     const svgY = SVG_H / 2 - worldY / SCALE
 
@@ -200,6 +275,8 @@ function ParticleMesh({
     </group>
   )
 }
+
+// ─── Root export ──────────────────────────────────────────────────────────────
 
 export function Logo3D({ reduced = false }: { reduced?: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -244,6 +321,7 @@ export function Logo3D({ reduced = false }: { reduced?: boolean }) {
       >
         <Suspense fallback={null}>
           <ParticleMesh mouseRef={mouseRef} isHoveredRef={isHoveredRef} reduced={reduced} />
+          {!reduced && <OrbitingA mouseRef={mouseRef} />}
         </Suspense>
       </Canvas>
     </div>
