@@ -7,6 +7,7 @@ import { publicUrl } from "@/utils/publicUrl"
 import { useLang } from "@/i18n/useLang"
 import { t } from "@/i18n/strings"
 import { Seo } from "@/components/Seo"
+import { Picture } from "@/components/Picture"
 
 const COLOR_ACTIVE = "#ff1a1a"
 const COLOR_REST = "#282828"
@@ -78,7 +79,7 @@ function ProjectCard({
           preload="metadata"
         />
       ) : (
-        <img
+        <Picture
           src={imageSrc}
           alt=""
           className={mediaClass}

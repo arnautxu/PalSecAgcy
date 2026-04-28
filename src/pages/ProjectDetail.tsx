@@ -10,6 +10,7 @@ import {
   type ProjectSlug,
 } from "@/data/projects"
 import { publicUrl } from "@/utils/publicUrl"
+import { Picture } from "@/components/Picture"
 import { useLang } from "@/i18n/useLang"
 import { t } from "@/i18n/strings"
 import type { Lang } from "@/i18n/lang"
@@ -121,7 +122,7 @@ function LogotecaGallery({
               className="group overflow-hidden rounded-[2px] border border-frame bg-white"
               aria-label={`Open logo ${i + 1}`}
             >
-              <img
+              <Picture
                 src={imageSrc(s, 800, 800)}
                 alt=""
                 className="aspect-square w-full select-none object-contain bg-white p-4 transition-transform duration-200 group-hover:scale-[1.02]"
@@ -147,7 +148,7 @@ function LogotecaGallery({
                   className="group overflow-hidden rounded-[2px] border border-frame bg-white"
                   aria-label={`Open logo ${idx + 1}`}
                 >
-                  <img
+                  <Picture
                     src={imageSrc(s, 1200, 900)}
                     alt=""
                     className="aspect-[16/10] w-full select-none object-contain bg-white p-6 transition-transform duration-200 group-hover:scale-[1.01]"
@@ -192,7 +193,7 @@ function LogotecaGallery({
                 whileTap={{ cursor: "grabbing" }}
                 style={{ touchAction: "pan-y", cursor: "grab" }}
               >
-                <img
+                <Picture
                   src={imageSrc(slides[active]!, 1800, 1800)}
                   alt=""
                   className="h-[min(78vh,820px)] w-full select-none object-contain bg-white p-6"
@@ -527,7 +528,7 @@ export function ProjectDetail() {
                     whileTap={{ cursor: "grabbing" }}
                     style={{ touchAction: "pan-y", cursor: "grab" }}
                   >
-                    <img
+                    <Picture
                       src={imageSrc(slides[safeIndex]!, 1600, 900)}
                       alt={`${project.title} — ${copy?.bullets[0] ?? t(lang, "project.label")} (${t(lang, "project.label")} ${safeIndex + 1})`}
                       className="block max-h-[70vh] w-full select-none object-contain bg-white"
@@ -589,7 +590,7 @@ export function ProjectDetail() {
                         }`}
                         aria-label={`Image ${i + 1}`}
                       >
-                        <img
+                        <Picture
                           src={imageSrc(seed, 320, 180)}
                           alt=""
                           className="h-full w-auto object-contain bg-white"
@@ -629,7 +630,7 @@ export function ProjectDetail() {
                   whileTap={{ cursor: "grabbing" }}
                   style={{ touchAction: "pan-y", cursor: "grab" }}
                 >
-                  <img
+                  <Picture
                     src={imageSrc(slides[safeIndex]!, 1600, 900)}
                     alt={`${project.title} — ${t(lang, "project.label")} ${safeIndex + 1}`}
                     className="aspect-video w-full select-none object-cover"
@@ -662,7 +663,7 @@ export function ProjectDetail() {
                       preload="metadata"
                     />
                   ) : (
-                    <img
+                    <Picture
                       src={
                         p.localImages?.thumb
                           ? publicUrl(p.localImages.thumb)

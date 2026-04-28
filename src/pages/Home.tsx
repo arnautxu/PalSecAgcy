@@ -6,6 +6,8 @@ import { t } from "@/i18n/strings"
 import { Seo } from "@/components/Seo"
 
 const VIDEO_SRC = publicUrl("/hero-home.mp4")
+const VIDEO_SRC_MOBILE = publicUrl("/hero-home-720.mp4")
+const VIDEO_POSTER = publicUrl("/hero-home-poster.jpg")
 
 export function Home() {
   const lang = useLang()
@@ -50,14 +52,17 @@ export function Home() {
       <video
         ref={videoRef}
         className="absolute inset-0 z-[1] h-full w-full object-cover"
-        src={VIDEO_SRC}
+        poster={VIDEO_POSTER}
         autoPlay
         muted
         loop
         playsInline
         preload="metadata"
         aria-label="Showreel"
-      />
+      >
+        <source src={VIDEO_SRC_MOBILE} media="(max-width: 768px)" type="video/mp4" />
+        <source src={VIDEO_SRC} type="video/mp4" />
+      </video>
 
       {/* Gradient overlay — ensures text legibility over video */}
       <div
