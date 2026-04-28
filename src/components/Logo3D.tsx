@@ -10,7 +10,7 @@ const SCALE = 0.016
 const Z_SPREAD = 20
 
 // Particle physics constants (in SVG units)
-const REPEL_RADIUS = 32   // how far the cursor influence reaches
+const REPEL_RADIUS = 16   // how far the cursor influence reaches
 const REPEL_FORCE = 6.0   // repulsion impulse strength
 const SPRING = 0.10       // fraction pulled back to origin per frame
 const DAMPING = 0.84      // velocity multiplier per frame
