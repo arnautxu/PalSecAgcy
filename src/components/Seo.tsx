@@ -1,5 +1,6 @@
 import { Helmet } from "react-helmet-async"
 import type { Lang } from "@/i18n/lang"
+import type { Project } from "@/data/projects"
 
 const BASE_URL = "https://www.palsec.agency"
 
@@ -21,6 +22,73 @@ function swapLang(path: string, newLang: Lang): string {
   return `/${parts.join("/")}`
 }
 
+// ─── JSON-LD helpers ────────────────────────────────────────────────────────
+
+function organizationSchema() {
+  // TODO: add real sameAs entries once social profiles are confirmed
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "PALSEC AGCY",
+    url: BASE_URL,
+    email: "info@palsec.agency",
+    logo: `${BASE_URL}/favicon.svg`,
+    sameAs: [] as string[],
+  }
+}
+
+function webSiteSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "PALSEC AGCY",
+    url: BASE_URL,
+    inLanguage: ["ca", "en", "es"],
+  }
+}
+
+function breadcrumbSchema(items: { name: string; url: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, idx) => ({
+      "@type": "ListItem",
+      position: idx + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  }
+}
+
+function creativeWorkSchema(opts: {
+  project: Project
+  lang: Lang
+  canonicalUrl: string
+  description: string
+}) {
+  const { project, lang, canonicalUrl, description } = opts
+  const firstSlide = project.localImages?.slides?.[0]
+  const image = firstSlide ? `${BASE_URL}${firstSlide}` : `${BASE_URL}/favicon.svg`
+
+  // Pull client + year from INDEX_ROWS if needed — but Project type doesn't carry them.
+  // We rely on the INDEX_ROWS import to look up client/year by slug.
+  return {
+    "@context": "https://schema.org",
+    "@type": "VisualArtwork",
+    name: project.title,
+    url: canonicalUrl,
+    image,
+    description,
+    inLanguage: lang,
+    creator: {
+      "@type": "Organization",
+      name: "PALSEC AGCY",
+    },
+  }
+}
+
+// ─── Props ──────────────────────────────────────────────────────────────────
+
 type SeoProps = {
   /** Page title — will be rendered as "{title} | PALSEC AGCY" unless `bare` is true */
   title: string
@@ -36,6 +104,12 @@ type SeoProps = {
   type?: "website" | "article"
   /** When true, adds <meta name="robots" content="noindex"> */
   noindex?: boolean
+  /** Set true on home page to emit WebSite schema */
+  isHome?: boolean
+  /** Set true on projects list page to emit breadcrumb */
+  isProjectsList?: boolean
+  /** Supply on project detail pages for CreativeWork + breadcrumb */
+  project?: Project
 }
 
 export function Seo({
@@ -47,12 +121,49 @@ export function Seo({
   image,
   type = "website",
   noindex = false,
+  isHome = false,
+  isProjectsList = false,
+  project,
 }: SeoProps) {
   const fullTitle = bare ? title : `${title} | PALSEC AGCY`
   const canonicalUrl = `${BASE_URL}${path}`
   const ogImage = image ?? DEFAULT_OG_IMAGE
 
   const langs: Lang[] = ["ca", "en", "es"]
+
+  // ── Breadcrumb labels per lang ─────────────────────────────────────────
+  const homeLabel = lang === "ca" ? "Inici" : lang === "es" ? "Inicio" : "Home"
+  const projectsLabel = lang === "ca" ? "Projectes" : lang === "es" ? "Proyectos" : "Projects"
+
+  // ── Build JSON-LD blocks ───────────────────────────────────────────────
+  const orgJson = JSON.stringify(organizationSchema())
+
+  const webSiteJson = isHome ? JSON.stringify(webSiteSchema()) : null
+
+  let breadcrumbJson: string | null = null
+  if (isProjectsList) {
+    breadcrumbJson = JSON.stringify(
+      breadcrumbSchema([
+        { name: homeLabel, url: `${BASE_URL}/${lang}` },
+        { name: projectsLabel, url: canonicalUrl },
+      ]),
+    )
+  } else if (project) {
+    breadcrumbJson = JSON.stringify(
+      breadcrumbSchema([
+        { name: homeLabel, url: `${BASE_URL}/${lang}` },
+        { name: projectsLabel, url: `${BASE_URL}/${lang}/projects` },
+        { name: project.title, url: canonicalUrl },
+      ]),
+    )
+  }
+
+  const creativeJson =
+    project
+      ? JSON.stringify(
+          creativeWorkSchema({ project, lang, canonicalUrl, description }),
+        )
+      : null
 
   return (
     <Helmet htmlAttributes={{ lang }}>
@@ -92,6 +203,24 @@ export function Seo({
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={ogImage} />
+
+      {/* JSON-LD: Organization (always) */}
+      <script type="application/ld+json">{orgJson}</script>
+
+      {/* JSON-LD: WebSite (home only) */}
+      {webSiteJson && (
+        <script type="application/ld+json">{webSiteJson}</script>
+      )}
+
+      {/* JSON-LD: BreadcrumbList */}
+      {breadcrumbJson && (
+        <script type="application/ld+json">{breadcrumbJson}</script>
+      )}
+
+      {/* JSON-LD: CreativeWork/VisualArtwork (project detail only) */}
+      {creativeJson && (
+        <script type="application/ld+json">{creativeJson}</script>
+      )}
     </Helmet>
   )
 }

@@ -11,7 +11,6 @@ export default {
       },
       fontFamily: {
         mono: ['"Geist Mono"', "ui-monospace", "monospace"],
-        script: ['"Caveat"', "cursive"],
       },
       fontSize: {
         nav: "8px",

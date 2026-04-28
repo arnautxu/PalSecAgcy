@@ -156,6 +156,7 @@ export function Projects() {
         description={t(lang, "projects.seoDesc")}
         path={pathname}
         lang={lang}
+        isProjectsList
       />
       <div className="h-full w-full overflow-y-auto px-6 pb-8 pt-[92px]">
         <h1 className="mb-2 text-nav uppercase tracking-nav opacity-80">{t(lang, "projects.title")}</h1>

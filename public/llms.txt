@@ -1,0 +1,58 @@
+# PALSEC AGCY
+
+> Strategic design studio based in Costa Brava, Spain. We work across brand strategy, branding, web design, motion graphics, and creative direction — from definition to execution.
+
+## Services
+
+- Brand strategy
+- Branding & visual identity
+- Web design & digital product (UX/UI)
+- Motion graphics
+- Creative direction
+- Print graphics & spatial materials
+
+## Projects
+
+### VIRA (2026)
+Client: PALSEC
+App designed to help address the main challenges faced by teenagers with ADHD. UX/UI mobile, brand identity, visual system, and design language.
+
+### ARKUOS (2026)
+Client: PALSEC
+Socio-educational action space and creative environment for children, teenagers, and young people. Brand application, design system, communication pieces, and visual language.
+
+### GALEÓN (2026)
+Client: PALSEC
+Interactive application that allows users to travel through the history of the Spanish monarchy via the Royal Collections. Product design, UX/UI, visual system, and interactive content.
+
+### EL XIRINGUITO (2026)
+Client: PALSEC
+Complete brand identity for a coastal restaurant designed to convey a light, bright Mediterranean aesthetic. Brand identity, menu system, print & signage, and digital assets.
+
+### ENTEZA (2026)
+Client: PALSEC
+Brand focused on furniture and tableware rentals for events, with an emphasis on design, elegance, and quality. Brand system, catalog structure, digital design, and product presentation.
+
+### GENT GRAN DE CALONGE I SANT ANTONI (2026)
+Client: PALSEC
+Project developed for a municipal social services department to give visibility and cohesion to activities for older adults. Public sector brand identity, communication system, print & digital.
+
+### LOGOTECA (2026)
+Client: PALSEC
+Curated collection of logo design work. Brand identity explorations.
+
+### BON DIA VEÏNAT / PALSEC AI LAB (2026)
+Client: AJUNTAMENT DE BARCELONA
+Civic project for the Ajuntament de Barcelona designed to improve cooperation between neighbors. Service design, UX/UI, accessibility.
+
+### ESTUDI DENTAL CARRERA (2026)
+Client: PALSEC
+Brand identity and visual system for a dental practice.
+
+## Sitemap
+
+https://www.palsec.agency/sitemap.xml
+
+## Contact
+
+info@palsec.agency

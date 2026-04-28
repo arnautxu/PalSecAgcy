@@ -501,6 +501,7 @@ export function ProjectDetail() {
         lang={lang}
         image={ogImage}
         type="article"
+        project={project}
       />
       {/* sr-only h1: project name for crawlers; visual title is the div.text-nav below */}
       <h1 className="sr-only">{project.title}</h1>

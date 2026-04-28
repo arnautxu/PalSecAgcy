@@ -40,6 +40,7 @@ export function Home() {
         description={t(lang, "home.seoDesc")}
         path={pathname}
         lang={lang}
+        isHome
       />
       {/* sr-only h1 for crawlers — visual design is the video + tagline below */}
       <h1 className="sr-only">PALSEC AGCY — {t(lang, "home.tagline")}</h1>
