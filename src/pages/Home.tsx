@@ -1,12 +1,15 @@
 import { useEffect, useRef, useState } from "react"
+import { useLocation } from "react-router-dom"
 import { publicUrl } from "@/utils/publicUrl"
 import { useLang } from "@/i18n/useLang"
 import { t } from "@/i18n/strings"
+import { Seo } from "@/components/Seo"
 
 const VIDEO_SRC = publicUrl("/hero-home.mp4")
 
 export function Home() {
   const lang = useLang()
+  const { pathname } = useLocation()
   const videoRef = useRef<HTMLVideoElement>(null)
   const [paused, setPaused] = useState(false)
 
@@ -31,6 +34,15 @@ export function Home() {
 
   return (
     <div className="relative h-full w-full overflow-hidden bg-black">
+      <Seo
+        title={t(lang, "home.seoTitle")}
+        bare
+        description={t(lang, "home.seoDesc")}
+        path={pathname}
+        lang={lang}
+      />
+      {/* sr-only h1 for crawlers — visual design is the video + tagline below */}
+      <h1 className="sr-only">PALSEC AGCY — {t(lang, "home.tagline")}</h1>
       {/* Static gradient fallback while video loads */}
       <div className="hero-home absolute inset-0 h-full w-full" aria-hidden />
 

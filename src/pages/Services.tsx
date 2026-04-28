@@ -1,12 +1,21 @@
+import { useLocation } from "react-router-dom"
 import { PageFrame } from "@/components/PageFrame"
 import { mailtoProjectInquiryHref } from "@/constants/contact"
 import { useLang } from "@/i18n/useLang"
 import { t } from "@/i18n/strings"
+import { Seo } from "@/components/Seo"
 
 export function Services() {
   const lang = useLang()
+  const { pathname } = useLocation()
   return (
     <PageFrame className="relative">
+      <Seo
+        title={t(lang, "services.title")}
+        description={t(lang, "services.seoDesc")}
+        path={pathname}
+        lang={lang}
+      />
       <div className="h-full w-full overflow-y-auto px-6 pb-8 pt-[92px]">
         <div className="max-w-[520px]">
           <h1 className="mb-4 text-nav uppercase tracking-nav opacity-80">

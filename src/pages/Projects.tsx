@@ -1,11 +1,12 @@
 import { useLayoutEffect, useRef, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { motion } from "framer-motion"
 import { PageFrame } from "@/components/PageFrame"
 import { PROJECTS, picsum } from "@/data/projects"
 import { publicUrl } from "@/utils/publicUrl"
 import { useLang } from "@/i18n/useLang"
 import { t } from "@/i18n/strings"
+import { Seo } from "@/components/Seo"
 
 const COLOR_ACTIVE = "#ff1a1a"
 const COLOR_REST = "#282828"
@@ -147,8 +148,15 @@ function ProjectCard({
 
 export function Projects() {
   const lang = useLang()
+  const { pathname } = useLocation()
   return (
     <PageFrame className="relative">
+      <Seo
+        title={t(lang, "projects.title")}
+        description={t(lang, "projects.seoDesc")}
+        path={pathname}
+        lang={lang}
+      />
       <div className="h-full w-full overflow-y-auto px-6 pb-8 pt-[92px]">
         <h1 className="mb-2 text-nav uppercase tracking-nav opacity-80">{t(lang, "projects.title")}</h1>
         <p className="mb-6 max-w-[640px] normal-case text-bodymd leading-[1.6] tracking-nav text-ink/70 md:text-body">

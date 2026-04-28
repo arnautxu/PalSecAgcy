@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react"
-import { Link, Navigate, useParams } from "react-router-dom"
+import { Link, Navigate, useLocation, useParams } from "react-router-dom"
 import { AnimatePresence, motion } from "framer-motion"
 import { PageFrame } from "@/components/PageFrame"
 import {
@@ -13,6 +13,7 @@ import { publicUrl } from "@/utils/publicUrl"
 import { useLang } from "@/i18n/useLang"
 import { t } from "@/i18n/strings"
 import type { Lang } from "@/i18n/lang"
+import { Seo } from "@/components/Seo"
 
 function neighbors(current: ProjectSlug): { prev: Project; next: Project } {
   const idx = PROJECTS.findIndex((p) => p.slug === current)
@@ -419,6 +420,7 @@ function bonDiaVeinatCopy(lang: Lang): ProjectCopy {
 export function ProjectDetail() {
   const lang = useLang()
   const { slug } = useParams()
+  const { pathname } = useLocation()
   const project = slug ? projectBySlug(slug) : undefined
   const [index, setIndex] = useState(0)
 
@@ -437,6 +439,11 @@ export function ProjectDetail() {
   }, [slug])
 
   if (!slug || !project) {
+    return <Navigate to={`/${lang}/projects`} replace />
+  }
+
+  // cms (PALSEC AI LAB) is comingSoon with no slides — send to projects grid
+  if (!project.localImages?.slides?.length && !project.carouselSeeds.length) {
     return <Navigate to={`/${lang}/projects`} replace />
   }
 
@@ -478,8 +485,25 @@ export function ProjectDetail() {
     project.slug === "cms" ||
     project.slug === "estudi-dental-carrera"
 
+  // SEO: first body paragraph as description, first local image as OG image
+  const seoDescription = copy?.body[0] ?? project.title
+  const firstSlide = project.localImages?.slides?.[0]
+  const ogImage = firstSlide
+    ? `https://www.palsec.agency${firstSlide}`
+    : undefined
+
   return (
     <PageFrame>
+      <Seo
+        title={project.title}
+        description={seoDescription}
+        path={pathname}
+        lang={lang}
+        image={ogImage}
+        type="article"
+      />
+      {/* sr-only h1: project name for crawlers; visual title is the div.text-nav below */}
+      <h1 className="sr-only">{project.title}</h1>
       <div className="flex h-full min-h-0 flex-col">
         <div className="min-h-0 flex-1 overflow-y-auto px-5 pb-10 pt-[92px]">
           {project.slug === "logoteca" ? (
@@ -504,7 +528,7 @@ export function ProjectDetail() {
                   >
                     <img
                       src={imageSrc(slides[safeIndex]!, 1600, 900)}
-                      alt=""
+                      alt={`${project.title} — ${copy?.bullets[0] ?? t(lang, "project.label")} (${t(lang, "project.label")} ${safeIndex + 1})`}
                       className="block max-h-[70vh] w-full select-none object-contain bg-white"
                       draggable={false}
                     />
@@ -606,7 +630,7 @@ export function ProjectDetail() {
                 >
                   <img
                     src={imageSrc(slides[safeIndex]!, 1600, 900)}
-                    alt=""
+                    alt={`${project.title} — ${t(lang, "project.label")} ${safeIndex + 1}`}
                     className="aspect-video w-full select-none object-cover"
                     draggable={false}
                   />

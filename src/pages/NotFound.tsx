@@ -1,12 +1,21 @@
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { PageFrame } from "@/components/PageFrame"
 import { useLang } from "@/i18n/useLang"
 import { t } from "@/i18n/strings"
+import { Seo } from "@/components/Seo"
 
 export function NotFound() {
   const lang = useLang()
+  const { pathname } = useLocation()
   return (
     <PageFrame className="relative">
+      <Seo
+        title="404 — Page Not Found"
+        description="This page does not exist."
+        path={pathname}
+        lang={lang}
+        noindex
+      />
       <div className="flex h-full min-h-0 flex-col px-6 pb-8 pt-[92px]">
         <p className="mb-4 text-nav opacity-60">{t(lang, "notfound.title")}</p>
         <p className="mb-6 max-w-[520px] text-bodymd leading-[1.6] tracking-nav text-ink/80 md:text-body">
