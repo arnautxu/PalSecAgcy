@@ -1,0 +1,8 @@
+# palsec.agency
+# Canonical host: https://www.palsec.agency
+
+User-agent: *
+Allow: /
+Disallow: /assets/
+
+Sitemap: https://www.palsec.agency/sitemap.xml

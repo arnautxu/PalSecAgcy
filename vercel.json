@@ -3,7 +3,43 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "installCommand": "npm install --include=dev",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "palsec.agency" }],
+      "destination": "https://www.palsec.agency/$1",
+      "permanent": true
+    }
+  ],
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/(ca|en|es)", "destination": "/index.html" },
+    { "source": "/(ca|en|es)/(services|projects|about-us)", "destination": "/index.html" },
+    { "source": "/(ca|en|es)/project/(arkuos|cms|el-xiringuito|enteza|estudi-dental-carrera|galeon|gent-gran-de-calonge-i-sant-antoni|logoteca|vira)", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(favicon\\.svg|fonts/.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), interest-cohort=()" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" }
+      ]
+    }
   ]
 }
