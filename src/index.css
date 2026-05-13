@@ -26,6 +26,20 @@
     border-radius: 2px;
   }
 
+  /* Button-specific focus: inset glow instead of outline (avoids clipping in tight pills) */
+  button:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 2px #ff1a1a;
+    border-radius: 2px;
+  }
+
+  /* Tap/click feedback — works on every device, including where framer's whileTap doesn't fire */
+  a:active,
+  button:active {
+    transform: scale(0.99);
+    transition: transform 80ms ease-out;
+  }
+
   /* Hide scrollbars visually but keep scroll behavior */
   * {
     scrollbar-width: none;

@@ -16,12 +16,12 @@ export function Services() {
         path={pathname}
         lang={lang}
       />
-      <div className="h-full w-full overflow-y-auto px-6 pb-8 pt-[92px]">
+      <div className="h-full w-full overflow-y-auto px-4 pb-8 pt-[92px] sm:px-5 md:px-6">
         <div className="max-w-[520px]">
           <h1 className="mb-4 text-nav uppercase tracking-nav opacity-80">
             {t(lang, "services.title")}
           </h1>
-          <div className="normal-case text-bodymd leading-[1.6] tracking-nav text-ink md:text-body">
+          <div className="normal-case text-bodymd leading-[1.8] tracking-nav text-ink md:text-body md:leading-[1.6]">
             <p className="mb-3 opacity-80">{t(lang, "services.p1")}</p>
             <p className="mb-3">{t(lang, "services.p2")}</p>
             <p className="mb-3">{t(lang, "services.p3")}</p>

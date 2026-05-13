@@ -16,9 +16,17 @@ export default {
         nav: "8px",
         body: "10px",
         bodymd: "11px",
+        bodyLg: "12.5px",
+      },
+      lineHeight: {
+        comfortable: "1.8",
       },
       letterSpacing: {
         nav: "0.08em",
+      },
+      transitionDuration: {
+        crisp: "200ms",
+        smooth: "400ms",
       },
       transitionTimingFunction: {
         page: "cubic-bezier(0.40, 0.24, 0.40, 1)",

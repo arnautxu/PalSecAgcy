@@ -67,10 +67,13 @@ function ProjectCard({
   }, [comingSoon])
 
   const media = (
-    <div ref={wrapRef} className="relative overflow-hidden rounded-[2px] border border-frame bg-white">
+    <div
+      ref={wrapRef}
+      className="group/media relative overflow-hidden rounded-[2px] border border-frame bg-white transition-shadow duration-300 group-hover:shadow-[0_6px_24px_rgba(0,0,0,0.06)]"
+    >
       {videoSrc ? (
         <video
-          className="aspect-[3/4] w-full object-cover"
+          className="aspect-[3/4] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.015]"
           src={videoSrc}
           autoPlay
           muted
@@ -82,7 +85,7 @@ function ProjectCard({
         <Picture
           src={imageSrc}
           alt=""
-          className={mediaClass}
+          className={`${mediaClass} transition-transform duration-500 ease-out group-hover:scale-[1.015]`}
           loading="lazy"
         />
       )}
@@ -116,7 +119,7 @@ function ProjectCard({
   return (
     <Link
       to={`/${lang}/project/${slug}`}
-      className="block"
+      className="group block cursor-pointer"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onFocus={() => setHovered(true)}
@@ -136,8 +139,8 @@ function ProjectCard({
             color: hovered ? COLOR_ACTIVE : COLOR_REST,
           }}
           transition={{
-            duration: 0.7,
-            ease: [0.4, 0.24, 0.4, 1],
+            duration: 0.42,
+            ease: [0.22, 1, 0.36, 1],
           }}
         >
           {title}
@@ -159,9 +162,9 @@ export function Projects() {
         lang={lang}
         isProjectsList
       />
-      <div className="h-full w-full overflow-y-auto px-6 pb-8 pt-[92px]">
+      <div className="h-full w-full overflow-y-auto px-4 pb-8 pt-[92px] sm:px-5 md:px-6">
         <h1 className="mb-2 text-nav uppercase tracking-nav opacity-80">{t(lang, "projects.title")}</h1>
-        <p className="mb-6 max-w-[640px] normal-case text-bodymd leading-[1.6] tracking-nav text-ink/70 md:text-body">
+        <p className="mb-6 max-w-[640px] normal-case text-bodymd leading-[1.8] tracking-nav text-ink/70 md:text-body md:leading-[1.6]">
           {t(lang, "projects.lead")}
         </p>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">

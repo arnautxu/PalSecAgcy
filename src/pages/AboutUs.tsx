@@ -50,17 +50,17 @@ export function AboutUs() {
         </div>
 
         {/* ── Text content — centred below ── */}
-        <div className="mx-auto w-full max-w-2xl px-6 pb-10">
+        <div className="mx-auto w-full max-w-2xl px-4 pb-10 sm:px-5 md:px-6">
           <h1 className="mb-4 text-nav uppercase tracking-nav opacity-80">
             {t(lang, "about.title")}
           </h1>
-          <p className="normal-case text-bodymd leading-[1.6] tracking-nav text-ink md:text-body">
+          <p className="normal-case text-bodymd leading-[1.8] tracking-nav text-ink md:text-body md:leading-[1.6]">
             {t(lang, "about.p1")} {t(lang, "about.p2")}
           </p>
 
           <div className="my-5 h-px w-full bg-frame" />
 
-          <p className="normal-case text-bodymd leading-[1.6] tracking-nav text-ink/70 md:text-body">
+          <p className="normal-case text-bodymd leading-[1.8] tracking-nav text-ink/70 md:text-body md:leading-[1.6]">
             {t(lang, "about.contactPrefix")}{" "}
             <a
               href={mailtoProjectInquiryHref(lang)}

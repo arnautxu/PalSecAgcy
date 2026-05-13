@@ -48,7 +48,18 @@ export function BottomNav() {
     [
       "text-nav uppercase tracking-nav transition-[opacity,color] duration-200",
       "text-white hover:text-ink hover:opacity-100",
-      active ? "opacity-70" : "opacity-100",
+      active
+        ? "opacity-100 underline underline-offset-4 decoration-white/70"
+        : "opacity-70",
+    ].join(" ")
+
+  const langItemClass = (active: boolean, size: "sm" | "md" = "sm") =>
+    [
+      size === "md" ? "px-2 text-[14px]" : "px-1",
+      "uppercase tracking-[0.08em] transition-opacity duration-200",
+      active
+        ? "opacity-100 underline underline-offset-4 decoration-white/70"
+        : "opacity-60 hover:opacity-100",
     ].join(" ")
 
   const langLink = (l: Lang) => replaceLangInPathname(location.pathname, l) + location.search + location.hash
@@ -128,24 +139,27 @@ export function BottomNav() {
               >
                 <Link
                   to={langLink("en")}
-                  className={["px-1.5 text-[14px] uppercase tracking-[0.08em] transition-opacity duration-200 hover:opacity-60", lang === "en" ? "opacity-100" : "opacity-60"].join(" ")}
+                  className={langItemClass(lang === "en", "md")}
                   aria-label="Switch language to English"
+                  aria-current={lang === "en" ? "true" : undefined}
                 >
                   EN
                 </Link>
                 <span className="mx-2 text-white/40">·</span>
                 <Link
                   to={langLink("ca")}
-                  className={["px-1.5 text-[14px] uppercase tracking-[0.08em] transition-opacity duration-200 hover:opacity-60", lang === "ca" ? "opacity-100" : "opacity-60"].join(" ")}
+                  className={langItemClass(lang === "ca", "md")}
                   aria-label="Canvia l'idioma a català"
+                  aria-current={lang === "ca" ? "true" : undefined}
                 >
                   CA
                 </Link>
                 <span className="mx-2 text-white/40">·</span>
                 <Link
                   to={langLink("es")}
-                  className={["px-1.5 text-[14px] uppercase tracking-[0.08em] transition-opacity duration-200 hover:opacity-60", lang === "es" ? "opacity-100" : "opacity-60"].join(" ")}
+                  className={langItemClass(lang === "es", "md")}
                   aria-label="Cambiar idioma a español"
+                  aria-current={lang === "es" ? "true" : undefined}
                 >
                   ES
                 </Link>
@@ -182,7 +196,10 @@ export function BottomNav() {
           opacity: isScrolling ? 0 : 1,
           y: isScrolling ? 14 : 0,
         }}
-        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+        transition={{
+          opacity: { duration: 0.12, ease: "easeOut" },
+          y: { duration: 0.22, ease: [0.22, 1, 0.36, 1] },
+        }}
         style={{ pointerEvents: isScrolling ? "none" : "auto" }}
       >
         {/* ── Mobile pill: logo + hamburger ── */}
@@ -194,10 +211,9 @@ export function BottomNav() {
           >
             PALSEC AGCY
           </NavLink>
-          {/* Touch target extended via negative margin trick */}
           <button
             onClick={() => setMenuOpen((o) => !o)}
-            className="relative inline-flex items-center justify-center w-6 h-6 text-white/80 hover:text-white transition-colors duration-200 before:absolute before:content-[''] before:-inset-[10px]"
+            className="ml-auto inline-flex items-center justify-center min-h-[44px] min-w-[44px] text-white/80 hover:text-white transition-colors duration-200"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
           >
@@ -234,24 +250,27 @@ export function BottomNav() {
           <div className="ml-[2px] inline-flex items-center rounded-full border border-white/25 bg-white/5 px-2 py-[6px] text-white/90">
             <Link
               to={langLink("en")}
-              className={["px-1 transition-opacity duration-200 hover:opacity-60", lang === "en" ? "opacity-100" : "opacity-60"].join(" ")}
+              className={langItemClass(lang === "en")}
               aria-label="Switch language to English"
+              aria-current={lang === "en" ? "true" : undefined}
             >
               EN
             </Link>
             <span className="mx-[6px] text-white/40">·</span>
             <Link
               to={langLink("ca")}
-              className={["px-1 transition-opacity duration-200 hover:opacity-60", lang === "ca" ? "opacity-100" : "opacity-60"].join(" ")}
+              className={langItemClass(lang === "ca")}
               aria-label="Canvia l'idioma a català"
+              aria-current={lang === "ca" ? "true" : undefined}
             >
               CA
             </Link>
             <span className="mx-[6px] text-white/40">·</span>
             <Link
               to={langLink("es")}
-              className={["px-1 transition-opacity duration-200 hover:opacity-60", lang === "es" ? "opacity-100" : "opacity-60"].join(" ")}
+              className={langItemClass(lang === "es")}
               aria-label="Cambiar idioma a español"
+              aria-current={lang === "es" ? "true" : undefined}
             >
               ES
             </Link>

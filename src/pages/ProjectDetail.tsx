@@ -539,7 +539,7 @@ export function ProjectDetail() {
                   <div className="mt-4 flex items-center justify-center gap-10 text-[18px] font-light leading-none text-ink">
                     <button
                       type="button"
-                      className="px-2 transition-opacity duration-200 hover:opacity-40"
+                      className="cursor-pointer px-2 transition-opacity duration-200 hover:opacity-40"
                       aria-label="Previous image"
                       onClick={goPrev}
                     >
@@ -547,7 +547,7 @@ export function ProjectDetail() {
                     </button>
                     <button
                       type="button"
-                      className="px-2 transition-opacity duration-200 hover:opacity-40"
+                      className="cursor-pointer px-2 transition-opacity duration-200 hover:opacity-40"
                       aria-label="Next image"
                       onClick={goNext}
                     >
@@ -585,10 +585,11 @@ export function ProjectDetail() {
                         key={seed}
                         type="button"
                         onClick={() => setIndex(i)}
-                        className={`h-[92px] overflow-hidden rounded-[2px] border bg-white ${
+                        className={`h-[92px] min-w-[44px] cursor-pointer overflow-hidden rounded-[2px] border bg-white transition-opacity duration-200 hover:opacity-100 ${
                           i === safeIndex ? "border-ink opacity-100" : "border-frame opacity-60"
                         }`}
                         aria-label={`Image ${i + 1}`}
+                        aria-current={i === safeIndex ? "true" : undefined}
                       >
                         <Picture
                           src={imageSrc(seed, 320, 180)}
