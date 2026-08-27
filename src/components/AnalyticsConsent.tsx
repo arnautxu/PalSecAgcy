@@ -95,11 +95,13 @@ export function AnalyticsConsent({ lang }: { lang: Lang }) {
       const href = link.href
       const analyticsWindow = window as AnalyticsWindow
       if (href.startsWith("mailto:")) {
-        analyticsWindow.gtag?.("event", "contact_email_click", {
+        const contactEvent = {
           page_path: `${location.pathname}${location.search}`,
           link_url: href,
           transport_type: "beacon",
-        })
+        }
+        analyticsWindow.gtag?.("event", "contact_email_click", contactEvent)
+        analyticsWindow.gtag?.("event", "ads_conversion_Contacte_1", contactEvent)
         return
       }
 
