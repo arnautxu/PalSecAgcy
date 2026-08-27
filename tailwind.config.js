@@ -13,10 +13,10 @@ export default {
         mono: ['"Geist Mono"', "ui-monospace", "monospace"],
       },
       fontSize: {
-        nav: "8px",
-        body: "10px",
-        bodymd: "11px",
-        bodyLg: "12.5px",
+        nav: "11px",
+        body: "14px",
+        bodymd: "15px",
+        bodyLg: "16px",
       },
       lineHeight: {
         comfortable: "1.8",

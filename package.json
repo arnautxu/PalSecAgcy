@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/convert-images.mjs && tsc --noEmit && vite build && node scripts/prerender.mjs",
+    "build": "node scripts/convert-images.mjs && node scripts/generate-image-dimensions.mjs && tsc --noEmit && vite build && npm run prerender && npm run seo:verify",
+    "prerender": "node --import tsx scripts/prerender.mjs",
+    "seo:verify": "node scripts/verify-seo.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -17,8 +19,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-helmet-async": "^3.0.0",
-    "react-router-dom": "^6.28.0",
-    "sharp": "^0.34.5",
+    "react-router-dom": "^7.18.2",
     "three": "^0.184.0"
   },
   "devDependencies": {
@@ -27,9 +28,11 @@
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
-    "postcss": "^8.4.49",
+    "postcss": "^8.5.26",
+    "sharp": "^0.35.3",
     "tailwindcss": "^3.4.16",
+    "tsx": "^4.20.5",
     "typescript": "~5.6.3",
-    "vite": "^6.0.3"
+    "vite": "^6.4.3"
   }
 }

@@ -12,17 +12,94 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/",
+      "has": [{ "type": "host", "value": "palsec.agency" }],
+      "destination": "https://www.palsec.agency/en",
+      "permanent": true
+    },
+    {
       "source": "/(.*)",
       "has": [{ "type": "host", "value": "palsec.agency" }],
       "destination": "https://www.palsec.agency/$1",
       "permanent": true
+    },
+    {
+      "source": "/",
+      "destination": "/en",
+      "permanent": true
+    },
+    {
+      "source": "/services",
+      "destination": "/en/services",
+      "permanent": true
+    },
+    {
+      "source": "/projects",
+      "destination": "/en/projects",
+      "permanent": true
+    },
+    {
+      "source": "/about-us",
+      "destination": "/en/about-us",
+      "permanent": true
+    },
+    {
+      "source": "/privacy",
+      "destination": "/en/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/legal-notice",
+      "destination": "/en/legal-notice",
+      "permanent": true
+    },
+    {
+      "source": "/project/cms",
+      "destination": "/en/projects",
+      "permanent": true
+    },
+    {
+      "source": "/project/estudi-dental-carrera",
+      "destination": "/en/projects",
+      "permanent": true
+    },
+    {
+      "source": "/ca/project/cms",
+      "destination": "/ca/projects",
+      "permanent": true
+    },
+    {
+      "source": "/en/project/cms",
+      "destination": "/en/projects",
+      "permanent": true
+    },
+    {
+      "source": "/es/project/cms",
+      "destination": "/es/projects",
+      "permanent": true
+    },
+    {
+      "source": "/ca/project/estudi-dental-carrera",
+      "destination": "/ca/projects",
+      "permanent": true
+    },
+    {
+      "source": "/en/project/estudi-dental-carrera",
+      "destination": "/en/projects",
+      "permanent": true
+    },
+    {
+      "source": "/es/project/estudi-dental-carrera",
+      "destination": "/es/projects",
+      "permanent": true
     }
   ],
   "rewrites": [
-    { "source": "/", "destination": "/index.html" },
     { "source": "/(ca|en|es)", "destination": "/index.html" },
     { "source": "/(ca|en|es)/(services|projects|about-us)", "destination": "/index.html" },
-    { "source": "/(ca|en|es)/project/(arkuos|cms|el-xiringuito|enteza|estudi-dental-carrera|galeon|gent-gran-de-calonge-i-sant-antoni|logoteca|vira)", "destination": "/index.html" }
+    { "source": "/(ca|en|es)/services/(brand-strategy|branding-visual-identity|web-design-digital-products)", "destination": "/index.html" },
+    { "source": "/(ca|en|es)/(privacy|legal-notice)", "destination": "/index.html" },
+    { "source": "/(ca|en|es)/project/(arkuos|el-xiringuito|enteza|galeon|gent-gran-de-calonge-i-sant-antoni|logoteca|vira)", "destination": "/index.html" }
   ],
   "headers": [
     {
@@ -38,12 +115,25 @@
       ]
     },
     {
+      "source": "/(media|brand)/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }
+      ]
+    },
+    {
+      "source": "/hero-(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }
+      ]
+    },
+    {
       "source": "/(.*)",
       "headers": [
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
         { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), interest-cohort=()" },
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" }
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://picsum.photos; media-src 'self'; font-src 'self' data:; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com; form-action 'self'" }
       ]
     }
   ]

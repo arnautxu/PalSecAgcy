@@ -5,6 +5,8 @@ import { Home } from "./pages/Home"
 import { NotFound } from "./pages/NotFound"
 import { Projects } from "./pages/Projects"
 import { Services } from "./pages/Services"
+import { ServiceDetail } from "./pages/ServiceDetail"
+import { LegalPage } from "./pages/LegalPage"
 import { ProjectDetail } from "./pages/ProjectDetail"
 import { detectLang, isLang, langPath } from "@/i18n/lang"
 
@@ -28,8 +30,11 @@ export default function App() {
       <Route path="/:lang" element={<RootLayout />}>
         <Route index element={<Home />} />
         <Route path="services" element={<Services />} />
+        <Route path="services/:serviceSlug" element={<ServiceDetail />} />
         <Route path="projects" element={<Projects />} />
         <Route path="about-us" element={<AboutUs />} />
+        <Route path="privacy" element={<LegalPage kind="privacy" />} />
+        <Route path="legal-notice" element={<LegalPage kind="legal-notice" />} />
         <Route path="project/:slug" element={<ProjectDetail />} />
         <Route path="*" element={<NotFound />} />
       </Route>

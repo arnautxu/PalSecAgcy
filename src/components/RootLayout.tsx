@@ -2,6 +2,7 @@ import { AnimatePresence, LayoutGroup, motion } from "framer-motion"
 import { Outlet, useLocation } from "react-router-dom"
 import { BottomNav } from "./BottomNav"
 import { ErrorBoundary } from "./ErrorBoundary"
+import { AnalyticsConsent } from "./AnalyticsConsent"
 import { isLang } from "@/i18n/lang"
 
 // Page transition: blur/fade + subtle depth
@@ -29,11 +30,15 @@ const warp = {
 export function RootLayout() {
   const location = useLocation()
   const pathnameSegs = location.pathname.split("/").filter(Boolean)
+  const lang = isLang(pathnameSegs[0]) ? pathnameSegs[0] : "en"
   const restPath = isLang(pathnameSegs[0]) ? `/${pathnameSegs.slice(1).join("/")}` : location.pathname
   const navOnTop =
     restPath === "/projects" ||
     restPath === "/services" ||
     restPath === "/about-us" ||
+    restPath === "/privacy" ||
+    restPath === "/legal-notice" ||
+    restPath.startsWith("/services/") ||
     restPath.startsWith("/project/")
 
   return (
@@ -80,6 +85,7 @@ export function RootLayout() {
           </div>
         </div>
       </LayoutGroup>
+      <AnalyticsConsent lang={lang} />
     </div>
   )
 }

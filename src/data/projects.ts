@@ -62,7 +62,8 @@ export const PROJECTS: Project[] = [
         "/media/projects/logoteca/algo_2-22.jpg",
         "/media/projects/logoteca/algo_2-23.jpg",
       ],
-      thumb: "/media/projects/logoteca/thumb.gif",
+      thumb: "/media/projects/logoteca/algo_2-01.jpg",
+      thumbVideo: "/media/projects/logoteca/thumb.mp4",
     },
   },
   {
@@ -175,6 +176,7 @@ export const PROJECTS: Project[] = [
     title: "ESTUDI DENTAL CARRERA",
     carouselSeeds: ["carrera-1", "carrera-2", "carrera-3", "carrera-4"],
     thumbSeed: "carrera-thumb",
+    comingSoon: true,
     localImages: {
       thumbVideo: "/media/projects/estudi-dental-carrera/thumb.mp4",
     },

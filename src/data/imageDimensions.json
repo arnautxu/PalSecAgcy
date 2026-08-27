@@ -1,0 +1,598 @@
+{
+  "/brand/palsec-negative.png": {
+    "width": 1884,
+    "height": 853
+  },
+  "/brand/palsec-positive.jpg": {
+    "width": 1722,
+    "height": 705
+  },
+  "/hero-home-poster.jpg": {
+    "width": 1080,
+    "height": 1920
+  },
+  "/hero-home-poster.webp": {
+    "width": 1080,
+    "height": 1920
+  },
+  "/media/projects/ai-lab/thumb.jpg": {
+    "width": 2250,
+    "height": 2813
+  },
+  "/media/projects/ai-lab/thumb.webp": {
+    "width": 2250,
+    "height": 2813
+  },
+  "/media/projects/arkuos/1.jpg": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/arkuos/1.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/arkuos/1.webp": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/arkuos/2.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/arkuos/2.webp": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/arkuos/3.png": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/arkuos/3.webp": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/arkuos/4.png": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/arkuos/4.webp": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/arkuos/5.png": {
+    "width": 667,
+    "height": 667
+  },
+  "/media/projects/arkuos/5.webp": {
+    "width": 667,
+    "height": 667
+  },
+  "/media/projects/cms/01-mupi.png": {
+    "width": 1024,
+    "height": 682
+  },
+  "/media/projects/cms/01-mupi.webp": {
+    "width": 1024,
+    "height": 682
+  },
+  "/media/projects/cms/02-mockup-pedralbes.png": {
+    "width": 1024,
+    "height": 576
+  },
+  "/media/projects/cms/02-mockup-pedralbes.webp": {
+    "width": 1024,
+    "height": 576
+  },
+  "/media/projects/cms/03-mockup-wall.png": {
+    "width": 1024,
+    "height": 682
+  },
+  "/media/projects/cms/03-mockup-wall.webp": {
+    "width": 1024,
+    "height": 682
+  },
+  "/media/projects/cms/04-mockup-sagrada.png": {
+    "width": 1024,
+    "height": 682
+  },
+  "/media/projects/cms/04-mockup-sagrada.webp": {
+    "width": 1024,
+    "height": 682
+  },
+  "/media/projects/cms/05-instagram.png": {
+    "width": 1024,
+    "height": 682
+  },
+  "/media/projects/cms/05-instagram.webp": {
+    "width": 1024,
+    "height": 682
+  },
+  "/media/projects/cms/06-ara.png": {
+    "width": 1024,
+    "height": 688
+  },
+  "/media/projects/cms/06-ara.webp": {
+    "width": 1024,
+    "height": 688
+  },
+  "/media/projects/cms/07-el-pais.png": {
+    "width": 691,
+    "height": 1024
+  },
+  "/media/projects/cms/07-el-pais.webp": {
+    "width": 691,
+    "height": 1024
+  },
+  "/media/projects/el-xiringuito/1.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/el-xiringuito/1.webp": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/el-xiringuito/2.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/el-xiringuito/2.webp": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/el-xiringuito/3.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/el-xiringuito/3.webp": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/el-xiringuito/4.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/el-xiringuito/4.webp": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/el-xiringuito/5.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/el-xiringuito/5.webp": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/enteza/1.png": {
+    "width": 4500,
+    "height": 5625
+  },
+  "/media/projects/enteza/1.webp": {
+    "width": 4500,
+    "height": 5625
+  },
+  "/media/projects/enteza/2.jpg": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/enteza/2.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/enteza/2.webp": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/enteza/3.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/enteza/3.webp": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/enteza/4.png": {
+    "width": 4500,
+    "height": 5625
+  },
+  "/media/projects/enteza/4.webp": {
+    "width": 4500,
+    "height": 5625
+  },
+  "/media/projects/enteza/5.png": {
+    "width": 4500,
+    "height": 5625
+  },
+  "/media/projects/enteza/5.webp": {
+    "width": 4500,
+    "height": 5625
+  },
+  "/media/projects/galeon/01.png": {
+    "width": 4500,
+    "height": 5625
+  },
+  "/media/projects/galeon/01.webp": {
+    "width": 4500,
+    "height": 5625
+  },
+  "/media/projects/galeon/02.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/galeon/02.webp": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/galeon/03.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/galeon/03.webp": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/galeon/04.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/galeon/04.webp": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/gent-gran/01.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/gent-gran/01.webp": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/gent-gran/02.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/gent-gran/02.webp": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/gent-gran/03.png": {
+    "width": 4500,
+    "height": 5625
+  },
+  "/media/projects/gent-gran/03.webp": {
+    "width": 4500,
+    "height": 5625
+  },
+  "/media/projects/logoteca/algo_2-01.jpg": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-01.webp": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-02.jpg": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-02.webp": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-03.jpg": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-03.webp": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-04.jpg": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-04.webp": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-05.jpg": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-05.webp": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-06.jpg": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-06.webp": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-07.jpg": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-07.webp": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-08.jpg": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-08.webp": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-09.jpg": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-09.webp": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-10.jpg": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-10.webp": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-11.jpg": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-11.webp": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-12.jpg": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-12.webp": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-13.jpg": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-13.webp": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-14.jpg": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-14.webp": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-15.jpg": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-15.webp": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-16.jpg": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-16.webp": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-17.jpg": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-17.webp": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-19.jpg": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-19.webp": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-20.jpg": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-20.webp": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-21.jpg": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-21.webp": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-22.jpg": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-22.webp": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-23.jpg": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/algo_2-23.webp": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/media/projects/logoteca/thumb.gif": {
+    "width": 920,
+    "height": 518
+  },
+  "/media/projects/vira/01.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/vira/01.webp": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/vira/02.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/vira/02.webp": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/vira/03.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/vira/03.webp": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/vira/04.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/media/projects/vira/04.webp": {
+    "width": 819,
+    "height": 1024
+  },
+  "/og/palsec-og.png": {
+    "width": 1200,
+    "height": 630
+  },
+  "/projects/ai-lab/Sin título-3.png": {
+    "width": 2250,
+    "height": 2813
+  },
+  "/projects/arkuos/1.jpg": {
+    "width": 819,
+    "height": 1024
+  },
+  "/projects/arkuos/1.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/projects/arkuos/2.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/projects/arkuos/3.png": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/projects/arkuos/4.png": {
+    "width": 2250,
+    "height": 2812
+  },
+  "/projects/arkuos/5.png": {
+    "width": 667,
+    "height": 667
+  },
+  "/projects/el-xiringuito/1.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/projects/el-xiringuito/2.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/projects/el-xiringuito/3.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/projects/el-xiringuito/4.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/projects/el-xiringuito/5.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/projects/enteza/1.png": {
+    "width": 4500,
+    "height": 5625
+  },
+  "/projects/enteza/2.jpg": {
+    "width": 819,
+    "height": 1024
+  },
+  "/projects/enteza/2.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/projects/enteza/3.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/projects/enteza/4.png": {
+    "width": 4500,
+    "height": 5625
+  },
+  "/projects/enteza/5.png": {
+    "width": 4500,
+    "height": 5625
+  },
+  "/projects/galeon/01.png": {
+    "width": 4500,
+    "height": 5625
+  },
+  "/projects/galeon/02.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/projects/galeon/03.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/projects/galeon/04.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/projects/gent-gran/01.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/projects/gent-gran/02.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/projects/gent-gran/03.png": {
+    "width": 4500,
+    "height": 5625
+  },
+  "/projects/vira/01.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/projects/vira/02.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/projects/vira/03.png": {
+    "width": 819,
+    "height": 1024
+  },
+  "/projects/vira/04.png": {
+    "width": 819,
+    "height": 1024
+  }
+}

@@ -55,8 +55,8 @@ export function BottomNav() {
 
   const langItemClass = (active: boolean, size: "sm" | "md" = "sm") =>
     [
-      size === "md" ? "px-2 text-[14px]" : "px-1",
-      "uppercase tracking-[0.08em] transition-opacity duration-200",
+      size === "md" ? "px-2 text-[14px]" : "px-1 text-[11px]",
+      "inline-flex min-h-[48px] items-center uppercase tracking-[0.08em] transition-opacity duration-200",
       active
         ? "opacity-100 underline underline-offset-4 decoration-white/70"
         : "opacity-60 hover:opacity-100",
@@ -115,7 +115,7 @@ export function BottomNav() {
                   <NavLink
                     to={to}
                     className={({ isActive }) => [
-                      "block py-3 text-[16px] uppercase tracking-[0.1em] font-normal",
+                      "flex min-h-[48px] items-center py-3 text-[16px] uppercase tracking-[0.1em] font-normal",
                       "transition-[opacity,color] duration-200 text-white hover:text-ink hover:opacity-100",
                       isActive ? "opacity-70" : "opacity-100",
                     ].join(" ")}
@@ -168,7 +168,7 @@ export function BottomNav() {
               <motion.a
                 href={mailtoProjectInquiryHref(lang)}
                 className={[
-                  "inline-flex items-center min-h-[44px]",
+                "inline-flex items-center min-h-[48px]",
                   "rounded-full border px-6 py-2.5",
                   "text-[14px] uppercase tracking-[0.1em]",
                   "transition-[opacity,color,background-color,border-color] duration-200",
@@ -213,7 +213,7 @@ export function BottomNav() {
           </NavLink>
           <button
             onClick={() => setMenuOpen((o) => !o)}
-            className="ml-auto inline-flex items-center justify-center min-h-[44px] min-w-[44px] text-white/80 hover:text-white transition-colors duration-200"
+            className="ml-auto inline-flex min-h-[48px] min-w-[48px] items-center justify-center text-white/80 transition-colors duration-200 hover:text-white"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
           >

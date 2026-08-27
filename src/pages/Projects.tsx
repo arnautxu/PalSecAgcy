@@ -8,6 +8,8 @@ import { useLang } from "@/i18n/useLang"
 import { t } from "@/i18n/strings"
 import { Seo } from "@/components/Seo"
 import { Picture } from "@/components/Picture"
+import { LazyAutoplayVideo } from "@/components/LazyAutoplayVideo"
+import { PROJECTS_META } from "@/lib/seoMeta"
 
 const COLOR_ACTIVE = "#ff1a1a"
 const COLOR_REST = "#282828"
@@ -72,20 +74,18 @@ function ProjectCard({
       className="group/media relative overflow-hidden rounded-[2px] border border-frame bg-white transition-shadow duration-300 group-hover:shadow-[0_6px_24px_rgba(0,0,0,0.06)]"
     >
       {videoSrc ? (
-        <video
+        <LazyAutoplayVideo
           className="aspect-[3/4] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.015]"
           src={videoSrc}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
+          poster={imageSrc}
+          aria-label={`${title} — ${lang === "ca" ? "projecte de PALSEC AGCY" : lang === "es" ? "proyecto de PALSEC AGCY" : "project by PALSEC AGCY"}`}
         />
       ) : (
         <Picture
           src={imageSrc}
-          alt=""
+          alt={`${title} — ${lang === "ca" ? "projecte de PALSEC AGCY" : lang === "es" ? "proyecto de PALSEC AGCY" : "project by PALSEC AGCY"}`}
           className={`${mediaClass} transition-transform duration-500 ease-out group-hover:scale-[1.015]`}
+          sizes="(max-width: 767px) calc(100vw - 40px), 33vw"
           loading="lazy"
         />
       )}
@@ -156,8 +156,9 @@ export function Projects() {
   return (
     <PageFrame className="relative">
       <Seo
-        title={t(lang, "projects.title")}
-        description={t(lang, "projects.seoDesc")}
+        title={PROJECTS_META[lang].title}
+        bare
+        description={PROJECTS_META[lang].description}
         path={pathname}
         lang={lang}
         isProjectsList
@@ -195,4 +196,3 @@ export function Projects() {
     </PageFrame>
   )
 }
-

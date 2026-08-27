@@ -1,0 +1,192 @@
+{
+  "version": "1.9.0",
+  "seed_keyword": "diseño web Girona",
+  "created_at": "2026-08-27T11:00:00+02:00",
+  "locale": "Girona, Catalonia, Spain",
+  "language_strategy": ["ca", "es", "en"],
+  "volume_source": "unavailable; priorities use observed SERP intent and business fit",
+  "keyword_expansion": [
+    "diseño web Girona",
+    "disseny web Girona",
+    "web design Girona",
+    "agencia diseño web Girona",
+    "agència disseny web Girona",
+    "estudio diseño web Girona",
+    "empresa diseño web Girona",
+    "diseñador web Girona",
+    "diseño web profesional Girona",
+    "diseño web a medida Girona",
+    "desarrollo web Girona",
+    "páginas web Girona",
+    "crear página web Girona",
+    "presupuesto diseño web Girona",
+    "precio página web Girona",
+    "cuánto cuesta una página web en Girona",
+    "coste web corporativa Girona",
+    "tarifas diseño web Girona",
+    "qué incluye diseño web profesional",
+    "qué debe incluir presupuesto página web",
+    "fases proyecto diseño web",
+    "cuánto tarda crear página web",
+    "contenido necesario para una web",
+    "dominio hosting mantenimiento web",
+    "diseño web a medida vs plantilla",
+    "WordPress vs web a medida",
+    "agencia web vs freelance",
+    "cómo elegir agencia diseño web",
+    "errores al contratar diseño web",
+    "propiedad código fuente página web",
+    "rediseño web Girona",
+    "cuándo rediseñar una página web",
+    "checklist rediseño web",
+    "migración web sin perder SEO",
+    "web multilingüe Costa Brava",
+    "diseño web para hoteles Costa Brava",
+    "web para restaurantes Costa Brava",
+    "página web turismo Girona",
+    "web en catalán castellano inglés",
+    "SEO internacional Costa Brava"
+  ],
+  "pillar": {
+    "id": "pillar",
+    "title": "Guia de disseny web a Girona: procés, decisions i resultats",
+    "keyword": "diseño web Girona",
+    "secondaryKeywords": ["disseny web Girona", "web design Girona", "agencia diseño web Girona", "diseño web a medida Girona"],
+    "intent": "commercial-informational",
+    "volume": 0,
+    "template": "ultimate-guide",
+    "wordCount": 2800,
+    "url": "/{lang}/resources/web-design-girona-guide",
+    "status": "planned"
+  },
+  "clusters": [
+    {
+      "name": "Pressupost i model de producció",
+      "color": "#ff3131",
+      "posts": [
+        {
+          "id": "cost",
+          "title": "Quant costa una pàgina web a Girona? Factors i pressupost",
+          "keyword": "cuánto cuesta una página web en Girona",
+          "secondaryKeywords": ["precio página web Girona", "presupuesto diseño web Girona", "coste web corporativa Girona"],
+          "intent": "commercial",
+          "volume": 0,
+          "template": "explainer",
+          "wordCount": 1500,
+          "url": "/{lang}/resources/website-cost-girona",
+          "status": "planned"
+        },
+        {
+          "id": "custom-vs-template",
+          "title": "Web a mida o plantilla: com decidir sense pagar dues vegades",
+          "keyword": "diseño web a medida vs plantilla",
+          "secondaryKeywords": ["WordPress vs web a medida", "agencia web vs freelance", "propiedad código fuente página web"],
+          "intent": "commercial",
+          "volume": 0,
+          "template": "comparison",
+          "wordCount": 1500,
+          "url": "/{lang}/resources/custom-web-vs-template",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "name": "Planificació i renovació",
+      "color": "#282828",
+      "posts": [
+        {
+          "id": "scope",
+          "title": "Què ha d'incloure un projecte de disseny web professional",
+          "keyword": "qué incluye diseño web profesional",
+          "secondaryKeywords": ["fases proyecto diseño web", "contenido necesario para una web", "dominio hosting mantenimiento web"],
+          "intent": "informational-commercial",
+          "volume": 0,
+          "template": "checklist",
+          "wordCount": 1600,
+          "url": "/{lang}/resources/website-project-scope",
+          "status": "planned"
+        },
+        {
+          "id": "redesign",
+          "title": "Checklist de redisseny web: quan renovar i com protegir el SEO",
+          "keyword": "checklist rediseño web",
+          "secondaryKeywords": ["cuándo rediseñar una página web", "rediseño web Girona", "migración web sin perder SEO"],
+          "intent": "informational",
+          "volume": 0,
+          "template": "checklist",
+          "wordCount": 1500,
+          "url": "/{lang}/resources/website-redesign-checklist",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "name": "Negocis internacionals de Costa Brava",
+      "color": "#8b6f47",
+      "posts": [
+        {
+          "id": "multilingual",
+          "title": "Web multilingüe a Costa Brava: arquitectura, SEO i conversió",
+          "keyword": "web multilingüe Costa Brava",
+          "secondaryKeywords": ["web en catalán castellano inglés", "página web turismo Girona", "SEO internacional Costa Brava"],
+          "intent": "commercial-informational",
+          "volume": 0,
+          "template": "ultimate-guide",
+          "wordCount": 1700,
+          "url": "/{lang}/resources/multilingual-website-costa-brava",
+          "status": "planned"
+        }
+      ]
+    }
+  ],
+  "links": [
+    { "from": "pillar", "to": "cost", "type": "mandatory", "anchor": "preu d'una pàgina web a Girona" },
+    { "from": "cost", "to": "pillar", "type": "mandatory", "anchor": "guia de disseny web a Girona" },
+    { "from": "pillar", "to": "custom-vs-template", "type": "mandatory", "anchor": "web a mida o plantilla" },
+    { "from": "custom-vs-template", "to": "pillar", "type": "mandatory", "anchor": "disseny web a Girona" },
+    { "from": "pillar", "to": "scope", "type": "mandatory", "anchor": "què inclou un projecte web" },
+    { "from": "scope", "to": "pillar", "type": "mandatory", "anchor": "guia de disseny web professional" },
+    { "from": "pillar", "to": "redesign", "type": "mandatory", "anchor": "checklist de redisseny web" },
+    { "from": "redesign", "to": "pillar", "type": "mandatory", "anchor": "disseny web a Girona" },
+    { "from": "pillar", "to": "multilingual", "type": "mandatory", "anchor": "web multilingüe a Costa Brava" },
+    { "from": "multilingual", "to": "pillar", "type": "mandatory", "anchor": "guia de disseny web a Girona" },
+    { "from": "cost", "to": "custom-vs-template", "type": "within-cluster", "anchor": "web a mida o plantilla" },
+    { "from": "custom-vs-template", "to": "cost", "type": "within-cluster", "anchor": "factors que determinen el pressupost" },
+    { "from": "cost", "to": "scope", "type": "cross-cluster", "anchor": "abast d'un projecte web" },
+    { "from": "scope", "to": "cost", "type": "cross-cluster", "anchor": "com es calcula el pressupost web" },
+    { "from": "custom-vs-template", "to": "scope", "type": "cross-cluster", "anchor": "lliurables i responsabilitats" },
+    { "from": "scope", "to": "custom-vs-template", "type": "cross-cluster", "anchor": "decidir entre plantilla i sistema a mida" },
+    { "from": "scope", "to": "redesign", "type": "within-cluster", "anchor": "planificar un redisseny sense perdre SEO" },
+    { "from": "redesign", "to": "scope", "type": "within-cluster", "anchor": "abast i fases del projecte" },
+    { "from": "redesign", "to": "multilingual", "type": "cross-cluster", "anchor": "arquitectura multilingüe" },
+    { "from": "multilingual", "to": "redesign", "type": "cross-cluster", "anchor": "migrar idiomes sense perdre visibilitat" },
+    { "from": "multilingual", "to": "custom-vs-template", "type": "cross-cluster", "anchor": "tecnologia adequada per a una web multilingüe" },
+    { "from": "custom-vs-template", "to": "multilingual", "type": "cross-cluster", "anchor": "requisits d'una web en diversos idiomes" }
+  ],
+  "serp_matrix": {
+    "method": "representative WebSearch overlap; long-tail variants with the same head term were merged according to the skip rules",
+    "keywords": [
+      "diseño web Girona",
+      "cuánto cuesta una página web en Girona",
+      "diseño web a medida vs plantilla",
+      "qué incluye diseño web profesional",
+      "checklist rediseño web",
+      "web multilingüe Costa Brava"
+    ],
+    "scores": [
+      [10, 2, 3, 4, 1, 0],
+      [2, 10, 4, 3, 1, 0],
+      [3, 4, 10, 3, 1, 1],
+      [4, 3, 3, 10, 4, 1],
+      [1, 1, 1, 4, 10, 2],
+      [0, 0, 1, 1, 2, 10]
+    ]
+  },
+  "scorecard": {
+    "coverage": 0,
+    "linkDensity": 0,
+    "orphanPages": 0,
+    "cannibalization": 0,
+    "contentGaps": 6
+  }
+}

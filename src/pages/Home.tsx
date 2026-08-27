@@ -4,16 +4,19 @@ import { publicUrl } from "@/utils/publicUrl"
 import { useLang } from "@/i18n/useLang"
 import { t } from "@/i18n/strings"
 import { Seo } from "@/components/Seo"
+import { Link } from "react-router-dom"
+import { getAllServicePages } from "@/content/servicePages"
 
 const VIDEO_SRC = publicUrl("/hero-home.mp4")
 const VIDEO_SRC_MOBILE = publicUrl("/hero-home-720.mp4")
-const VIDEO_POSTER = publicUrl("/hero-home-poster.jpg")
+const VIDEO_POSTER = publicUrl("/hero-home-poster.webp")
 
 export function Home() {
   const lang = useLang()
   const { pathname } = useLocation()
   const videoRef = useRef<HTMLVideoElement>(null)
   const [paused, setPaused] = useState(false)
+  const services = getAllServicePages(lang)
 
   useEffect(() => {
     const el = videoRef.current
@@ -72,7 +75,7 @@ export function Home() {
       />
 
       {/* Value proposition */}
-      <div className="fixed bottom-[90px] left-6 z-[60] max-w-[min(360px,calc(100vw-80px))]">
+      <div className="fixed bottom-[104px] left-6 z-[40] max-w-[min(760px,calc(100vw-48px))]">
         <p className="mb-2 text-nav uppercase tracking-nav text-white/50">
           PALSEC AGCY
         </p>
@@ -82,6 +85,17 @@ export function Home() {
         >
           {t(lang, "home.tagline")}
         </p>
+        <nav aria-label={lang === "ca" ? "Serveis destacats" : lang === "es" ? "Servicios destacados" : "Featured services"} className="mt-4 flex max-w-[680px] flex-wrap gap-2">
+          {services.map((service) => (
+            <Link
+              key={service.slug}
+              to={`/${lang}/services/${service.slug}`}
+              className="rounded-full border border-white/30 bg-black/15 px-3 py-2 text-[10px] uppercase tracking-nav text-white/85 backdrop-blur-[4px] transition-colors hover:border-white/70 hover:text-white"
+            >
+              {service.title}
+            </Link>
+          ))}
+        </nav>
       </div>
 
       {/* Play/pause — extended touch target via pseudo-element */}
@@ -89,7 +103,7 @@ export function Home() {
         type="button"
         aria-pressed={paused}
         aria-label={paused ? t(lang, "home.play") : t(lang, "home.pause")}
-        className="relative text-nav fixed bottom-[58px] left-6 z-[60] uppercase tracking-nav text-white/50 transition-opacity duration-200 hover:text-white/90 before:absolute before:content-[''] before:-inset-3"
+        className="fixed bottom-[112px] right-6 z-[40] min-h-[48px] min-w-[48px] text-[11px] uppercase tracking-nav text-white/60 transition-opacity duration-200 hover:text-white/90 before:absolute before:content-[''] before:-inset-3 md:bottom-[62px] md:left-6 md:right-auto"
         onClick={() => setPaused((p) => !p)}
       >
         {paused ? t(lang, "home.play") : t(lang, "home.pause")}

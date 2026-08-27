@@ -1,4 +1,5 @@
 import type { ImgHTMLAttributes } from "react"
+import imageDimensions from "../data/imageDimensions.json"
 
 /**
  * Drop-in replacement for <img> that serves a WebP sibling when one exists.
@@ -25,17 +26,45 @@ type PictureProps = ImgHTMLAttributes<HTMLImageElement> & {
   alt?: string
 }
 
+type ImageDimension = { width: number; height: number }
+
+function intrinsicDimensions(src: string): ImageDimension | undefined {
+  const localPath = src.split("?")[0]
+  return (imageDimensions as Record<string, ImageDimension>)[localPath]
+}
+
+function responsiveWebpSrcSet(src: string): string | undefined {
+  const localPath = src.split("?")[0]
+  if (!localPath.startsWith("/media/projects/")) return undefined
+
+  const preferredWebp = webpSiblingOf(localPath) ?? (/\.webp$/i.test(localPath) ? localPath : null)
+  const dimensions = intrinsicDimensions(preferredWebp ?? localPath)
+  if (!preferredWebp || !dimensions) return undefined
+
+  const candidates = [160, 720, 1280]
+    .filter((width) => dimensions.width > width)
+    .map((width) => `${preferredWebp.replace(/\.webp$/i, `.${width}.webp`)} ${width}w`)
+
+  candidates.push(`${preferredWebp} ${dimensions.width}w`)
+  return candidates.join(", ")
+}
+
 export function Picture({ src, alt = "", ...imgProps }: PictureProps) {
   const webp = webpSiblingOf(src)
+  const dimensions = intrinsicDimensions(src)
+  const responsiveSrcSet = responsiveWebpSrcSet(src)
+  const width = imgProps.width ?? dimensions?.width
+  const height = imgProps.height ?? dimensions?.height
+  const props = { ...imgProps, width, height }
   if (!webp) {
     // eslint-disable-next-line jsx-a11y/alt-text
-    return <img src={src} alt={alt} {...imgProps} />
+    return <img src={src} alt={alt} srcSet={responsiveSrcSet} {...props} />
   }
   return (
     <picture>
-      <source srcSet={webp} type="image/webp" />
+      <source srcSet={responsiveSrcSet ?? webp} sizes={imgProps.sizes} type="image/webp" />
       {/* eslint-disable-next-line jsx-a11y/alt-text */}
-      <img src={src} alt={alt} {...imgProps} />
+      <img src={src} alt={alt} {...props} />
     </picture>
   )
 }
