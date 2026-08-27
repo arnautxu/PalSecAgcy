@@ -44,7 +44,9 @@ function loadAnalytics() {
   if (analyticsWindow.gtag) return
 
   analyticsWindow.dataLayer = analyticsWindow.dataLayer ?? []
-  analyticsWindow.gtag = (...args: unknown[]) => analyticsWindow.dataLayer?.push(args)
+  analyticsWindow.gtag = function gtag() {
+    analyticsWindow.dataLayer?.push(arguments)
+  }
   analyticsWindow.gtag("js", new Date())
   analyticsWindow.gtag("config", MEASUREMENT_ID, {
     send_page_view: false,
