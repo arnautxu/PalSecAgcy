@@ -107,9 +107,9 @@ export const ABOUT_META: Record<Lang, PageMeta> = {
 }
 
 export const ABOUT_TEAM_COPY: Record<Lang, string> = {
-  ca: "PALSEC AGCY es va fundar el 2025. L'equip públic de l'estudi està format per Arnau Piñol Olabegoya i Guillem Ferrando Codina.",
-  en: "PALSEC AGCY was founded in 2025. The studio's public team includes Arnau Piñol Olabegoya and Guillem Ferrando Codina.",
-  es: "PALSEC AGCY se fundó en 2025. El equipo público del estudio está formado por Arnau Piñol Olabegoya y Guillem Ferrando Codina.",
+  ca: "PALSEC AGCY es va fundar el 2025.",
+  en: "PALSEC AGCY was founded in 2025.",
+  es: "PALSEC AGCY se fundó en 2025.",
 }
 
 export const ABOUT_APPROACH = {
@@ -461,17 +461,6 @@ export function buildOrganizationSchema() {
     sameAs: [
       "https://www.linkedin.com/company/palsec-agency",
       "https://www.instagram.com/palsec.agency/",
-    ],
-    member: [
-      {
-        "@type": "Person",
-        name: "Arnau Piñol Olabegoya",
-        sameAs: "https://es.linkedin.com/in/arnau-pi%C3%B1ol-olabegoya-722329158",
-      },
-      {
-        "@type": "Person",
-        name: "Guillem Ferrando Codina",
-      },
     ],
     areaServed: ["Girona, Spain", "Costa Brava, Spain", "Worldwide"],
     knowsAbout: ["Brand strategy", "Branding and visual identity", "Web design", "Digital product design", "UX/UI design", "Motion graphics", "Creative direction"],

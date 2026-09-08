@@ -6,7 +6,7 @@ Last reviewed: 2026-08-27
 
 ## Studio
 
-PALSEC AGCY was founded in 2025. The studio's public team includes Arnau Piñol Olabegoya and Guillem Ferrando Codina. Project pages describe work and design decisions visible in the published portfolio; the site does not claim unverified performance results or client metrics.
+PALSEC AGCY was founded in 2025. Project pages describe work and design decisions visible in the published portfolio; the site does not claim unverified performance results or client metrics.
 
 ## Main pages
 
