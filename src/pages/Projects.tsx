@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom"
 import { motion } from "framer-motion"
 import { PageFrame } from "@/components/PageFrame"
 import { SiteFooter } from "@/components/SiteFooter"
-import { PROJECTS, picsum, type ProjectSlug } from "@/data/projects"
+import { PROJECTS, type ProjectSlug } from "@/data/projects"
 import { publicUrl } from "@/utils/publicUrl"
 import { useLang } from "@/i18n/useLang"
 import { t } from "@/i18n/strings"
@@ -31,7 +31,7 @@ function ProjectCard({
 }: {
   slug: ProjectSlug
   title: string
-  imageSrc: string
+  imageSrc?: string
   videoSrc?: string
   fit?: "cover" | "contain"
   padded?: boolean
@@ -86,7 +86,7 @@ function ProjectCard({
           poster={imageSrc}
           aria-label={`${title} — ${lang === "ca" ? "projecte de PALSEC AGCY" : lang === "es" ? "proyecto de PALSEC AGCY" : "project by PALSEC AGCY"}`}
         />
-      ) : (
+      ) : imageSrc ? (
         <Picture
           src={imageSrc}
           alt={`${title} — ${lang === "ca" ? "projecte de PALSEC AGCY" : lang === "es" ? "proyecto de PALSEC AGCY" : "project by PALSEC AGCY"}`}
@@ -94,7 +94,7 @@ function ProjectCard({
           sizes="(max-width: 767px) calc(100vw - 40px), 33vw"
           loading="lazy"
         />
-      )}
+      ) : <div className="aspect-[3/4] w-full bg-page" aria-hidden="true" />}
       {comingSoon && (
         <div className="absolute inset-0 flex items-end justify-center pb-5 pointer-events-none">
           <span className={[
@@ -184,7 +184,7 @@ export function Projects() {
           {PROJECTS.map((p) => {
             const src = p.localImages?.thumb
               ? publicUrl(p.localImages.thumb)
-              : picsum(p.thumbSeed, 920, 518)
+              : undefined
             const video = p.localImages?.thumbVideo ? publicUrl(p.localImages.thumbVideo) : undefined
             const fit = p.localImages?.thumbFit ?? "cover"
             const padded = p.localImages?.thumbPadded ?? false
