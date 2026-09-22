@@ -14,9 +14,9 @@ export const LEGAL_COPY = {
       description: "Informació sobre el tractament de dades personals al web de PALSEC AGCY.",
       sections: [
         ["RESPONSABLE", `PALSEC AGCY gestiona aquest web. Per a qualsevol qüestió de privacitat pots escriure a ${CONTACT_EMAIL}.`],
-        ["DADES QUE TRACTEM", "Quan ens escrius per correu, tractem les dades i el contingut que ens facilites únicament per respondre la consulta, preparar una proposta o gestionar una relació professional sol·licitada."],
+        ["DADES QUE TRACTEM", "Quan ens escrius per correu o omples un formulari, tractem el nom, correu, dades de marca i contingut que ens facilites per respondre la consulta, preparar una auditoria de marca o una proposta, o gestionar una relació professional sol·licitada."],
         ["BASE I CONSERVACIÓ", "El tractament es basa en la teva petició o consentiment i, quan correspon, en l'execució de mesures precontractuals o contractuals. Conservem la informació durant el temps necessari per gestionar la relació i complir obligacions aplicables."],
-        ["PROVEÏDORS I TRANSFERÈNCIES", "Podem utilitzar proveïdors tècnics necessaris per allotjar el web i gestionar el correu. No venem dades personals ni les utilitzem per a publicitat comportamental."],
+        ["PROVEÏDORS I TRANSFERÈNCIES", "Utilitzem Vercel per allotjar el web i Resend per enviar les sol·licituds dels formularis al nostre correu. No venem dades personals ni les utilitzem per a publicitat comportamental."],
         ["DRETS", `Pots sol·licitar accés, rectificació, supressió, oposició, limitació o portabilitat escrivint a ${CONTACT_EMAIL}. També pots presentar una reclamació davant l'autoritat de protecció de dades competent.`],
         ["COOKIES I ANALÍTICA", "Google Analytics només es carrega si acceptes l'analítica al gestor de preferències. En aquest cas, Google tracta dades d'ús i identificadors tècnics per generar estadístiques agregades. No activem senyals publicitaris ni personalització d'anuncis. Pots retirar el consentiment en qualsevol moment des d'aquesta pàgina."],
       ],
@@ -39,9 +39,9 @@ export const LEGAL_COPY = {
       description: "Information about personal data processing on the PALSEC AGCY website.",
       sections: [
         ["CONTROLLER", `PALSEC AGCY manages this website. For any privacy question, contact ${CONTACT_EMAIL}.`],
-        ["DATA WE PROCESS", "When you email us, we process the details and content you provide only to answer your enquiry, prepare a proposal, or manage the professional relationship you requested."],
+        ["DATA WE PROCESS", "When you email us or complete a form, we process the name, email, brand details and content you provide to answer your enquiry, prepare a brand audit or proposal, or manage the professional relationship you requested."],
         ["BASIS AND RETENTION", "Processing is based on your request or consent and, where applicable, on pre-contractual or contractual steps. We retain information for as long as needed to manage the relationship and meet applicable obligations."],
-        ["PROVIDERS AND TRANSFERS", "We may use technical providers required to host the website and manage email. We do not sell personal data or use it for behavioural advertising."],
+        ["PROVIDERS AND TRANSFERS", "We use Vercel to host the website and Resend to deliver form enquiries to our email inbox. We do not sell personal data or use it for behavioural advertising."],
         ["YOUR RIGHTS", `You may request access, correction, deletion, objection, restriction, or portability by emailing ${CONTACT_EMAIL}. You may also complain to the competent data protection authority.`],
         ["COOKIES AND ANALYTICS", "Google Analytics loads only if you accept analytics in the preference manager. If accepted, Google processes usage data and technical identifiers to produce aggregated statistics. We do not enable advertising signals or ad personalisation. You can withdraw consent at any time from this page."],
       ],
@@ -64,9 +64,9 @@ export const LEGAL_COPY = {
       description: "Información sobre el tratamiento de datos personales en la web de PALSEC AGCY.",
       sections: [
         ["RESPONSABLE", `PALSEC AGCY gestiona esta web. Para cualquier cuestión de privacidad puedes escribir a ${CONTACT_EMAIL}.`],
-        ["DATOS QUE TRATAMOS", "Cuando nos escribes por correo, tratamos los datos y el contenido que facilitas únicamente para responder la consulta, preparar una propuesta o gestionar la relación profesional solicitada."],
+        ["DATOS QUE TRATAMOS", "Cuando nos escribes por correo o completas un formulario, tratamos el nombre, correo, datos de marca y contenido que facilitas para responder la consulta, preparar una auditoría de marca o una propuesta, o gestionar la relación profesional solicitada."],
         ["BASE Y CONSERVACIÓN", "El tratamiento se basa en tu petición o consentimiento y, cuando corresponde, en medidas precontractuales o contractuales. Conservamos la información durante el tiempo necesario para gestionar la relación y cumplir obligaciones aplicables."],
-        ["PROVEEDORES Y TRANSFERENCIAS", "Podemos utilizar proveedores técnicos necesarios para alojar la web y gestionar el correo. No vendemos datos personales ni los utilizamos para publicidad comportamental."],
+        ["PROVEEDORES Y TRANSFERENCIAS", "Utilizamos Vercel para alojar la web y Resend para enviar las solicitudes de los formularios a nuestro correo. No vendemos datos personales ni los utilizamos para publicidad comportamental."],
         ["DERECHOS", `Puedes solicitar acceso, rectificación, supresión, oposición, limitación o portabilidad escribiendo a ${CONTACT_EMAIL}. También puedes reclamar ante la autoridad de protección de datos competente.`],
         ["COOKIES Y ANALÍTICA", "Google Analytics solo se carga si aceptas la analítica en el gestor de preferencias. En ese caso, Google trata datos de uso e identificadores técnicos para generar estadísticas agregadas. No activamos señales publicitarias ni personalización de anuncios. Puedes retirar el consentimiento en cualquier momento desde esta página."],
       ],
@@ -99,7 +99,7 @@ export function LegalPage({ kind }: { kind: LegalKind }) {
         <div className="mx-auto max-w-[820px]">
           <p className="mb-4 text-nav uppercase tracking-nav text-ink/55">PALSEC AGCY</p>
           <h1 className="text-[clamp(24px,4vw,48px)] font-normal leading-[1.05] tracking-[-0.03em] normal-case">{copy.title}</h1>
-          <p className="mt-3 text-[12px] text-ink/50 normal-case">25 · 08 · 2026</p>
+          <p className="mt-3 text-[12px] text-ink/50 normal-case">{kind === "privacy" ? "22 · 09 · 2026" : "25 · 08 · 2026"}</p>
           <div className="mt-10 space-y-9">
             {copy.sections.map(([title, body]) => (
               <section key={title} className="grid gap-3 border-t border-frame pt-5 md:grid-cols-[180px_1fr]">

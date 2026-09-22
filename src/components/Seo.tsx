@@ -8,6 +8,7 @@ import {
   BASE_URL,
   alternateLinks,
   buildGuideSchema,
+  buildBlogSchema,
   buildCommercialServiceSchema,
   DEFAULT_OG_IMAGE,
   PROJECT_SLUGS,
@@ -71,6 +72,7 @@ export function Seo({
   const commercial = getCommercialPageByPath(path)
   const ogImage = image ?? DEFAULT_OG_IMAGE
   const guide = BUYING_GUIDES.find(guide => guide.path === path)
+  const isBlog = (lang === 'ca' || lang === 'es') && path === `/${lang}/blog`
 
   const organizationJson = isHome || path.endsWith("/about-us")
     ? JSON.stringify(buildOrganizationSchema())
@@ -84,8 +86,13 @@ export function Seo({
   if (guide) {
     breadcrumbJson = JSON.stringify(buildBreadcrumbSchema([
       { name: homeLabel(lang), url: `${BASE_URL}/${lang}` },
-      { name: servicesLabel(lang), url: `${BASE_URL}/${lang}/services` },
+      { name: "Blog", url: `${BASE_URL}/${lang}/blog` },
       { name: guide.title, url: canonicalUrl },
+    ]))
+  } else if (isBlog) {
+    breadcrumbJson = JSON.stringify(buildBreadcrumbSchema([
+      { name: homeLabel(lang), url: `${BASE_URL}/${lang}` },
+      { name: "Blog", url: canonicalUrl },
     ]))
   } else if (isProjectsList) {
     breadcrumbJson = JSON.stringify(buildBreadcrumbSchema([
@@ -152,6 +159,8 @@ export function Seo({
       <meta property="og:image" content={ogImage} />
       <meta property="og:image:alt" content={`${fullTitle} — PALSEC AGCY`} />
       <meta property="og:site_name" content="PALSEC AGCY" />
+      {guide && <meta property="article:published_time" content={guide.publishedAt} />}
+      {guide && <meta property="article:modified_time" content={guide.publishedAt} />}
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={fullTitle} />
@@ -160,6 +169,7 @@ export function Seo({
 
       {faqJson && <script type="application/ld+json">{faqJson}</script>}
       {guide && <script type="application/ld+json">{JSON.stringify(buildGuideSchema(guide))}</script>}
+      {isBlog && (lang === 'ca' || lang === 'es') && <script type="application/ld+json">{JSON.stringify(buildBlogSchema(lang))}</script>}
       {commercial && <script type="application/ld+json">{JSON.stringify(buildCommercialServiceSchema(commercial))}</script>}
       {organizationJson && <script type="application/ld+json">{organizationJson}</script>}
       {websiteJson && <script type="application/ld+json">{websiteJson}</script>}

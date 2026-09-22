@@ -1,4 +1,3 @@
-import { BUYING_GUIDES } from '@/content/buyingGuides'
 import { Link } from 'react-router-dom'
 import { getCommercialPages } from '@/content/commercialPages'
 import { SITE_COPY } from '@/content/siteCopy'
@@ -12,9 +11,8 @@ export function SiteFooter() {
     <nav aria-label={copy.services} className="flex flex-wrap gap-x-5 gap-y-3">
       {getCommercialPages(lang).map(page => <Link key={page.id} to={page.path} className="underline underline-offset-4">{page.label}</Link>)}
     </nav>
-    {lang === 'es' && <nav aria-label="Guías para preparar tu proyecto" className="mt-6 border-t border-current/15 pt-5">
-      <p className="mb-3">Guías para preparar tu proyecto</p>
-      <div className="flex flex-wrap gap-x-5 gap-y-3">{BUYING_GUIDES.map(guide => <Link key={guide.slug} to={guide.path} className="underline underline-offset-4">{guide.title}</Link>)}</div>
+    {(lang === 'ca' || lang === 'es') && <nav aria-label="Blog" className="mt-6 border-t border-current/15 pt-5">
+      <Link to={`/${lang}/blog`} className="underline underline-offset-4">{lang === 'ca' ? 'Blog · Guies per preparar el teu projecte' : 'Blog · Guías para preparar tu proyecto'} →</Link>
     </nav>}
     <div className="mt-5 flex flex-wrap gap-x-5 gap-y-3 opacity-70">
       <Link to={`/${lang}/projects`}>{copy.allProjects}</Link>

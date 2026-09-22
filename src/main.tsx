@@ -5,6 +5,7 @@ import { HelmetProvider } from "react-helmet-async"
 import "@fontsource-variable/geist-mono"
 import App from "./App"
 import "./index.css"
+import "./components/inquiry.css"
 
 function HydrationReady() {
   useEffect(() => { document.documentElement.dataset.hydrated = "true" }, [])

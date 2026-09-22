@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
 import { Link, NavLink, useLocation } from "react-router-dom"
-import { CONTACT_EMAIL, mailtoProjectInquiryHref } from "@/constants/contact"
+import { INQUIRY_LABELS, useInquiry } from "./Inquiry"
 import { type Lang } from "@/i18n/lang"
 import { swapLang } from "@/lib/seoMeta"
 import { useLang } from "@/i18n/useLang"
@@ -15,6 +15,8 @@ function Sep() {
 
 export function BottomNav() {
   const lang = useLang()
+  const openInquiry = useInquiry()
+  const inquiry = INQUIRY_LABELS[lang]
   const location = useLocation()
   const [isScrolling, setIsScrolling] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -89,7 +91,7 @@ export function BottomNav() {
             <motion.div
               className={[
                 "flex flex-col items-center gap-6",
-                "px-12 py-10 rounded-2xl w-full max-w-xs",
+                "px-12 py-10 rounded-2xl w-full max-w-xs max-h-[calc(100svh-110px)] overflow-y-auto",
                 "bg-[#d50000]/95 border border-white/20 backdrop-blur-[10px]",
               ].join(" ")}
               variants={{
@@ -103,6 +105,7 @@ export function BottomNav() {
               {[
                 { to: `/${lang}/services`, label: t(lang, "nav.services") },
                 { to: `/${lang}/projects`, label: t(lang, "nav.projects") },
+                { to: `/${lang === "en" ? "es" : lang}/blog`, label: lang === "en" ? "Blog (ES)" : "Blog" },
                 { to: `/${lang}/about-us`, label: t(lang, "nav.about") },
               ].map(({ to, label }) => (
                 <motion.div
@@ -166,8 +169,9 @@ export function BottomNav() {
                 </Link>
               </motion.div>
 
-              <motion.a
-                href={mailtoProjectInquiryHref(lang)}
+              <motion.button
+                type="button"
+                onClick={() => { setMenuOpen(false); openInquiry("quote") }}
                 className={[
                 "inline-flex items-center min-h-[48px]",
                   "rounded-full border px-6 py-2.5",
@@ -179,10 +183,10 @@ export function BottomNav() {
                 transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.99 }}
-                aria-label={`${t(lang, "nav.cta")} ${CONTACT_EMAIL}`}
+                aria-label={inquiry.quote}
               >
-                {t(lang, "nav.cta")}
-              </motion.a>
+                {inquiry.nav}
+              </motion.button>
             </motion.div>
           </motion.div>
         )}
@@ -203,7 +207,7 @@ export function BottomNav() {
         }}
         style={{ pointerEvents: isScrolling ? "none" : "auto" }}
       >
-        {/* ── Mobile pill: logo + hamburger ── */}
+        {/* Mobile pill: original identity, visible enquiry, menu. */}
         <div className="flex items-center px-4 py-[10px] md:hidden">
           <NavLink
             to={`/${lang}`}
@@ -213,7 +217,17 @@ export function BottomNav() {
             PALSEC AGCY
           </NavLink>
           <button
+            type="button"
+            onClick={() => openInquiry("quote")}
+            className="mr-1 inline-flex min-h-[40px] items-center rounded-full border border-white/35 bg-white/10 px-3 text-[10px] uppercase tracking-nav text-white transition-colors hover:bg-white/15"
+            aria-label={inquiry.quote}
+          >
+            {inquiry.nav}
+          </button>
+          <button
+            type="button"
             onClick={() => setMenuOpen((o) => !o)}
+            data-inquiry-focus-fallback
             className="ml-auto inline-flex min-h-[48px] min-w-[48px] items-center justify-center text-white/80 transition-colors duration-200 hover:text-white"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
@@ -242,6 +256,8 @@ export function BottomNav() {
           <NavLink to={`/${lang}/projects`} className={({ isActive }) => linkClass(isActive)}>
             {t(lang, "nav.projects")}
           </NavLink>
+          <Sep />
+          <NavLink to={`/${lang === "en" ? "es" : lang}/blog`} className={({ isActive }) => linkClass(isActive)}>Blog{lang === "en" ? " (ES)" : ""}</NavLink>
           <Sep />
           <NavLink to={`/${lang}/about-us`} className={({ isActive }) => linkClass(isActive)}>
             {t(lang, "nav.about")}
@@ -279,8 +295,9 @@ export function BottomNav() {
 
           <Sep />
 
-          <motion.a
-            href={mailtoProjectInquiryHref(lang)}
+          <motion.button
+            type="button"
+            onClick={() => openInquiry("quote")}
             className={[
               "ml-[2px] inline-flex items-center",
               "rounded-full border px-3 py-[6px]",
@@ -292,10 +309,10 @@ export function BottomNav() {
             animate={{ boxShadow: "0 0 0 0 rgba(0,0,0,0)" }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.99 }}
-            aria-label={`${t(lang, "nav.cta")} ${CONTACT_EMAIL}`}
+            aria-label={inquiry.quote}
           >
-            {t(lang, "nav.cta")}
-          </motion.a>
+            {inquiry.nav}
+          </motion.button>
         </div>
       </motion.nav>
     </>

@@ -1,14 +1,20 @@
 import fs from "node:fs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
+import { tsImport } from "tsx/esm/api"
+
+const { buildAllRoutes } = await tsImport("../src/lib/seoMeta.ts", import.meta.url)
+const manifest = buildAllRoutes()
+const manifestByPath = new Map(manifest.map(route => [route.path, route]))
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const DIST = path.join(ROOT, "dist")
-const EXPECTED_ROUTES = 66
+const EXPECTED_ROUTES = manifest.length
 const LANGUAGES = { ca: "ca-ES", es: "es-ES", en: "en" }
 const EXPECTED_ALTERNATES = [...Object.values(LANGUAGES), "x-default"].sort()
-const isSpanishGuide = (pathname) => /^\/es\/guias\/[^/]+$/.test(pathname)
-const expectedAlternatesFor = (pathname) => isSpanishGuide(pathname) ? ["es-ES", "x-default"] : EXPECTED_ALTERNATES
+const isGuide = (pathname) => /^\/(?:ca\/guies|es\/guias)\/[^/]+$/.test(pathname)
+const isEditorial = (pathname) => isGuide(pathname) || /^\/(ca|es)\/blog$/.test(pathname)
+const expectedAlternatesFor = (pathname) => isEditorial(pathname) ? ["ca-ES", "es-ES", "x-default"] : EXPECTED_ALTERNATES
 const baseArg = process.argv.find((arg) => arg.startsWith("--base-url="))
 const baseUrl = baseArg?.slice("--base-url=".length).replace(/\/$/, "") ?? null
 const issues = []
@@ -74,7 +80,8 @@ function expectedTypes(pathname) {
   if (parts[1] === "about-us") return ["Organization", "AboutPage"]
   if (parts[1] === "projects") return ["BreadcrumbList"]
   if (parts[1] === "project") return ["BreadcrumbList", "CreativeWork", "WebPage"]
-  if (parts[1] === "guias") return ["BreadcrumbList", "Article"]
+  if (parts[1] === "guias" || parts[1] === "guies") return ["BreadcrumbList", "Article"]
+  if (parts[1] === "blog") return ["BreadcrumbList", "CollectionPage", "ItemList"]
   if (parts[1] === "services") return parts.length === 2 ? ["BreadcrumbList", "OfferCatalog"] : ["BreadcrumbList", "Service", "WebPage"]
   if (parts[1].endsWith("-girona")) return ["BreadcrumbList", "Service", "WebPage"]
   return []
@@ -90,8 +97,15 @@ async function run() {
   const sitemapUrls = new Set(urls)
   if (urls.length !== EXPECTED_ROUTES) issues.push(`sitemap: expected ${EXPECTED_ROUTES} URLs, found ${urls.length}`)
   if (sitemapUrls.size !== urls.length) issues.push("sitemap: duplicate URLs")
-  const guideCount = urls.filter((url) => { try { return isSpanishGuide(new URL(url).pathname) } catch { return false } }).length
-  if (guideCount !== 6) issues.push(`sitemap: expected 6 Spanish guides, found ${guideCount}`)
+  if (manifestByPath.size !== manifest.length) issues.push("route manifest: duplicate paths")
+  for (const route of manifest) if (!sitemapUrls.has(route.canonicalUrl)) issues.push(`sitemap: route manifest URL missing: ${route.canonicalUrl}`)
+  for (const url of sitemapUrls) if (!manifest.some(route => route.canonicalUrl === url)) issues.push(`sitemap: URL absent from route manifest: ${url}`)
+  for (const lang of ["ca", "es"]) {
+    const expectedGuides = manifest.filter(route => route.kind === "guide" && route.lang === lang).length
+    const guideCount = urls.filter((url) => { try { const pathname = new URL(url).pathname; return isGuide(pathname) && pathname.startsWith(`/${lang}/`) } catch { return false } }).length
+    if (!expectedGuides || guideCount !== expectedGuides) issues.push(`sitemap: expected ${expectedGuides} ${lang} guides, found ${guideCount}`)
+    if (!sitemapUrls.has(`https://www.palsec.agency/${lang}/blog`)) issues.push(`sitemap: missing ${lang} blog index`)
+  }
   const serviceWords = {}
 
   for (const { url, alternates: sitemapAlternates } of entries) {
@@ -114,8 +128,8 @@ async function run() {
     const h1s = [...html.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)]
     const language = pathname.split("/")[1]
     const expectedAlternates = expectedAlternatesFor(pathname)
-    const defaultLanguage = isSpanishGuide(pathname) ? "es" : "en"
-    if (/^\/(ca|en)\/guias(?:\/|$)/.test(pathname)) issues.push(`${pathname}: Spanish guides must not claim untranslated CA/EN versions`)
+    const defaultLanguage = isEditorial(pathname) ? "es" : "en"
+    if (/^\/(ca\/guias|es\/guies|en\/(guias|guies|blog))(?:\/|$)/.test(pathname)) issues.push(`${pathname}: invalid editorial language path`)
 
     if (titleMatches.length !== 1) issues.push(`${pathname}: expected exactly one title`)
     if (descriptionTags.length !== 1) issues.push(`${pathname}: expected exactly one description`)
@@ -127,6 +141,9 @@ async function run() {
     if (description.length < 100 || description.length > 180) issues.push(`${pathname}: description length ${description.length}, expected 100–180`)
     recordUnique(titles, title, pathname, "title")
     recordUnique(descriptions, description, pathname, "description")
+    const route = manifestByPath.get(pathname)
+    if (route && title !== route.title) issues.push(`${pathname}: title differs from route manifest`)
+    if (route && description !== route.description) issues.push(`${pathname}: description differs from route manifest`)
     for (const [property, expected] of [["og:title", title], ["og:description", description], ["og:url", url]]) {
       const matching = metas.filter((tag) => tag.property === property)
       if (matching.length !== 1 || matching[0].content !== expected) issues.push(`${pathname}: inconsistent ${property}`)
@@ -147,12 +164,21 @@ async function run() {
     pages.set(url, { pathname, alternates: alternateMap })
 
     const types = new Set()
+    const schemas = []
     for (const match of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
       if (attributes(match[1]).type !== "application/ld+json") continue
-      try { schemaTypes(JSON.parse(match[2]), types); jsonLdCount += 1 }
+      try { const schema = JSON.parse(match[2]); schemas.push(schema); schemaTypes(schema, types); jsonLdCount += 1 }
       catch { issues.push(`${pathname}: invalid JSON-LD`) }
     }
     for (const type of expectedTypes(pathname)) if (!types.has(type)) issues.push(`${pathname}: missing ${type} schema`)
+    if (isGuide(pathname)) {
+      const article = schemas.find(schema => schema["@type"] === "Article")
+      const publishedAt = manifestByPath.get(pathname)?.publishedAt
+      if (!publishedAt || article?.datePublished !== publishedAt || article?.dateModified !== publishedAt) issues.push(`${pathname}: Article dates differ from the content manifest`)
+      if (article?.inLanguage !== language || article?.url !== url || article?.mainEntityOfPage !== url) issues.push(`${pathname}: Article language or URL differs from the page`)
+      if (article?.headline !== normalText(h1s[0]?.[1] ?? "")) issues.push(`${pathname}: Article headline differs from the H1`)
+      if (!tags(html, "time").some(tag => tag.datetime === publishedAt)) issues.push(`${pathname}: publication date is not visible in time markup`)
+    }
     const serviceMatch = pathname.match(/^\/(ca|es|en)\/services\/(brand-strategy|branding-visual-identity|web-design-digital-products)$/)
     if (serviceMatch) {
       const [, lang, slug] = serviceMatch

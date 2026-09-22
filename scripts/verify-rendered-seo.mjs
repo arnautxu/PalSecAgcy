@@ -3,6 +3,10 @@ import fs from "node:fs"
 import http from "node:http"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
+import { tsImport } from "tsx/esm/api"
+
+const { buildAllRoutes } = await tsImport("../src/lib/seoMeta.ts", import.meta.url)
+const routeManifest = buildAllRoutes()
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const DIST = path.join(ROOT, "dist")
@@ -11,7 +15,7 @@ const baseArg = args.find((arg) => arg.startsWith("--base-url="))
 const outputArg = args.find((arg) => arg.startsWith("--output="))
 const issues = []
 const results = []
-const EXPECTED_ROUTES = 66
+const EXPECTED_ROUTES = routeManifest.length
 
 async function localServer() {
   const mimeTypes = { ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".xml": "application/xml", ".svg": "image/svg+xml", ".webp": "image/webp", ".jpg": "image/jpeg", ".png": "image/png", ".mp4": "video/mp4", ".woff2": "font/woff2" }
@@ -79,6 +83,10 @@ async function run() {
     const sitemap = await sitemapResponse.text()
     const urls = [...sitemap.matchAll(/<loc\b[^>]*>([^<]+)<\/loc>/gi)].map((match) => match[1])
     if (urls.length !== EXPECTED_ROUTES) issues.push(`sitemap: expected ${EXPECTED_ROUTES} URLs, found ${urls.length}`)
+    const sitemapUrls = new Set(urls)
+    if (sitemapUrls.size !== urls.length) issues.push("sitemap: duplicate URLs")
+    for (const route of routeManifest) if (!sitemapUrls.has(route.canonicalUrl)) issues.push(`sitemap: route manifest URL missing: ${route.canonicalUrl}`)
+    for (const url of sitemapUrls) if (!routeManifest.some(route => route.canonicalUrl === url)) issues.push(`sitemap: URL absent from route manifest: ${url}`)
     let activeErrors = []
     page.on("pageerror", (error) => activeErrors.push(error.message))
     page.on("console", (message) => { if (message.type() === "error") activeErrors.push(message.text()) })

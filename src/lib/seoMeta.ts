@@ -4,7 +4,7 @@
  * and the postbuild prerender script (scripts/prerender.mjs).
  */
 
-import { BUYING_GUIDES, type BuyingGuideContent } from "../content/buyingGuides"
+import { BUYING_GUIDES, getBuyingGuides, type BuyingGuideContent, type GuideLang } from "../content/buyingGuides"
 import { getAllServicePages, type ServiceSlug } from "../content/servicePages"
 import { getCommercialPages, getCommercialPageByPath, COMMERCIAL_PATHS, type CommercialPage } from "../content/commercialPages"
 
@@ -37,6 +37,17 @@ export function isPublishedProjectSlug(slug: string): slug is ProjectSlug {
 // ─── Localised titles & descriptions per page ────────────────────────────────
 
 type PageMeta = { title: string; description: string }
+
+export const BLOG_META: Record<GuideLang, PageMeta> = {
+  ca: {
+    title: "Blog de branding, webs a mida i aplicacions | PALSEC",
+    description: "Guies de PALSEC per definir una marca, preparar una web a mida o encarregar una aplicació. Criteris, processos i preguntes per decidir el teu projecte.",
+  },
+  es: {
+    title: "Blog de branding, webs a medida y aplicaciones | PALSEC",
+    description: "Guías de PALSEC para definir una marca, preparar una web a medida o encargar una aplicación. Criterios, procesos y preguntas para decidir tu proyecto.",
+  },
+}
 
 export const HOME_META: Record<Lang, PageMeta> = {
   en: {
@@ -306,7 +317,7 @@ export function getProjectPrimaryServiceSlug(slug: ProjectSlug): ServiceSlug {
 
 // ─── Route descriptor ─────────────────────────────────────────────────────────
 
-export type RouteKind = "home" | "services" | "service" | "projects" | "about-us" | "privacy" | "legal-notice" | "project" | "commercial" | "guide"
+export type RouteKind = "home" | "services" | "service" | "projects" | "about-us" | "privacy" | "legal-notice" | "project" | "commercial" | "guide" | "blog"
 
 export interface RouteMeta {
   /** URL path, e.g. /ca/services */
@@ -317,6 +328,7 @@ export interface RouteMeta {
   kind: RouteKind
   slug?: ProjectSlug
   serviceSlug?: ServiceSlug
+  publishedAt?: string
   title: string
   description: string
   canonicalUrl: string
@@ -325,7 +337,9 @@ export interface RouteMeta {
 }
 
 export function swapLang(path: string, newLang: Lang): string {
-  if (path.startsWith("/es/guias/")) return newLang === "es" ? path : `/${newLang}`
+  const guide = BUYING_GUIDES.find(guide => guide.path === path)
+  if (guide) return BUYING_GUIDES.find(item => item.id === guide.id && item.lang === newLang)?.path ?? `/${newLang}`
+  if (/^\/(ca|es)\/blog$/.test(path)) return newLang === "en" ? "/en" : `/${newLang}/blog`
   const commercial = getCommercialPageByPath(path)
   if (commercial) return COMMERCIAL_PATHS[commercial.id][newLang]
   const parts = path.split("/").filter(Boolean)
@@ -447,8 +461,13 @@ export function buildAllRoutes(): RouteMeta[] {
     }
   }
 
+  for (const lang of ["ca", "es"] as const) {
+    routes.push({ path: `/${lang}/blog`, distPath: `${lang}/blog/index.html`, lang,
+      kind: "blog", title: BLOG_META[lang].title, description: BLOG_META[lang].description,
+      canonicalUrl: `${BASE_URL}/${lang}/blog`, ogImage: DEFAULT_OG_IMAGE })
+  }
   for (const guide of BUYING_GUIDES) {
-    routes.push({ path: guide.path, distPath: `${guide.path.slice(1)}/index.html`, lang: "es",
+    routes.push({ path: guide.path, distPath: `${guide.path.slice(1)}/index.html`, lang: guide.lang, publishedAt: guide.publishedAt,
       kind: "guide", title: guide.seoTitle, description: guide.description,
       canonicalUrl: `${BASE_URL}${guide.path}`, ogImage: DEFAULT_OG_IMAGE })
   }
@@ -663,8 +682,15 @@ export function buildCommercialServiceSchema(page: CommercialPage) {
 }
 
 export function alternateLinks(path: string) {
-  if (path.startsWith("/es/guias/")) return [
-    { lang: "es-ES", path }, { lang: "x-default", path },
+  const guide = BUYING_GUIDES.find(guide => guide.path === path)
+  if (guide) {
+    const equivalents = BUYING_GUIDES.filter(item => item.id === guide.id)
+    const spanish = equivalents.find(item => item.lang === "es")
+    return [...equivalents.map(item => ({ lang: HREFLANG[item.lang], path: item.path })),
+      ...(spanish ? [{ lang: "x-default", path: spanish.path }] : [])]
+  }
+  if (/^\/(ca|es)\/blog$/.test(path)) return [
+    { lang: "ca-ES", path: "/ca/blog" }, { lang: "es-ES", path: "/es/blog" }, { lang: "x-default", path: "/es/blog" },
   ]
   return [...LANGS.map(lang => ({ lang: HREFLANG[lang], path: swapLang(path, lang) })),
     { lang: "x-default", path: swapLang(path, "en") }]
@@ -675,9 +701,25 @@ export function buildGuideSchema(guide: BuyingGuideContent) {
   return {
     "@context": "https://schema.org", "@type": "Article", "@id": `${url}#article`,
     headline: guide.title, description: guide.description, url,
-    mainEntityOfPage: url, inLanguage: "es", image: DEFAULT_OG_IMAGE,
+    mainEntityOfPage: url, inLanguage: guide.lang, image: DEFAULT_OG_IMAGE,
     author: { "@type": "Organization", "@id": `${BASE_URL}/#organization`, name: "PALSEC AGCY", url: BASE_URL },
     publisher: { "@id": `${BASE_URL}/#organization` },
-    datePublished: "2026-09-22", dateModified: "2026-09-22",
+    datePublished: guide.publishedAt, dateModified: guide.publishedAt,
+  }
+}
+
+export function buildBlogSchema(lang: GuideLang) {
+  const url = `${BASE_URL}/${lang}/blog`
+  return {
+    "@context": "https://schema.org", "@type": "CollectionPage", "@id": `${url}#webpage`,
+    url, name: BLOG_META[lang].title, description: BLOG_META[lang].description, inLanguage: lang,
+    isPartOf: { "@id": `${BASE_URL}/#website` },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: getBuyingGuides(lang).map((guide, index) => ({
+        "@type": "ListItem", position: index + 1,
+        item: { "@type": "Article", "@id": `${BASE_URL}${guide.path}#article`, url: `${BASE_URL}${guide.path}`, headline: guide.title, inLanguage: lang },
+      })),
+    },
   }
 }

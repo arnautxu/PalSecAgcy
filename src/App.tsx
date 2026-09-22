@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes, useLocation } from "react-router-dom"
 import { BuyingGuide } from "./pages/BuyingGuide"
+import { Blog } from "./pages/Blog"
 import { CommercialLanding } from "./pages/CommercialLanding"
 import { RootLayout } from "./components/RootLayout"
 import { AboutUs } from "./pages/AboutUs"
@@ -24,6 +25,12 @@ function LegacyPathRedirect() {
   return <Navigate to={langPath(lang, pathname) + search + hash} replace />
 }
 
+function GuideIndexRedirect() {
+  const { pathname } = useLocation()
+  if (pathname === '/ca/guies' || pathname === '/es/guias') return <Navigate to={pathname.startsWith('/ca/') ? '/ca/blog' : '/es/blog'} replace />
+  return <NotFound />
+}
+
 export default function App() {
   return (
     <Routes>
@@ -31,6 +38,10 @@ export default function App() {
 
       <Route path="/:lang" element={<RootLayout />}>
         <Route index element={<Home />} />
+        <Route path="blog" element={<Blog />} />
+        <Route path="guies" element={<GuideIndexRedirect />} />
+        <Route path="guias" element={<GuideIndexRedirect />} />
+        <Route path="guies/:guideSlug" element={<BuyingGuide />} />
         <Route path="guias/:guideSlug" element={<BuyingGuide />} />
         <Route path=":commercialSlug" element={<CommercialLanding />} />
         <Route path="services" element={<Services />} />

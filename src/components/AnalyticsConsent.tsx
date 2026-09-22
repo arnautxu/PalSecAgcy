@@ -112,7 +112,6 @@ export function AnalyticsConsent({ lang }: { lang: Lang }) {
           transport_type: "beacon",
         }
         analyticsWindow.gtag?.("event", "contact_email_click", contactEvent)
-        analyticsWindow.gtag?.("event", "ads_conversion_Contacte_1", contactEvent)
         return
       }
 
@@ -135,6 +134,20 @@ export function AnalyticsConsent({ lang }: { lang: Lang }) {
     return () => document.removeEventListener("click", trackLink)
   }, [consent, location.pathname, location.search, lang])
 
+  useEffect(() => {
+    if (consent !== "granted") return
+    const trackLead = (event: Event) => {
+      const detail = (event as CustomEvent).detail
+      if (!detail || !["audit", "quote"].includes(detail.intent) || !["branding", "web", "apps", "audit", "other"].includes(detail.service)) return
+      const parameters = { page_path: location.pathname, landing_page: landingPage.current, language: lang, contact_method: "form", inquiry_type: detail.intent, service: detail.service, transport_type: "beacon" }
+      const analyticsWindow = window as AnalyticsWindow
+      analyticsWindow.gtag?.("event", "generate_lead", parameters)
+      analyticsWindow.gtag?.("event", "ads_conversion_Contacte_1", parameters)
+    }
+    window.addEventListener("palsec:lead-submitted", trackLead)
+    return () => window.removeEventListener("palsec:lead-submitted", trackLead)
+  }, [consent, location.pathname, lang])
+
   const choose = (value: Exclude<Consent, null>) => {
     try { window.localStorage.setItem(STORAGE_KEY, value) } catch { /* Continue with an in-memory choice. */ }
     setConsent(value)
@@ -148,7 +161,7 @@ export function AnalyticsConsent({ lang }: { lang: Lang }) {
   return (
     <aside
       aria-label="Analytics preferences"
-      className="fixed bottom-[92px] left-1/2 z-[80] w-[calc(100%-32px)] max-w-[680px] -translate-x-1/2 rounded-[22px] border border-frame bg-white/95 p-4 text-ink shadow-[0_18px_60px_rgba(0,0,0,0.16)] backdrop-blur-xl sm:p-5"
+      className={`fixed ${/^\/(ca|es|en)\/?$/.test(location.pathname) ? "top-5" : "bottom-5"} left-1/2 z-[80] w-[calc(100%-32px)] max-w-[680px] -translate-x-1/2 rounded-[22px] border border-frame bg-white/95 p-4 text-ink shadow-[0_18px_60px_rgba(0,0,0,0.16)] backdrop-blur-xl sm:p-5`}
     >
       <p className="text-[13px] leading-[1.55] normal-case sm:text-[14px]">
         {copy.text}{" "}

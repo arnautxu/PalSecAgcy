@@ -8,10 +8,12 @@ import { SiteFooter } from '@/components/SiteFooter'
 import { getCommercialPages } from '@/content/commercialPages'
 import { SITE_COPY } from '@/content/siteCopy'
 import { HOME_META, PROJECT_META, type ProjectSlug } from '@/lib/seoMeta'
-import { mailtoProjectInquiryHref } from '@/constants/contact'
+import { INQUIRY_LABELS, useInquiry } from '@/components/Inquiry'
 
 export function Home() {
   const lang = useLang()
+  const openInquiry = useInquiry()
+  const inquiry = INQUIRY_LABELS[lang]
   const { pathname } = useLocation()
   const videoRef = useRef<HTMLVideoElement>(null)
   const [paused, setPaused] = useState(false)
@@ -40,7 +42,10 @@ export function Home() {
         <nav aria-label={copy.services} className="mt-5 flex flex-wrap gap-2">
           {services.map(service => <Link key={service.id} to={service.path} className="rounded-full border border-white/35 bg-black/25 px-3 py-2 text-[10px] uppercase tracking-nav backdrop-blur-[4px] hover:border-white">{service.label}</Link>)}
         </nav>
-        <a href={mailtoProjectInquiryHref(lang)} className="mt-5 inline-block text-[12px] underline underline-offset-4">{copy.cta} →</a>
+        <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
+          <button type="button" onClick={() => openInquiry('audit')} className="inline-flex min-h-12 max-w-full items-center justify-center rounded-full bg-white px-5 py-3 text-[12px] font-normal text-black transition-colors hover:bg-white/90">{inquiry.audit} ↗</button>
+          <button type="button" onClick={() => openInquiry('quote')} className="text-[12px] underline underline-offset-4">{inquiry.quote} →</button>
+        </div>
       </div>
       <button type="button" aria-pressed={paused} aria-label={paused ? t(lang,'home.play') : t(lang,'home.pause')} onClick={() => setPaused(value => !value)} className="absolute top-5 right-6 min-h-12 min-w-12 text-[11px] uppercase tracking-nav text-white/80">{paused ? t(lang,'home.play') : t(lang,'home.pause')}</button>
     </section>
@@ -75,7 +80,10 @@ export function Home() {
         <h2 className="text-[25px]">{copy.local}</h2>
         <p className="mt-4 max-w-[800px] text-[14px] leading-[1.8] text-white/70">{copy.localBody}</p>
         <Link to={`/${lang}/about-us`} className="mt-5 inline-block text-[12px] underline underline-offset-4">{copy.about}</Link>
-        <a href={mailtoProjectInquiryHref(lang)} className="mt-10 block text-[24px] underline underline-offset-8">{copy.cta} →</a>
+        <div className="mt-10 flex flex-wrap items-center gap-x-5 gap-y-3">
+          <button type="button" onClick={() => openInquiry('audit')} className="inline-flex min-h-12 max-w-full items-center justify-center rounded-full bg-white px-5 py-3 text-[12px] font-normal text-black transition-colors hover:bg-white/90">{inquiry.audit} ↗</button>
+          <button type="button" onClick={() => openInquiry('quote')} className="text-[12px] underline underline-offset-4">{inquiry.quote} →</button>
+        </div>
       </section>
       <SiteFooter />
     </div>

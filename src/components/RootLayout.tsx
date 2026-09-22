@@ -1,5 +1,6 @@
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion"
 import { Outlet, useLocation } from "react-router-dom"
+import { InquiryProvider } from "./Inquiry"
 import { BottomNav } from "./BottomNav"
 import { ErrorBoundary } from "./ErrorBoundary"
 import { AnalyticsConsent } from "./AnalyticsConsent"
@@ -35,7 +36,7 @@ export function RootLayout() {
   const navOnTop = restPath !== "/"
 
   return (
-    <div className="relative h-full w-full overflow-hidden bg-page">
+    <InquiryProvider lang={lang}><div className="relative h-full w-full overflow-hidden bg-page">
       {/* Skip link — keyboard accessibility */}
       <a
         href="#main-content"
@@ -79,6 +80,6 @@ export function RootLayout() {
         </div>
       </LayoutGroup>
       <AnalyticsConsent lang={lang} />
-    </div>
+    </div></InquiryProvider>
   )
 }

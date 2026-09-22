@@ -1,26 +1,21 @@
-import type { CommercialId } from "./commercialPages"
+import type { BuyingGuideContent, GuideLang } from "./guideTypes"
+import { CATALAN_BUYING_GUIDES } from "./buyingGuidesCa"
+import { NEW_BUYING_GUIDES } from "./buyingGuidesNew"
 
-export type BuyingGuideContent = {
-  slug: string
-  path: string
-  title: string
-  seoTitle: string
-  description: string
-  intro: string
-  sections: { title: string; paragraphs: string[]; checklist?: string[] }[]
-  relatedService: CommercialId[]
-  ctaTitle: string
-  ctaText: string
-}
+export type { BuyingGuideContent, GuideLang, GuideCategory } from "./guideTypes"
 
-export const BUYING_GUIDES: BuyingGuideContent[] = [
+const SPANISH_BUYING_GUIDES: BuyingGuideContent[] = [
   {
+    id: "presupuesto-web",
+    lang: "es",
+    category: "web",
+    publishedAt: "2026-09-22",
     slug: "presupuesto-web",
     path: "/es/guias/presupuesto-web",
-    title: "Cuánto cuesta una web profesional y cómo comparar presupuestos",
-    seoTitle: "Cuánto cuesta una web profesional en Girona | PALSEC",
+    title: "Cómo comparar presupuestos para una web a medida",
+    seoTitle: "Presupuesto web a medida: alcance y entregables | PALSEC",
     description: "Qué determina el presupuesto de una web profesional en Girona: alcance, diseño, contenido, desarrollo y mantenimiento. Preguntas para comparar propuestas.",
-    intro: "El precio de una web profesional depende de lo que necesita resolver y de lo que incluye la entrega. Para comparar presupuestos en Girona o en cualquier otro lugar, primero hay que poner el alcance sobre la mesa. Dos propuestas para una «web corporativa» pueden cubrir trabajos muy diferentes. Esta guía te ayuda a identificar esas diferencias antes de contratar.",
+    intro: "El alcance de una web profesional depende de lo que necesita resolver y de lo que incluye la entrega. Para comparar presupuestos en Girona o en cualquier otro lugar, primero hay que poner el alcance sobre la mesa. Dos propuestas para una «web corporativa» pueden cubrir trabajos muy diferentes. Esta guía te ayuda a identificar esas diferencias antes de contratar.",
     sections: [
       {
         title: "Empieza por el objetivo y los recorridos",
@@ -61,12 +56,16 @@ export const BUYING_GUIDES: BuyingGuideContent[] = [
     ctaText: "Cuéntanos qué hace tu empresa, qué debe conseguir la web y qué materiales tienes. Con esa base podemos plantear un alcance y un presupuesto concretos.",
   },
   {
+    id: "presupuesto-branding",
+    lang: "es",
+    category: "branding",
+    publishedAt: "2026-09-22",
     slug: "presupuesto-branding",
     path: "/es/guias/presupuesto-branding",
-    title: "Cuánto cuesta un proyecto de branding y qué debería incluir",
-    seoTitle: "Presupuesto de branding: precio, alcance y entregables | PALSEC",
+    title: "Qué debe incluir un proyecto de branding",
+    seoTitle: "Presupuesto de branding: alcance y entregables | PALSEC",
     description: "Cómo valorar un presupuesto de branding: estrategia, identidad visual, aplicaciones, archivos y criterios de uso. Qué preguntar antes de contratar.",
-    intro: "Un proyecto de branding puede resolver desde una identidad visual inicial hasta el replanteamiento de una marca con varias líneas de negocio. Por eso no hay un presupuesto comparable sin conocer las decisiones pendientes y las aplicaciones necesarias. Antes de pedir un precio, conviene definir qué debe cambiar y dónde tendrá que funcionar la nueva identidad.",
+    intro: "Un proyecto de branding puede resolver desde una identidad visual inicial hasta el replanteamiento de una marca con varias líneas de negocio. Por eso no hay un presupuesto comparable sin conocer las decisiones pendientes y las aplicaciones necesarias. Antes de pedir una propuesta, conviene definir qué debe cambiar y dónde tendrá que funcionar la nueva identidad.",
     sections: [
       {
         title: "Aclarar la necesidad antes de encargar un logotipo",
@@ -107,6 +106,10 @@ export const BUYING_GUIDES: BuyingGuideContent[] = [
     ctaText: "Explícanos el momento del proyecto, los materiales que utilizas y las aplicaciones prioritarias. Te ayudaremos a concretar qué debería incluir el trabajo.",
   },
   {
+    id: "agencia-o-freelance",
+    lang: "es",
+    category: "web",
+    publishedAt: "2026-09-22",
     slug: "agencia-o-freelance",
     path: "/es/guias/agencia-o-freelance",
     title: "Agencia de diseño o profesional freelance: cómo elegir",
@@ -153,6 +156,10 @@ export const BUYING_GUIDES: BuyingGuideContent[] = [
     ctaText: "Cuéntanos el alcance, los recursos de tu equipo y las disciplinas que necesitas. Podemos explicarte cómo organizaríamos el proyecto y qué asumiría cada parte.",
   },
   {
+    id: "plazos-proyecto-web",
+    lang: "es",
+    category: "web",
+    publishedAt: "2026-09-22",
     slug: "plazos-proyecto-web",
     path: "/es/guias/plazos-proyecto-web",
     title: "Cuánto tarda una web y de qué depende el calendario",
@@ -199,6 +206,10 @@ export const BUYING_GUIDES: BuyingGuideContent[] = [
     ctaText: "Envíanos las necesidades, el estado de los contenidos y cualquier fecha relevante. Revisaremos las dependencias para proponer una secuencia de trabajo viable.",
   },
   {
+    id: "rediseno-web",
+    lang: "es",
+    category: "web",
+    publishedAt: "2026-09-22",
     slug: "rediseno-web",
     path: "/es/guias/rediseno-web",
     title: "Cuándo merece la pena rediseñar una web y cómo preparar el cambio",
@@ -245,6 +256,10 @@ export const BUYING_GUIDES: BuyingGuideContent[] = [
     ctaText: "Comparte tu web actual y las dificultades que quieres resolver. Podemos ayudarte a concretar el rediseño y a preparar la transición de contenido y estructura.",
   },
   {
+    id: "web-a-medida-o-plantilla",
+    lang: "es",
+    category: "web",
+    publishedAt: "2026-09-22",
     slug: "web-a-medida-o-plantilla",
     path: "/es/guias/web-a-medida-o-plantilla",
     title: "Web a medida o plantilla: qué encaja con tu proyecto",
@@ -292,6 +307,16 @@ export const BUYING_GUIDES: BuyingGuideContent[] = [
   },
 ]
 
-export function getBuyingGuide(slug: string): BuyingGuideContent | undefined {
-  return BUYING_GUIDES.find((guide) => guide.slug === slug)
+export const BUYING_GUIDES: BuyingGuideContent[] = [
+  ...SPANISH_BUYING_GUIDES,
+  ...CATALAN_BUYING_GUIDES,
+  ...NEW_BUYING_GUIDES,
+]
+
+export function getBuyingGuide(slug: string, lang: GuideLang): BuyingGuideContent | undefined {
+  return BUYING_GUIDES.find((guide) => guide.slug === slug && guide.lang === lang)
+}
+
+export function getBuyingGuides(lang: GuideLang): BuyingGuideContent[] {
+  return BUYING_GUIDES.filter((guide) => guide.lang === lang)
 }

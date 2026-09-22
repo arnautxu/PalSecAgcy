@@ -107,6 +107,16 @@
       "source": "/es/project/estudi-dental-carrera",
       "destination": "/es/projects",
       "permanent": true
+    },
+    {
+      "source": "/ca/guies",
+      "destination": "/ca/blog",
+      "permanent": true
+    },
+    {
+      "source": "/es/guias",
+      "destination": "/es/blog",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -143,7 +153,15 @@
       "destination": "/index.html"
     },
     {
-      "source": "/es/guias/(presupuesto-web|presupuesto-branding|agencia-o-freelance|plazos-proyecto-web|rediseno-web|web-a-medida-o-plantilla)",
+      "source": "/(ca|es)/blog",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/ca/guies/(pressupost-web|pressupost-branding|agencia-o-freelance|terminis-projecte-web|redisseny-web|web-a-mida-o-plantilla|quan-fer-rebranding|branding-identitat-visual-logotip|app-mobil-o-webapp|definir-mvp-app-abans-pressupost|que-incloure-pressupost-app|triar-empresa-desenvolupament-apps)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/es/guias/(presupuesto-web|presupuesto-branding|agencia-o-freelance|plazos-proyecto-web|rediseno-web|web-a-medida-o-plantilla|cuando-hacer-rebranding|branding-identidad-visual-logotipo|app-movil-o-webapp|definir-mvp-app-antes-presupuesto|que-incluir-presupuesto-app|elegir-empresa-desarrollo-apps)",
       "destination": "/index.html"
     }
   ],
