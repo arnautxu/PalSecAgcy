@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 import type { Lang } from "@/i18n/lang"
 
@@ -35,13 +35,18 @@ const COPY: Record<Lang, { text: string; accept: string; reject: string; privacy
 
 function currentConsent(): Consent {
   if (typeof window === "undefined") return null
-  const value = window.localStorage.getItem(STORAGE_KEY)
-  return value === "granted" || value === "denied" ? value : null
+  try {
+    const value = window.localStorage.getItem(STORAGE_KEY)
+    return value === "granted" || value === "denied" ? value : null
+  } catch { return null }
 }
 
 function loadAnalytics() {
   const analyticsWindow = window as AnalyticsWindow
-  if (analyticsWindow.gtag) return
+  if (analyticsWindow.gtag) {
+    analyticsWindow.gtag("consent", "update", { analytics_storage: "granted" })
+    return
+  }
 
   analyticsWindow.dataLayer = analyticsWindow.dataLayer ?? []
   analyticsWindow.gtag = function gtag() {
@@ -63,8 +68,10 @@ function loadAnalytics() {
 
 export function AnalyticsConsent({ lang }: { lang: Lang }) {
   const location = useLocation()
-  const [consent, setConsent] = useState<Consent>(currentConsent)
+  const landingPage = useRef(location.pathname)
+  const [consent, setConsent] = useState<Consent>(null)
   const copy = COPY[lang]
+  useEffect(() => setConsent(currentConsent()), [])
 
   useEffect(() => {
     const openPreferences = () => setConsent(null)
@@ -79,9 +86,10 @@ export function AnalyticsConsent({ lang }: { lang: Lang }) {
     analyticsWindow.gtag?.("event", "page_view", {
       page_title: document.title,
       page_location: window.location.href,
-      page_path: `${location.pathname}${location.search}`,
+      page_path: location.pathname,
+      language: lang,
     })
-  }, [consent, location.pathname, location.search])
+  }, [consent, location.pathname, location.search, lang])
 
   useEffect(() => {
     if (consent !== "granted") return
@@ -96,8 +104,11 @@ export function AnalyticsConsent({ lang }: { lang: Lang }) {
       const analyticsWindow = window as AnalyticsWindow
       if (href.startsWith("mailto:")) {
         const contactEvent = {
-          page_path: `${location.pathname}${location.search}`,
-          link_url: href,
+          page_path: location.pathname,
+          link_url: "mailto:info@palsec.agency",
+          language: lang,
+          landing_page: landingPage.current,
+          contact_method: "email",
           transport_type: "beacon",
         }
         analyticsWindow.gtag?.("event", "contact_email_click", contactEvent)
@@ -109,9 +120,10 @@ export function AnalyticsConsent({ lang }: { lang: Lang }) {
         const destination = new URL(href)
         if (destination.origin === window.location.origin) return
         analyticsWindow.gtag?.("event", "outbound_click", {
-          page_path: `${location.pathname}${location.search}`,
+          page_path: location.pathname,
           link_domain: destination.hostname,
-          link_url: href,
+          link_url: `${destination.origin}${destination.pathname}`,
+          language: lang,
           transport_type: "beacon",
         })
       } catch {
@@ -121,10 +133,10 @@ export function AnalyticsConsent({ lang }: { lang: Lang }) {
 
     document.addEventListener("click", trackLink)
     return () => document.removeEventListener("click", trackLink)
-  }, [consent, location.pathname, location.search])
+  }, [consent, location.pathname, location.search, lang])
 
   const choose = (value: Exclude<Consent, null>) => {
-    window.localStorage.setItem(STORAGE_KEY, value)
+    try { window.localStorage.setItem(STORAGE_KEY, value) } catch { /* Continue with an in-memory choice. */ }
     setConsent(value)
     if (value === "denied") {
       ;(window as AnalyticsWindow).gtag?.("consent", "update", { analytics_storage: "denied" })
@@ -148,7 +160,7 @@ export function AnalyticsConsent({ lang }: { lang: Lang }) {
         <button
           type="button"
           onClick={() => choose("granted")}
-          className="min-h-12 rounded-full bg-accent px-5 text-nav uppercase tracking-nav text-white"
+          className="min-h-12 rounded-full bg-[#d50000] px-5 text-nav uppercase tracking-nav text-white"
         >
           {copy.accept}
         </button>

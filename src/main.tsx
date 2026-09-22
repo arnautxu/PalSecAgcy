@@ -1,34 +1,26 @@
-import { StrictMode } from "react"
-import { createRoot } from "react-dom/client"
+import { StrictMode, useEffect } from "react"
+import { createRoot, hydrateRoot } from "react-dom/client"
 import { BrowserRouter } from "react-router-dom"
 import { HelmetProvider } from "react-helmet-async"
 import "@fontsource-variable/geist-mono"
 import App from "./App"
 import "./index.css"
 
-// The prerendered head makes every route crawlable without JavaScript. Once the
-// app starts, Helmet owns these route-specific tags so client-side navigation
-// cannot leave stale or duplicate metadata behind.
-document.head
-  .querySelectorAll(
-    [
-      'meta[name="description"]',
-      'meta[property^="og:"]',
-      'meta[name^="twitter:"]',
-      'link[rel="canonical"]',
-      'link[rel="alternate"][hreflang]',
-      'script[type="application/ld+json"]',
-      '#seo-static-style',
-    ].join(","),
-  )
-  .forEach((element) => element.remove())
+function HydrationReady() {
+  useEffect(() => { document.documentElement.dataset.hydrated = "true" }, [])
+  return null
+}
 
-createRoot(document.getElementById("root")!).render(
+const app = (
   <StrictMode>
     <HelmetProvider>
       <BrowserRouter>
         <App />
+        <HydrationReady />
       </BrowserRouter>
     </HelmetProvider>
-  </StrictMode>,
+  </StrictMode>
 )
+const root = document.getElementById("root")!
+if (root.hasChildNodes()) hydrateRoot(root, app)
+else createRoot(root).render(app)

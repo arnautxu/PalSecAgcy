@@ -84,8 +84,8 @@ const PAGES: Record<ServiceSlug, Record<Lang, Omit<ServicePage, "slug" | "faqs">
   "branding-visual-identity": {
     ca: {
       title: "BRANDING I IDENTITAT VISUAL",
-      seoTitle: "Branding a Girona i Costa Brava | PALSEC AGCY",
-      description: "Disseny d'identitat visual, sistemes gràfics i aplicacions de marca pensats per mantenir coherència en digital, impressió i espai.",
+      seoTitle: "Identitat visual: procés, sistema i aplicacions | PALSEC",
+      description: "Coneix el procés d'identitat visual de PALSEC: direcció creativa, logotip, tipografia, color, proves d'aplicació i criteris per mantenir la marca coherent.",
       intro: "Transformem l'estratègia en un sistema visual recognoscible, flexible i preparat per funcionar en les aplicacions reals de la marca.",
       forWhom: "Per a marques que neixen, es reposicionen o necessiten ordenar expressions visuals que avui no treballen com un sistema.",
       budget: "El cost d'una identitat visual varia segons el punt de partida, el nombre d'aplicacions i la profunditat del sistema. Dissenyar un logotip aïllat no equival a definir una identitat amb direcció visual, tipografia, color, moviment, plantilles i guia d'ús. El pressupost concreta les aplicacions prioritàries i evita produir peces que l'equip no necessitarà.",
@@ -102,8 +102,8 @@ const PAGES: Record<ServiceSlug, Record<Lang, Omit<ServicePage, "slug" | "faqs">
     },
     en: {
       title: "BRANDING & VISUAL IDENTITY",
-      seoTitle: "Branding in Girona & Costa Brava | PALSEC AGCY",
-      description: "Visual identity design, graphic systems, and brand applications built to stay coherent across digital, print, and spatial touchpoints.",
+      seoTitle: "Visual Identity: Process, Systems & Applications | PALSEC",
+      description: "Explore PALSEC's visual identity process: creative direction, logo, typography, colour, application testing, and guidance for a consistent brand system.",
       intro: "We turn strategy into a recognizable, flexible visual system designed to work across the brand's real applications.",
       forWhom: "For brands that are launching, repositioning, or need to organize visual expressions that do not yet work as one system.",
       budget: "The cost of a visual identity varies with the starting point, the number of applications, and the depth of the system. Designing an isolated logo is not equivalent to defining visual direction, typography, colour, motion, templates, and usage guidance. The proposal identifies priority applications so the project does not produce assets the team will not use.",
@@ -120,8 +120,8 @@ const PAGES: Record<ServiceSlug, Record<Lang, Omit<ServicePage, "slug" | "faqs">
     },
     es: {
       title: "BRANDING E IDENTIDAD VISUAL",
-      seoTitle: "Branding en Girona y Costa Brava | PALSEC AGCY",
-      description: "Diseño de identidad visual, sistemas gráficos y aplicaciones de marca pensados para mantener coherencia en digital, impresión y espacio.",
+      seoTitle: "Identidad visual: proceso, sistema y aplicaciones | PALSEC",
+      description: "Conoce el proceso de identidad visual de PALSEC: dirección creativa, logotipo, tipografía, color, pruebas de aplicación y criterios de coherencia de marca.",
       intro: "Transformamos la estrategia en un sistema visual reconocible, flexible y preparado para funcionar en las aplicaciones reales de la marca.",
       forWhom: "Para marcas que nacen, se reposicionan o necesitan ordenar expresiones visuales que todavía no trabajan como un sistema.",
       budget: "El coste de una identidad visual varía según el punto de partida, el número de aplicaciones y la profundidad del sistema. Diseñar un logotipo aislado no equivale a definir una identidad con dirección visual, tipografía, color, movimiento, plantillas y guía de uso. El presupuesto concreta las aplicaciones prioritarias y evita producir piezas que el equipo no necesitará.",
@@ -140,8 +140,8 @@ const PAGES: Record<ServiceSlug, Record<Lang, Omit<ServicePage, "slug" | "faqs">
   "web-design-digital-products": {
     ca: {
       title: "DISSENY WEB I PRODUCTE DIGITAL",
-      seoTitle: "Disseny web a Girona i Costa Brava | PALSEC AGCY",
-      description: "Disseny web, producte digital i UX/UI amb arquitectura clara, components escalables i una expressió visual coherent amb la marca.",
+      seoTitle: "Disseny UX/UI i producte digital: procés | PALSEC",
+      description: "Com dissenyem productes digitals a PALSEC: arquitectura d'informació, fluxos UX, prototips, interfícies accessibles i sistemes de components per implementar.",
       intro: "Dissenyem webs editorials i productes digitals que converteixen contingut i funcionalitat en una experiència clara, usable i coherent.",
       forWhom: "Per a marques i organitzacions que necessiten una web, una aplicació o un sistema digital que connecti objectius, contingut i experiència d'ús.",
       budget: "El pressupost d'una web depèn de l'arquitectura, la quantitat i l'estat del contingut, el nivell de personalització, els idiomes, les integracions i qui assumeix el desenvolupament. Una landing, una web corporativa i un producte digital no són paquets equivalents. Primer acotem objectius, funcionalitats, responsabilitats i criteris de llançament; després proposem fases i entregables comparables.",
@@ -158,8 +158,8 @@ const PAGES: Record<ServiceSlug, Record<Lang, Omit<ServicePage, "slug" | "faqs">
     },
     en: {
       title: "WEB DESIGN & DIGITAL PRODUCTS",
-      seoTitle: "Web Design in Girona & Costa Brava | PALSEC AGCY",
-      description: "Web design, digital product, and UX/UI with clear architecture, scalable components, and a visual expression aligned with the brand.",
+      seoTitle: "UX/UI & Digital Product Design Process | PALSEC",
+      description: "How PALSEC designs digital products: information architecture, user journeys, prototypes, accessible interfaces, and component systems for implementation.",
       intro: "We design editorial websites and digital products that turn content and functionality into a clear, usable, and coherent experience.",
       forWhom: "For brands and organizations that need a website, application, or digital system connecting objectives, content, and user experience.",
       budget: "Website budgets depend on architecture, the amount and readiness of content, the level of customization, languages, integrations, and who owns development. A landing page, corporate site, and digital product are not equivalent packages. We first define objectives, functionality, responsibilities, and launch criteria, then propose comparable phases and deliverables.",
@@ -176,8 +176,8 @@ const PAGES: Record<ServiceSlug, Record<Lang, Omit<ServicePage, "slug" | "faqs">
     },
     es: {
       title: "DISEÑO WEB Y PRODUCTO DIGITAL",
-      seoTitle: "Diseño web en Girona y Costa Brava | PALSEC AGCY",
-      description: "Diseño web, producto digital y UX/UI con arquitectura clara, componentes escalables y una expresión visual coherente con la marca.",
+      seoTitle: "Diseño UX/UI y producto digital: proceso | PALSEC",
+      description: "Cómo diseñamos productos digitales en PALSEC: arquitectura de información, flujos UX, prototipos, interfaces accesibles y sistemas de componentes para implementar.",
       intro: "Diseñamos webs editoriales y productos digitales que convierten contenido y funcionalidad en una experiencia clara, usable y coherente.",
       forWhom: "Para marcas y organizaciones que necesitan una web, aplicación o sistema digital que conecte objetivos, contenido y experiencia de uso.",
       budget: "El presupuesto de una web depende de la arquitectura, la cantidad y el estado del contenido, el nivel de personalización, los idiomas, las integraciones y quién asume el desarrollo. Una landing, una web corporativa y un producto digital no son paquetes equivalentes. Primero acotamos objetivos, funcionalidades, responsabilidades y criterios de lanzamiento; después proponemos fases y entregables comparables.",

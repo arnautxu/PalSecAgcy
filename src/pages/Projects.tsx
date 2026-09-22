@@ -1,8 +1,9 @@
-import { useLayoutEffect, useRef, useState } from "react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 import { motion } from "framer-motion"
 import { PageFrame } from "@/components/PageFrame"
-import { PROJECTS, picsum } from "@/data/projects"
+import { SiteFooter } from "@/components/SiteFooter"
+import { PROJECTS, picsum, type ProjectSlug } from "@/data/projects"
 import { publicUrl } from "@/utils/publicUrl"
 import { useLang } from "@/i18n/useLang"
 import { t } from "@/i18n/strings"
@@ -10,6 +11,10 @@ import { Seo } from "@/components/Seo"
 import { Picture } from "@/components/Picture"
 import { LazyAutoplayVideo } from "@/components/LazyAutoplayVideo"
 import { PROJECTS_META } from "@/lib/seoMeta"
+import { getProjectCase } from "@/content/projectCases"
+import type { Lang } from "@/i18n/lang"
+
+const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect
 
 const COLOR_ACTIVE = "#ff1a1a"
 const COLOR_REST = "#282828"
@@ -24,15 +29,16 @@ function ProjectCard({
   comingSoon = false,
   lang,
 }: {
-  slug: string
+  slug: ProjectSlug
   title: string
   imageSrc: string
   videoSrc?: string
   fit?: "cover" | "contain"
   padded?: boolean
   comingSoon?: boolean
-  lang: string
+  lang: Lang
 }) {
+  const projectCase = getProjectCase(slug, lang)
   const wrapRef = useRef<HTMLDivElement>(null)
   const titleViewportRef = useRef<HTMLDivElement>(null)
   const titleTextRef = useRef<HTMLSpanElement>(null)
@@ -45,7 +51,7 @@ function ProjectCard({
     padded ? "p-10" : "",
   ].join(" ")
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (comingSoon) return
     const wrap = wrapRef.current
     const titleViewport = titleViewportRef.current
@@ -96,7 +102,7 @@ function ProjectCard({
             "text-nav uppercase tracking-nav",
             "border-white/40 bg-black/30 text-white backdrop-blur-[6px]",
           ].join(" ")}>
-            COMING SOON
+            {lang === "ca" ? "Properament" : lang === "es" ? "Próximamente" : "Coming soon"}
           </span>
         </div>
       )}
@@ -146,6 +152,12 @@ function ProjectCard({
           {title}
         </motion.span>
       </div>
+      {projectCase ? (
+        <div className="mt-2 normal-case text-[12px] leading-[1.6] tracking-normal text-ink/65">
+          <p>{projectCase.discipline}</p>
+          <p className="text-ink/45">{projectCase.sector}</p>
+        </div>
+      ) : null}
     </Link>
   )
 }
@@ -192,6 +204,7 @@ export function Projects() {
             )
           })}
         </div>
+        <SiteFooter />
       </div>
     </PageFrame>
   )

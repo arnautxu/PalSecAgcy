@@ -1,4 +1,6 @@
 import { Navigate, Route, Routes, useLocation } from "react-router-dom"
+import { BuyingGuide } from "./pages/BuyingGuide"
+import { CommercialLanding } from "./pages/CommercialLanding"
 import { RootLayout } from "./components/RootLayout"
 import { AboutUs } from "./pages/AboutUs"
 import { Home } from "./pages/Home"
@@ -29,6 +31,8 @@ export default function App() {
 
       <Route path="/:lang" element={<RootLayout />}>
         <Route index element={<Home />} />
+        <Route path="guias/:guideSlug" element={<BuyingGuide />} />
+        <Route path=":commercialSlug" element={<CommercialLanding />} />
         <Route path="services" element={<Services />} />
         <Route path="services/:serviceSlug" element={<ServiceDetail />} />
         <Route path="projects" element={<Projects />} />

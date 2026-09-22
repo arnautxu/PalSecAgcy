@@ -1,6 +1,7 @@
-import { Component, lazy, Suspense } from "react"
+import { Component, lazy, Suspense, useEffect, useState } from "react"
 import type { ReactNode } from "react"
 import { useLocation } from "react-router-dom"
+import { SiteFooter } from "@/components/SiteFooter"
 import { PageFrame } from "@/components/PageFrame"
 import { CONTACT_EMAIL, mailtoProjectInquiryHref } from "@/constants/contact"
 import { useLang } from "@/i18n/useLang"
@@ -33,6 +34,8 @@ export function AboutUs() {
   const lang = useLang()
   const { pathname } = useLocation()
   const extra = ABOUT_APPROACH[lang]
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
   return (
     <PageFrame className="relative">
       <Seo
@@ -46,11 +49,11 @@ export function AboutUs() {
 
         {/* ── 3D Logo — full width, dominant ── */}
         <div className="w-full flex-shrink-0" style={{ height: "clamp(220px, 45vh, 460px)" }}>
-          <Logo3DBoundary>
+          {mounted && <Logo3DBoundary>
             <Suspense fallback={null}>
               <Logo3D reduced={prefersReducedMotion} />
             </Suspense>
-          </Logo3DBoundary>
+          </Logo3DBoundary>}
         </div>
 
         {/* ── Text content — centred below ── */}
@@ -85,6 +88,10 @@ export function AboutUs() {
             </div>
           </section>
 
+          <nav className="mt-7 flex gap-5 text-[12px]">
+            <Link to={`/${lang}/services`} className="underline underline-offset-4">{t(lang, "nav.services")}</Link>
+            <Link to={`/${lang}/projects`} className="underline underline-offset-4">{t(lang, "nav.projects")}</Link>
+          </nav>
           <div className="my-5 h-px w-full bg-frame" />
 
           <p className="normal-case text-bodymd leading-[1.8] tracking-nav text-ink/70 md:text-body md:leading-[1.6]">
@@ -96,6 +103,7 @@ export function AboutUs() {
               {CONTACT_EMAIL}
             </a>
           </p>
+          <SiteFooter />
         </div>
 
       </div>

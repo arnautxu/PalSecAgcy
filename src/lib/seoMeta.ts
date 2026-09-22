@@ -4,11 +4,15 @@
  * and the postbuild prerender script (scripts/prerender.mjs).
  */
 
+import { BUYING_GUIDES, type BuyingGuideContent } from "../content/buyingGuides"
 import { getAllServicePages, type ServiceSlug } from "../content/servicePages"
+import { getCommercialPages, getCommercialPageByPath, COMMERCIAL_PATHS, type CommercialPage } from "../content/commercialPages"
 
 export type Lang = "en" | "ca" | "es"
 
 export const LANGS: readonly Lang[] = ["ca", "en", "es"] as const
+
+export const HREFLANG: Record<Lang, string> = { ca: "ca-ES", es: "es-ES", en: "en" }
 
 export const BASE_URL = "https://www.palsec.agency"
 export const DEFAULT_OG_IMAGE = `${BASE_URL}/og/palsec-og.png`
@@ -36,17 +40,17 @@ type PageMeta = { title: string; description: string }
 
 export const HOME_META: Record<Lang, PageMeta> = {
   en: {
-    title: "Strategic Design Agency in Girona & Costa Brava | PALSEC",
+    title: "Web Design & Branding Agency in Girona | PALSEC",
     description:
       "Palsec Agcy is a strategic design studio in Costa Brava serving Girona and global teams across brand strategy, branding, web design, and visual systems.",
   },
   ca: {
-    title: "Agència de disseny a Girona i Costa Brava | PALSEC",
+    title: "Agència de disseny web i branding a Girona | PALSEC",
     description:
       "Palsec Agcy és un estudi de disseny de la Costa Brava que treballa a Girona i globalment en estratègia de marca, branding, disseny web i sistemes visuals.",
   },
   es: {
-    title: "Agencia de diseño en Girona y Costa Brava | PALSEC",
+    title: "Agencia de diseño web y branding en Girona | PALSEC",
     description:
       "Palsec Agcy es un estudio de diseño de la Costa Brava que trabaja en Girona y globalmente en estrategia de marca, branding, diseño web y sistemas visuales.",
   },
@@ -72,17 +76,17 @@ export const PROJECTS_META: Record<Lang, PageMeta> = {
 
 export const SERVICES_META: Record<Lang, PageMeta> = {
   en: {
-    title: "Strategic Design Agency Services | PALSEC AGCY",
+    title: "Branding, Design & Web Development Services | PALSEC",
     description:
       "Palsec Agcy services: brand strategy, branding, web design, motion graphics, and creative direction. From definition to execution.",
   },
   ca: {
-    title: "Serveis d'agència de disseny | PALSEC AGCY",
+    title: "Serveis de branding, disseny i desenvolupament web | PALSEC",
     description:
       "Agència de disseny estratègic a la Costa Brava: branding, identitat visual, disseny web, motion graphics i direcció creativa.",
   },
   es: {
-    title: "Servicios de agencia de diseño | PALSEC AGCY",
+    title: "Servicios de branding, diseño y desarrollo web | PALSEC",
     description:
       "Servicios de Palsec Agcy: estrategia de marca, branding, diseño web, motion graphics y dirección creativa. De la definición a la ejecución.",
   },
@@ -90,17 +94,17 @@ export const SERVICES_META: Record<Lang, PageMeta> = {
 
 export const ABOUT_META: Record<Lang, PageMeta> = {
   en: {
-    title: "Strategic Design Studio in Costa Brava | PALSEC AGCY",
+    title: "About PALSEC | Our Approach to Design & Digital Products",
     description:
       "Palsec Agcy is a design-led studio based in Costa Brava, working globally on brand strategy, digital products, and visual systems.",
   },
   ca: {
-    title: "Estudi de disseny a la Costa Brava | PALSEC AGCY",
+    title: "Sobre PALSEC | Criteri, disseny i manera de treballar",
     description:
       "Palsec Agcy és un estudi de disseny a la Costa Brava que treballa globalment en estratègia de marca, productes digitals i sistemes visuals.",
   },
   es: {
-    title: "Estudio de diseño en Costa Brava | PALSEC AGCY",
+    title: "Sobre PALSEC | Criterio, diseño y forma de trabajar",
     description:
       "Palsec Agcy es un estudio de diseño en la Costa Brava que trabaja globalmente en estrategia de marca, productos digitales y sistemas visuales.",
   },
@@ -302,7 +306,7 @@ export function getProjectPrimaryServiceSlug(slug: ProjectSlug): ServiceSlug {
 
 // ─── Route descriptor ─────────────────────────────────────────────────────────
 
-export type RouteKind = "home" | "services" | "service" | "projects" | "about-us" | "privacy" | "legal-notice" | "project"
+export type RouteKind = "home" | "services" | "service" | "projects" | "about-us" | "privacy" | "legal-notice" | "project" | "commercial" | "guide"
 
 export interface RouteMeta {
   /** URL path, e.g. /ca/services */
@@ -321,6 +325,9 @@ export interface RouteMeta {
 }
 
 export function swapLang(path: string, newLang: Lang): string {
+  if (path.startsWith("/es/guias/")) return newLang === "es" ? path : `/${newLang}`
+  const commercial = getCommercialPageByPath(path)
+  if (commercial) return COMMERCIAL_PATHS[commercial.id][newLang]
   const parts = path.split("/").filter(Boolean)
   if (parts.length === 0) return `/${newLang}`
   parts[0] = newLang
@@ -355,6 +362,12 @@ export function buildAllRoutes(): RouteMeta[] {
         canonicalUrl: `${BASE_URL}/${lang}/services/${service.slug}`,
         ogImage: DEFAULT_OG_IMAGE,
       })
+    }
+
+    for (const page of getCommercialPages(lang)) {
+      routes.push({ path: page.path, distPath: `${page.path.slice(1)}/index.html`, lang,
+        kind: "commercial", title: page.seoTitle, description: page.description,
+        canonicalUrl: `${BASE_URL}${page.path}`, ogImage: DEFAULT_OG_IMAGE })
     }
 
     // Services
@@ -434,6 +447,11 @@ export function buildAllRoutes(): RouteMeta[] {
     }
   }
 
+  for (const guide of BUYING_GUIDES) {
+    routes.push({ path: guide.path, distPath: `${guide.path.slice(1)}/index.html`, lang: "es",
+      kind: "guide", title: guide.seoTitle, description: guide.description,
+      canonicalUrl: `${BASE_URL}${guide.path}`, ogImage: DEFAULT_OG_IMAGE })
+  }
   return routes
 }
 
@@ -534,7 +552,7 @@ export function buildServiceSchema(opts: {
 }
 
 export function buildServicesCatalogSchema(lang: Lang, canonicalUrl: string) {
-  const services = getAllServicePages(lang)
+  const services = getCommercialPages(lang)
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -556,7 +574,7 @@ export function buildServicesCatalogSchema(lang: Lang, canonicalUrl: string) {
           "@type": "Service",
           name: service.title,
           description: service.description,
-          url: `${BASE_URL}/${lang}/services/${service.slug}`,
+          url: `${BASE_URL}${service.path}`,
           provider: { "@id": `${BASE_URL}/#organization` },
         })),
       },
@@ -609,7 +627,6 @@ export function buildCreativeWorkSchema(opts: {
         description,
         inLanguage: lang,
         creator: { "@id": `${BASE_URL}/#organization` },
-        dateCreated: meta.year,
       },
     ],
   }
@@ -625,4 +642,42 @@ export function projectsLabel(lang: Lang): string {
 
 export function servicesLabel(lang: Lang): string {
   return lang === "ca" ? "Serveis" : lang === "es" ? "Servicios" : "Services"
+}
+
+export function buildCommercialServiceSchema(page: CommercialPage) {
+  const url = `${BASE_URL}${page.path}`
+  return {
+    "@context": "https://schema.org",
+    "@graph": [{
+      "@type": "WebPage", "@id": `${url}#webpage`, url,
+      name: page.seoTitle, description: page.description, inLanguage: page.lang,
+      isPartOf: { "@id": `${BASE_URL}/#website` }, mainEntity: { "@id": `${url}#service` },
+    }, {
+      "@type": "Service", "@id": `${url}#service`,
+      name: page.title, description: page.description, url, serviceType: page.serviceType,
+      provider: { "@id": `${BASE_URL}/#organization`, "@type": "Organization", name: "PALSEC AGCY", url: BASE_URL },
+      areaServed: [{ "@type": "Place", name: "Girona" }, { "@type": "Place", name: "Costa Brava" }],
+      availableChannel: { "@type": "ServiceChannel", serviceUrl: url, availableLanguage: ["ca", "es", "en"] },
+    }],
+  }
+}
+
+export function alternateLinks(path: string) {
+  if (path.startsWith("/es/guias/")) return [
+    { lang: "es-ES", path }, { lang: "x-default", path },
+  ]
+  return [...LANGS.map(lang => ({ lang: HREFLANG[lang], path: swapLang(path, lang) })),
+    { lang: "x-default", path: swapLang(path, "en") }]
+}
+
+export function buildGuideSchema(guide: BuyingGuideContent) {
+  const url = `${BASE_URL}${guide.path}`
+  return {
+    "@context": "https://schema.org", "@type": "Article", "@id": `${url}#article`,
+    headline: guide.title, description: guide.description, url,
+    mainEntityOfPage: url, inLanguage: "es", image: DEFAULT_OG_IMAGE,
+    author: { "@type": "Organization", "@id": `${BASE_URL}/#organization`, name: "PALSEC AGCY", url: BASE_URL },
+    publisher: { "@id": `${BASE_URL}/#organization` },
+    datePublished: "2026-09-22", dateModified: "2026-09-22",
+  }
 }

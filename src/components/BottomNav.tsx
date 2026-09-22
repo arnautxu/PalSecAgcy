@@ -2,7 +2,8 @@ import { AnimatePresence, motion } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
 import { Link, NavLink, useLocation } from "react-router-dom"
 import { CONTACT_EMAIL, mailtoProjectInquiryHref } from "@/constants/contact"
-import { replaceLangInPathname, type Lang } from "@/i18n/lang"
+import { type Lang } from "@/i18n/lang"
+import { swapLang } from "@/lib/seoMeta"
 import { useLang } from "@/i18n/useLang"
 import { t } from "@/i18n/strings"
 
@@ -50,7 +51,7 @@ export function BottomNav() {
       "text-white hover:text-ink hover:opacity-100",
       active
         ? "opacity-100 underline underline-offset-4 decoration-white/70"
-        : "opacity-70",
+        : "opacity-100",
     ].join(" ")
 
   const langItemClass = (active: boolean, size: "sm" | "md" = "sm") =>
@@ -59,17 +60,17 @@ export function BottomNav() {
       "inline-flex min-h-[48px] items-center uppercase tracking-[0.08em] transition-opacity duration-200",
       active
         ? "opacity-100 underline underline-offset-4 decoration-white/70"
-        : "opacity-60 hover:opacity-100",
+        : "opacity-100 hover:opacity-80",
     ].join(" ")
 
-  const langLink = (l: Lang) => replaceLangInPathname(location.pathname, l) + location.search + location.hash
+  const langLink = (l: Lang) => swapLang(location.pathname, l) + location.search + location.hash
 
   const pillBase = [
     "pointer-events-auto",
     "text-nav uppercase tracking-nav",
     "flex items-center",
     "border backdrop-blur-[10px] rounded-full",
-    "bg-accent/90 border-white/20",
+    "bg-[#d50000]/95 border-white/20",
   ].join(" ")
 
   return (
@@ -89,7 +90,7 @@ export function BottomNav() {
               className={[
                 "flex flex-col items-center gap-6",
                 "px-12 py-10 rounded-2xl w-full max-w-xs",
-                "bg-accent/90 border border-white/20 backdrop-blur-[10px]",
+                "bg-[#d50000]/95 border border-white/20 backdrop-blur-[10px]",
               ].join(" ")}
               variants={{
                 show: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } },
@@ -117,7 +118,7 @@ export function BottomNav() {
                     className={({ isActive }) => [
                       "flex min-h-[48px] items-center py-3 text-[16px] uppercase tracking-[0.1em] font-normal",
                       "transition-[opacity,color] duration-200 text-white hover:text-ink hover:opacity-100",
-                      isActive ? "opacity-70" : "opacity-100",
+                      isActive ? "opacity-100" : "opacity-100",
                     ].join(" ")}
                   >
                     {label}

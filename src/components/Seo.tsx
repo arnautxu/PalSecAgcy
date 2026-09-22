@@ -1,9 +1,14 @@
+import { BUYING_GUIDES } from "@/content/buyingGuides"
+import { getCommercialPageByPath } from "@/content/commercialPages"
 import { Helmet } from "react-helmet-async"
 import type { Project } from "@/data/projects"
 import type { ServicePage } from "@/content/servicePages"
 import type { Lang } from "@/i18n/lang"
 import {
   BASE_URL,
+  alternateLinks,
+  buildGuideSchema,
+  buildCommercialServiceSchema,
   DEFAULT_OG_IMAGE,
   PROJECT_SLUGS,
   buildBreadcrumbSchema,
@@ -16,7 +21,6 @@ import {
   homeLabel,
   projectsLabel,
   servicesLabel,
-  swapLang,
   type ProjectSlug,
 } from "@/lib/seoMeta"
 
@@ -62,9 +66,11 @@ export function Seo({
   service,
 }: SeoProps) {
   const fullTitle = bare ? title : `${title} | PALSEC AGCY`
+  path = path.replace(/\/+$/, "") || "/"
   const canonicalUrl = `${BASE_URL}${path}`
+  const commercial = getCommercialPageByPath(path)
   const ogImage = image ?? DEFAULT_OG_IMAGE
-  const langs: Lang[] = ["ca", "en", "es"]
+  const guide = BUYING_GUIDES.find(guide => guide.path === path)
 
   const organizationJson = isHome || path.endsWith("/about-us")
     ? JSON.stringify(buildOrganizationSchema())
@@ -75,7 +81,13 @@ export function Seo({
     : null
 
   let breadcrumbJson: string | null = null
-  if (isProjectsList) {
+  if (guide) {
+    breadcrumbJson = JSON.stringify(buildBreadcrumbSchema([
+      { name: homeLabel(lang), url: `${BASE_URL}/${lang}` },
+      { name: servicesLabel(lang), url: `${BASE_URL}/${lang}/services` },
+      { name: guide.title, url: canonicalUrl },
+    ]))
+  } else if (isProjectsList) {
     breadcrumbJson = JSON.stringify(buildBreadcrumbSchema([
       { name: homeLabel(lang), url: `${BASE_URL}/${lang}` },
       { name: projectsLabel(lang), url: canonicalUrl },
@@ -84,6 +96,12 @@ export function Seo({
     breadcrumbJson = JSON.stringify(buildBreadcrumbSchema([
       { name: homeLabel(lang), url: `${BASE_URL}/${lang}` },
       { name: servicesLabel(lang), url: canonicalUrl },
+    ]))
+  } else if (commercial) {
+    breadcrumbJson = JSON.stringify(buildBreadcrumbSchema([
+      { name: homeLabel(lang), url: `${BASE_URL}/${lang}` },
+      { name: servicesLabel(lang), url: `${BASE_URL}/${lang}/services` },
+      { name: commercial.title, url: canonicalUrl },
     ]))
   } else if (service) {
     breadcrumbJson = JSON.stringify(buildBreadcrumbSchema([
@@ -102,6 +120,12 @@ export function Seo({
   const serviceJson = service
     ? JSON.stringify(buildServiceSchema({ serviceSlug: service.slug, lang, canonicalUrl }))
     : null
+  const faqs = commercial?.faqs ?? service?.faqs
+  const faqJson = faqs?.length ? JSON.stringify({
+    "@context": "https://schema.org", "@type": "FAQPage", "@id": `${canonicalUrl}#faq`,
+    mainEntity: faqs.map(faq => ({ "@type": "Question", name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: faq.answer } })),
+  }) : null
   const servicesCatalogJson = isServicesList
     ? JSON.stringify(buildServicesCatalogSchema(lang, canonicalUrl))
     : null
@@ -116,15 +140,9 @@ export function Seo({
       {noindex && <meta name="robots" content="noindex,follow" />}
 
       <link rel="canonical" href={canonicalUrl} />
-      {langs.map((alternateLang) => (
-        <link
-          key={alternateLang}
-          rel="alternate"
-          hrefLang={alternateLang}
-          href={`${BASE_URL}${swapLang(path, alternateLang)}`}
-        />
+      {alternateLinks(path).map(alternate => (
+        <link key={alternate.lang} rel="alternate" hrefLang={alternate.lang} href={`${BASE_URL}${alternate.path}`} />
       ))}
-      <link rel="alternate" hrefLang="x-default" href={`${BASE_URL}${swapLang(path, "en")}`} />
 
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
@@ -140,6 +158,9 @@ export function Seo({
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={ogImage} />
 
+      {faqJson && <script type="application/ld+json">{faqJson}</script>}
+      {guide && <script type="application/ld+json">{JSON.stringify(buildGuideSchema(guide))}</script>}
+      {commercial && <script type="application/ld+json">{JSON.stringify(buildCommercialServiceSchema(commercial))}</script>}
       {organizationJson && <script type="application/ld+json">{organizationJson}</script>}
       {websiteJson && <script type="application/ld+json">{websiteJson}</script>}
       {aboutJson && <script type="application/ld+json">{aboutJson}</script>}

@@ -8,22 +8,17 @@ export type I18nKey =
   | "home.play"
   | "home.pause"
   | "home.tagline"
-  | "home.seoTitle"
-  | "home.seoDesc"
   | "projects.title"
   | "projects.lead"
-  | "projects.seoDesc"
   | "services.title"
   | "services.p1"
   | "services.p2"
   | "services.p3"
   | "services.cta"
-  | "services.seoDesc"
   | "about.title"
   | "about.p1"
   | "about.p2"
   | "about.contactPrefix"
-  | "about.seoDesc"
   | "notfound.title"
   | "notfound.body"
   | "notfound.backHome"
@@ -43,14 +38,9 @@ export const STRINGS: Record<Lang, Dict> = {
     "home.play": "PLAY",
     "home.pause": "PAUSE",
     "home.tagline": "Strategic design agency for brands that need to execute.",
-    "home.seoTitle": "Strategic Design Agency in Costa Brava | PALSEC AGCY",
-    "home.seoDesc":
-      "Palsec Agcy is a strategic design agency in Costa Brava. Brand strategy, branding, web design, and visual systems from definition to execution.",
     "projects.title": "PROJECTS",
     "projects.lead":
       "A selection of projects across branding, digital product, and visual systems. If you want to review your project together, let's talk.",
-    "projects.seoDesc":
-      "Selected projects by Palsec Agcy: branding, digital product design, and visual systems. Each project built with precision and strategic intent.",
     "services.title": "SERVICES",
     "services.p1":
       "Brand strategy · Branding · Web design · Print graphics · Motion graphics · Creative direction",
@@ -59,15 +49,11 @@ export const STRINGS: Record<Lang, Dict> = {
     "services.p3":
       "We design editorial websites and digital products with UX/UI, components, and scalable systems. We also deploy identities across print pieces and spatial materials.",
     "services.cta": "If you have an idea or a brand in evolution, let's talk about your project.",
-    "services.seoDesc":
-      "Strategic design agency services: brand strategy, branding, web design, motion graphics, and creative direction from Costa Brava.",
     "about.title": "ABOUT US",
     "about.p1":
       "Palsec Agcy is a strategic design agency working across brand, digital, and visual systems.",
     "about.p2": "We build precise, minimal, high-contrast experiences.",
     "about.contactPrefix": "Based in Costa Brava · Available worldwide ·",
-    "about.seoDesc":
-      "Palsec Agcy is a design-led studio based in Costa Brava, working globally on brand strategy, digital products, and visual systems.",
     "notfound.title": "404",
     "notfound.body": "THIS PAGE DOESN'T EXIST.",
     "notfound.backHome": "BACK HOME",
@@ -84,14 +70,9 @@ export const STRINGS: Record<Lang, Dict> = {
     "home.play": "PLAY",
     "home.pause": "PAUSE",
     "home.tagline": "Agència de disseny estratègic per a marques que necessiten executar.",
-    "home.seoTitle": "Agència de disseny a la Costa Brava | PALSEC AGCY",
-    "home.seoDesc":
-      "Palsec Agcy és una agència de disseny a la Costa Brava. Estratègia de marca, branding, disseny web i sistemes visuals, de la definició a l'execució.",
     "projects.title": "PROJECTES",
     "projects.lead":
       "Selecció de projectes en branding, producte digital i sistemes visuals. Si vols que ho mirem junts, parlem del teu projecte.",
-    "projects.seoDesc":
-      "Projectes seleccionats de Palsec Agcy: branding, disseny de producte digital i sistemes visuals. Cada projecte construït amb precisió i intenció estratègica.",
     "services.title": "SERVEIS",
     "services.p1":
       "Estratègia de marca · Branding · Disseny web · Gràfica impresa · Motion graphics · Direcció creativa",
@@ -100,15 +81,11 @@ export const STRINGS: Record<Lang, Dict> = {
     "services.p3":
       "Dissenyem webs editorials i productes digitals amb UX/UI, components i sistemes escalables. També despleguem identitats en peces impreses i materials d'espai.",
     "services.cta": "Si tens una idea o una marca en evolució, parlem del teu projecte.",
-    "services.seoDesc":
-      "Agència de disseny estratègic a la Costa Brava: branding, identitat visual, disseny web, motion graphics i direcció creativa.",
     "about.title": "SOBRE NOSALTRES",
     "about.p1":
       "Palsec Agcy és una agència de disseny que treballa en marca, digital i sistemes visuals.",
     "about.p2": "Construïm experiències precíses, minimals i d'alt contrast.",
     "about.contactPrefix": "Basats a la Costa Brava · Disponibles arreu ·",
-    "about.seoDesc":
-      "Palsec Agcy és un estudi de disseny a la Costa Brava que treballa globalment en estratègia de marca, productes digitals i sistemes visuals.",
     "notfound.title": "404",
     "notfound.body": "AQUESTA PÀGINA NO EXISTEIX.",
     "notfound.backHome": "TORNAR A L'INICI",
@@ -125,14 +102,9 @@ export const STRINGS: Record<Lang, Dict> = {
     "home.play": "PLAY",
     "home.pause": "PAUSE",
     "home.tagline": "Agencia de diseño estratégico para marcas que necesitan ejecutar.",
-    "home.seoTitle": "Agencia de diseño en Costa Brava | PALSEC AGCY",
-    "home.seoDesc":
-      "Palsec Agcy es una agencia de diseño en Costa Brava. Estrategia de marca, branding, diseño web y sistemas visuales, de la definición a la ejecución.",
     "projects.title": "PROYECTOS",
     "projects.lead":
       "Una selección de proyectos en branding, producto digital y sistemas visuales. Si quieres que lo veamos juntos, hablemos de tu proyecto.",
-    "projects.seoDesc":
-      "Proyectos seleccionados de Palsec Agcy: branding, diseño de producto digital y sistemas visuales. Cada proyecto construido con precisión e intención estratégica.",
     "services.title": "SERVICIOS",
     "services.p1":
       "Estrategia de marca · Branding · Diseño web · Gráfica impresa · Motion graphics · Dirección creativa",
@@ -141,15 +113,11 @@ export const STRINGS: Record<Lang, Dict> = {
     "services.p3":
       "Diseñamos webs editoriales y productos digitales con UX/UI, componentes y sistemas escalables. También desplegamos identidades en piezas impresas y materiales espaciales.",
     "services.cta": "Si tienes una idea o una marca en evolución, hablemos de tu proyecto.",
-    "services.seoDesc":
-      "Agencia de diseño estratégico en Costa Brava: branding, identidad visual, diseño web, motion graphics y dirección creativa.",
     "about.title": "SOBRE NOSOTROS",
     "about.p1":
       "Palsec Agcy es una agencia de diseño que trabaja en marca, digital y sistemas visuales.",
     "about.p2": "Creamos experiencias precisas, mínimas y de alto contraste.",
     "about.contactPrefix": "Con base en Costa Brava · Disponibles en todo el mundo ·",
-    "about.seoDesc":
-      "Palsec Agcy es un estudio de diseño en la Costa Brava que trabaja globalmente en estrategia de marca, productos digitales y sistemas visuales.",
     "notfound.title": "404",
     "notfound.body": "ESTA PÁGINA NO EXISTE.",
     "notfound.backHome": "VOLVER AL INICIO",

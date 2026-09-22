@@ -32,14 +32,7 @@ export function RootLayout() {
   const pathnameSegs = location.pathname.split("/").filter(Boolean)
   const lang = isLang(pathnameSegs[0]) ? pathnameSegs[0] : "en"
   const restPath = isLang(pathnameSegs[0]) ? `/${pathnameSegs.slice(1).join("/")}` : location.pathname
-  const navOnTop =
-    restPath === "/projects" ||
-    restPath === "/services" ||
-    restPath === "/about-us" ||
-    restPath === "/privacy" ||
-    restPath === "/legal-notice" ||
-    restPath.startsWith("/services/") ||
-    restPath.startsWith("/project/")
+  const navOnTop = restPath !== "/"
 
   return (
     <div className="relative h-full w-full overflow-hidden bg-page">
@@ -48,7 +41,7 @@ export function RootLayout() {
         href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[9999] focus:rounded focus:bg-accent focus:px-3 focus:py-2 focus:text-nav focus:uppercase focus:tracking-nav focus:text-white"
       >
-        Skip to main content
+        {lang === "ca" ? "Ves al contingut principal" : lang === "es" ? "Ir al contenido principal" : "Skip to main content"}
       </a>
 
       <LayoutGroup>

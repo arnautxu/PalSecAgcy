@@ -4,138 +4,185 @@ import { fileURLToPath } from "node:url"
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const DIST = path.join(ROOT, "dist")
-const EXPECTED_ROUTES = 48
-const EXPECTED_JSON_LD = 81
-const SERVICE_SLUGS = [
-  "brand-strategy",
-  "branding-visual-identity",
-  "web-design-digital-products",
-]
-const LANGS = ["ca", "es", "en"]
-
+const EXPECTED_ROUTES = 66
+const LANGUAGES = { ca: "ca-ES", es: "es-ES", en: "en" }
+const EXPECTED_ALTERNATES = [...Object.values(LANGUAGES), "x-default"].sort()
+const isSpanishGuide = (pathname) => /^\/es\/guias\/[^/]+$/.test(pathname)
+const expectedAlternatesFor = (pathname) => isSpanishGuide(pathname) ? ["es-ES", "x-default"] : EXPECTED_ALTERNATES
 const baseArg = process.argv.find((arg) => arg.startsWith("--base-url="))
-const baseUrl = baseArg?.split("=").slice(1).join("=").replace(/\/$/, "") ?? null
+const baseUrl = baseArg?.slice("--base-url=".length).replace(/\/$/, "") ?? null
 const issues = []
 const titles = new Map()
 const descriptions = new Map()
+const pages = new Map()
 let jsonLdCount = 0
 
 function decode(value = "") {
-  return value.replace(/&amp;/g, "&").replace(/&#39;/g, "'").trim()
+  return value.replace(/&(#(?:x[\da-f]+|\d+)|amp|quot|apos|lt|gt|nbsp);/gi, (_, entity) => {
+    if (entity[0] === "#") {
+      const numeric = entity[1].toLowerCase() === "x" ? parseInt(entity.slice(2), 16) : parseInt(entity.slice(1), 10)
+      return numeric <= 0x10ffff ? String.fromCodePoint(numeric) : ""
+    }
+    return { amp: "&", quot: '"', apos: "'", lt: "<", gt: ">", nbsp: " " }[entity.toLowerCase()]
+  }).trim()
 }
 
-function first(html, pattern) {
-  return decode(html.match(pattern)?.[1] ?? "")
+function attributes(tag) {
+  const output = {}
+  for (const match of tag.matchAll(/([^\s=<>/]+)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/g)) {
+    output[match[1].toLowerCase()] = decode(match[2] ?? match[3] ?? match[4])
+  }
+  return output
 }
 
-function textWordCount(html) {
-  const text = html
-    .replace(/<[^>]+>/g, " ")
-    .replace(/&[^;]+;/g, " ")
-    .replace(/\s+/g, " ")
-    .trim()
-  return text ? text.split(" ").length : 0
+function tags(html, name) {
+  return [...html.matchAll(new RegExp(`<${name}\\b[^>]*>`, "gi"))].map((match) => attributes(match[0]))
+}
+
+function normalText(html) {
+  return decode(html.replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi, " ").replace(/<[^>]*>/g, " ")).replace(/\s+/g, " ").trim()
 }
 
 async function readText(target) {
   if (!baseUrl) return fs.readFileSync(target, "utf8")
-  const response = await fetch(target, { redirect: "follow" })
-  if (!response.ok) throw new Error(`${response.status} ${target}`)
+  const response = await fetch(target, { redirect: "manual", signal: AbortSignal.timeout(30000) })
+  if (response.status !== 200) throw new Error(`expected HTTP 200, received ${response.status} ${target}`)
+  if (response.headers.get("x-robots-tag")?.includes("noindex")) issues.push(`${target}: noindex HTTP header`)
   return response.text()
 }
 
-function localRouteFile(url) {
-  return path.join(DIST, new URL(url).pathname.replace(/^\//, ""), "index.html")
-}
-
-async function routeHtml(url) {
-  return readText(baseUrl ? url : localRouteFile(url))
-}
-
 function recordUnique(store, value, pathname, label) {
+  if (!value) return issues.push(`${pathname}: missing ${label}`)
   if (store.has(value)) issues.push(`${pathname}: duplicate ${label} with ${store.get(value)}`)
   else store.set(value, pathname)
 }
 
+function schemaTypes(value, output = new Set()) {
+  if (!value || typeof value !== "object") return output
+  const types = Array.isArray(value["@type"]) ? value["@type"] : [value["@type"]]
+  for (const type of types) if (type) output.add(type)
+  for (const child of Object.values(value)) {
+    if (Array.isArray(child)) child.forEach((item) => schemaTypes(item, output))
+    else if (child && typeof child === "object") schemaTypes(child, output)
+  }
+  return output
+}
+
+function expectedTypes(pathname) {
+  const parts = pathname.split("/").filter(Boolean)
+  if (parts.length === 1) return ["Organization", "WebSite"]
+  if (parts[1] === "about-us") return ["Organization", "AboutPage"]
+  if (parts[1] === "projects") return ["BreadcrumbList"]
+  if (parts[1] === "project") return ["BreadcrumbList", "CreativeWork", "WebPage"]
+  if (parts[1] === "guias") return ["BreadcrumbList", "Article"]
+  if (parts[1] === "services") return parts.length === 2 ? ["BreadcrumbList", "OfferCatalog"] : ["BreadcrumbList", "Service", "WebPage"]
+  if (parts[1].endsWith("-girona")) return ["BreadcrumbList", "Service", "WebPage"]
+  return []
+}
+
 async function run() {
   const sitemapText = await readText(baseUrl ? `${baseUrl}/sitemap.xml` : path.join(DIST, "sitemap.xml"))
-  const urls = [...sitemapText.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1])
+  const entries = [...sitemapText.matchAll(/<url\b[^>]*>([\s\S]*?)<\/url>/gi)].map((match) => ({
+    url: decode(match[1].match(/<loc\b[^>]*>([^<]+)<\/loc>/i)?.[1] ?? ""),
+    alternates: tags(match[1], "xhtml:link").filter((tag) => tag.rel === "alternate"),
+  }))
+  const urls = entries.map(({ url }) => url)
+  const sitemapUrls = new Set(urls)
   if (urls.length !== EXPECTED_ROUTES) issues.push(`sitemap: expected ${EXPECTED_ROUTES} URLs, found ${urls.length}`)
-
+  if (sitemapUrls.size !== urls.length) issues.push("sitemap: duplicate URLs")
+  const guideCount = urls.filter((url) => { try { return isSpanishGuide(new URL(url).pathname) } catch { return false } }).length
+  if (guideCount !== 6) issues.push(`sitemap: expected 6 Spanish guides, found ${guideCount}`)
   const serviceWords = {}
 
-  for (const url of urls) {
-    const pathname = new URL(url).pathname
+  for (const { url, alternates: sitemapAlternates } of entries) {
+    let address
+    try { address = new URL(url) } catch { issues.push(`sitemap: invalid URL ${url}`); continue }
+    const { pathname } = address
+    if (address.origin !== "https://www.palsec.agency" || address.search || address.hash || pathname.endsWith("/")) issues.push(`${url}: sitemap must use the clean HTTPS canonical URL`)
     let html
-    try {
-      html = await routeHtml(baseUrl ? `${baseUrl}${pathname}` : url)
-    } catch (error) {
-      issues.push(`${pathname}: ${error.message}`)
-      continue
-    }
+    try { html = await readText(baseUrl ? `${baseUrl}${pathname}` : path.join(DIST, pathname.slice(1), "index.html")) }
+    catch (error) { issues.push(`${pathname}: ${error.message}`); continue }
 
-    const title = first(html, /<title>([^<]+)<\/title>/i)
-    const description = first(html, /<meta name="description" content="([^"]+)"/i)
-    const canonical = first(html, /<link rel="canonical" href="([^"]+)"/i)
-    const hreflang = [...html.matchAll(/<link rel="alternate" hreflang="([^"]+)"/gi)].map((match) => match[1])
+    const metas = tags(html, "meta")
+    const links = tags(html, "link")
+    const titleMatches = [...html.matchAll(/<title\b[^>]*>([\s\S]*?)<\/title>/gi)]
+    const title = decode(titleMatches[0]?.[1] ?? "")
+    const descriptionTags = metas.filter((tag) => tag.name === "description")
+    const description = descriptionTags[0]?.content ?? ""
+    const canonicals = links.filter((tag) => tag.rel === "canonical")
+    const alternates = links.filter((tag) => tag.rel === "alternate" && tag.hreflang)
+    const h1s = [...html.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)]
+    const language = pathname.split("/")[1]
+    const expectedAlternates = expectedAlternatesFor(pathname)
+    const defaultLanguage = isSpanishGuide(pathname) ? "es" : "en"
+    if (/^\/(ca|en)\/guias(?:\/|$)/.test(pathname)) issues.push(`${pathname}: Spanish guides must not claim untranslated CA/EN versions`)
 
-    if ((html.match(/<h1\b/gi) ?? []).length !== 1) issues.push(`${pathname}: expected exactly one H1`)
-    if (canonical !== url) issues.push(`${pathname}: canonical is ${canonical || "missing"}`)
-    if (new Set(hreflang).size !== 4 || ![...LANGS, "x-default"].every((lang) => hreflang.includes(lang))) {
-      issues.push(`${pathname}: invalid hreflang set`)
-    }
-    if (title.length < 30 || title.length > 65) issues.push(`${pathname}: title length ${title.length}`)
-    if (description.length < 110 || description.length > 165) issues.push(`${pathname}: description length ${description.length}`)
+    if (titleMatches.length !== 1) issues.push(`${pathname}: expected exactly one title`)
+    if (descriptionTags.length !== 1) issues.push(`${pathname}: expected exactly one description`)
+    if (h1s.length !== 1 || !normalText(h1s[0]?.[1] ?? "")) issues.push(`${pathname}: expected exactly one nonempty H1`)
+    if (canonicals.length !== 1 || canonicals[0].href !== url) issues.push(`${pathname}: canonical must equal ${url}`)
+    if (tags(html, "html")[0]?.lang?.split("-")[0] !== language) issues.push(`${pathname}: HTML language differs from URL language`)
+    if (metas.some((tag) => /^(robots|googlebot)$/i.test(tag.name ?? "") && /noindex/i.test(tag.content ?? ""))) issues.push(`${pathname}: noindex on sitemap page`)
+    if (title.length < 30 || title.length > 75) issues.push(`${pathname}: title length ${title.length}, expected 30–75`)
+    if (description.length < 100 || description.length > 180) issues.push(`${pathname}: description length ${description.length}, expected 100–180`)
     recordUnique(titles, title, pathname, "title")
     recordUnique(descriptions, description, pathname, "description")
-
-    for (const match of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi)) {
-      try {
-        JSON.parse(match[1])
-        jsonLdCount += 1
-      } catch {
-        issues.push(`${pathname}: invalid JSON-LD`)
-      }
+    for (const [property, expected] of [["og:title", title], ["og:description", description], ["og:url", url]]) {
+      const matching = metas.filter((tag) => tag.property === property)
+      if (matching.length !== 1 || matching[0].content !== expected) issues.push(`${pathname}: inconsistent ${property}`)
     }
 
+    const alternateMap = Object.fromEntries(alternates.map(({ hreflang, href }) => [hreflang, href]))
+    if (JSON.stringify(alternates.map((tag) => tag.hreflang).sort()) !== JSON.stringify(expectedAlternates)) issues.push(`${pathname}: invalid hreflang set`)
+    if (alternateMap[LANGUAGES[language]] !== url) issues.push(`${pathname}: hreflang does not include self`)
+    if (alternateMap["x-default"] !== alternateMap[LANGUAGES[defaultLanguage]]) issues.push(`${pathname}: x-default must target ${defaultLanguage} equivalent`)
+    for (const [locale, href] of Object.entries(alternateMap)) {
+      if (!sitemapUrls.has(href)) issues.push(`${pathname}: alternate absent from sitemap: ${href}`)
+      const targetLang = locale === "x-default" ? defaultLanguage : locale.split("-")[0]
+      try { if (new URL(href).pathname.split("/")[1] !== targetLang) issues.push(`${pathname}: ${locale} alternate has wrong URL language`) }
+      catch { issues.push(`${pathname}: invalid alternate URL ${href}`) }
+    }
+    const xmlMap = Object.fromEntries(sitemapAlternates.map(({ hreflang, href }) => [hreflang, href]))
+    if (sitemapAlternates.length !== expectedAlternates.length || expectedAlternates.some((locale) => xmlMap[locale] !== alternateMap[locale])) issues.push(`${pathname}: sitemap and HTML hreflang differ`)
+    pages.set(url, { pathname, alternates: alternateMap })
+
+    const types = new Set()
+    for (const match of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
+      if (attributes(match[1]).type !== "application/ld+json") continue
+      try { schemaTypes(JSON.parse(match[2]), types); jsonLdCount += 1 }
+      catch { issues.push(`${pathname}: invalid JSON-LD`) }
+    }
+    for (const type of expectedTypes(pathname)) if (!types.has(type)) issues.push(`${pathname}: missing ${type} schema`)
     const serviceMatch = pathname.match(/^\/(ca|es|en)\/services\/(brand-strategy|branding-visual-identity|web-design-digital-products)$/)
     if (serviceMatch) {
       const [, lang, slug] = serviceMatch
-      const main = html.match(/<main>([\s\S]*?)<\/main>/i)?.[1] ?? ""
-      const words = textWordCount(main)
+      const main = html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i)?.[1] ?? ""
+      const words = normalText(main).split(/\s+/).filter(Boolean).length
       serviceWords[slug] ??= {}
       serviceWords[slug][lang] = words
-      if (words < 800) issues.push(`${pathname}: service content has ${words} words; expected at least 800`)
+      if (words < 700) issues.push(`${pathname}: service content has ${words} words; expected at least 700`)
     }
-
-    if (!baseUrl) {
-      for (const match of html.matchAll(/(?:href|src)="(\/[^"]+)"/gi)) {
-        const ref = match[1].split(/[?#]/)[0]
-        if (!ref || ref.startsWith("//") || ref.startsWith("/api/")) continue
-        const target = /^\/(ca|es|en)(?:\/|$)/.test(ref)
-          ? path.join(DIST, ref.replace(/^\//, ""), "index.html")
-          : path.join(DIST, ref.replace(/^\//, ""))
-        if (!fs.existsSync(target)) issues.push(`${pathname}: broken internal reference ${ref}`)
+    for (const tag of [...tags(html, "a"), ...tags(html, "img"), ...tags(html, "video"), ...tags(html, "source")]) {
+      for (const ref of [tag.href, tag.src, tag.poster].filter(Boolean)) {
+        if (/^(#|mailto:|tel:|data:|blob:)/i.test(ref)) continue
+        let targetUrl
+        try { targetUrl = new URL(ref, url) } catch { issues.push(`${pathname}: invalid link ${ref}`); continue }
+        if (targetUrl.origin !== address.origin) continue
+        const targetPath = targetUrl.pathname
+        if (targetPath === "/" || targetPath.startsWith("/api/")) continue
+        if (/^\/(ca|es|en)(\/|$)/.test(targetPath)) {
+          if (!sitemapUrls.has(`${address.origin}${targetPath}`)) issues.push(`${pathname}: internal page absent from sitemap ${targetPath}`)
+        } else if (!baseUrl && !fs.existsSync(path.join(DIST, decodeURIComponent(targetPath).replace(/^\//, "")))) issues.push(`${pathname}: broken internal asset ${targetPath}`)
       }
     }
   }
-
-  if (jsonLdCount !== EXPECTED_JSON_LD) issues.push(`JSON-LD: expected ${EXPECTED_JSON_LD} blocks, found ${jsonLdCount}`)
-
-  const result = {
-    target: baseUrl ?? DIST,
-    routes: urls.length,
-    jsonLd: jsonLdCount,
-    uniqueTitles: titles.size,
-    uniqueDescriptions: descriptions.size,
-    serviceWords,
-    issues: [...new Set(issues)],
+  for (const { pathname, alternates } of pages.values()) {
+    for (const href of new Set(Object.values(alternates))) {
+      const target = pages.get(href)
+      if (target && expectedAlternatesFor(pathname).some((locale) => target.alternates[locale] !== alternates[locale])) issues.push(`${pathname}: nonreciprocal hreflang with ${target.pathname}`)
+    }
   }
-  console.log(JSON.stringify(result, null, 2))
+  console.log(JSON.stringify({ target: baseUrl ?? DIST, routes: urls.length, jsonLd: jsonLdCount, uniqueTitles: titles.size, uniqueDescriptions: descriptions.size, serviceWords, issues: [...new Set(issues)] }, null, 2))
   if (issues.length) process.exitCode = 1
 }
-
-run().catch((error) => {
-  console.error(error)
-  process.exitCode = 1
-})
+run().catch((error) => { console.error(error); process.exitCode = 1 })

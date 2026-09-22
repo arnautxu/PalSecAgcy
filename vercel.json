@@ -13,13 +13,23 @@
   "redirects": [
     {
       "source": "/",
-      "has": [{ "type": "host", "value": "palsec.agency" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "palsec.agency"
+        }
+      ],
       "destination": "https://www.palsec.agency/en",
       "permanent": true
     },
     {
       "source": "/(.*)",
-      "has": [{ "type": "host", "value": "palsec.agency" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "palsec.agency"
+        }
+      ],
       "destination": "https://www.palsec.agency/$1",
       "permanent": true
     },
@@ -100,45 +110,103 @@
     }
   ],
   "rewrites": [
-    { "source": "/(ca|en|es)", "destination": "/index.html" },
-    { "source": "/(ca|en|es)/(services|projects|about-us)", "destination": "/index.html" },
-    { "source": "/(ca|en|es)/services/(brand-strategy|branding-visual-identity|web-design-digital-products)", "destination": "/index.html" },
-    { "source": "/(ca|en|es)/(privacy|legal-notice)", "destination": "/index.html" },
-    { "source": "/(ca|en|es)/project/(arkuos|el-xiringuito|enteza|galeon|gent-gran-de-calonge-i-sant-antoni|logoteca|vira)", "destination": "/index.html" }
+    {
+      "source": "/(ca|en|es)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/(ca|en|es)/(services|projects|about-us)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/(ca|en|es)/services/(brand-strategy|branding-visual-identity|web-design-digital-products)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/(ca|en|es)/(privacy|legal-notice)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/(ca|en|es)/project/(arkuos|el-xiringuito|enteza|galeon|gent-gran-de-calonge-i-sant-antoni|logoteca|vira)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/ca/(disseny-web-girona|desenvolupament-web-girona|branding-girona|disseny-grafic-girona)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/es/(diseno-web-girona|desarrollo-web-girona|branding-girona|diseno-grafico-girona)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/en/(web-design-girona|web-development-girona|branding-girona|graphic-design-girona)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/es/guias/(presupuesto-web|presupuesto-branding|agencia-o-freelance|plazos-proyecto-web|rediseno-web|web-a-medida-o-plantilla)",
+      "destination": "/index.html"
+    }
   ],
   "headers": [
     {
       "source": "/assets/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
       "source": "/(favicon\\.svg|fonts/.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
       "source": "/(media|brand)/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, stale-while-revalidate=86400"
+        }
       ]
     },
     {
       "source": "/hero-(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, stale-while-revalidate=86400"
+        }
       ]
     },
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), interest-cohort=()" },
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://picsum.photos; media-src 'self'; font-src 'self' data:; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://region1.analytics.google.com; form-action 'self'" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://picsum.photos; media-src 'self'; font-src 'self' data:; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://region1.analytics.google.com; form-action 'self'"
+        }
       ]
     }
   ]

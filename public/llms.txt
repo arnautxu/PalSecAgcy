@@ -2,7 +2,7 @@
 
 > Strategic design studio based in Costa Brava, Spain, serving Girona and teams worldwide. PALSEC AGCY works across brand strategy, branding and visual identity, web design, digital products, motion graphics, and creative direction.
 
-Last reviewed: 2026-08-27
+Last reviewed: 2026-09-22
 
 ## Studio
 
@@ -49,3 +49,27 @@ PALSEC AGCY is based in Costa Brava and is available for work worldwide. The web
 
 - [XML sitemap](https://www.palsec.agency/sitemap.xml)
 - [Robots policy](https://www.palsec.agency/robots.txt)
+
+## Commercial services in Girona
+
+- [Disseny web a Girona](https://www.palsec.agency/ca/disseny-web-girona)
+- [Desenvolupament web a Girona](https://www.palsec.agency/ca/desenvolupament-web-girona)
+- [Branding a Girona](https://www.palsec.agency/ca/branding-girona)
+- [Disseny gràfic a Girona](https://www.palsec.agency/ca/disseny-grafic-girona)
+- [Diseño web en Girona](https://www.palsec.agency/es/diseno-web-girona)
+- [Desarrollo web en Girona](https://www.palsec.agency/es/desarrollo-web-girona)
+- [Branding en Girona](https://www.palsec.agency/es/branding-girona)
+- [Diseño gráfico en Girona](https://www.palsec.agency/es/diseno-grafico-girona)
+- [Web design in Girona](https://www.palsec.agency/en/web-design-girona)
+- [Web development in Girona](https://www.palsec.agency/en/web-development-girona)
+- [Branding in Girona](https://www.palsec.agency/en/branding-girona)
+- [Graphic design in Girona](https://www.palsec.agency/en/graphic-design-girona)
+
+## Spanish buying guides
+
+- [Website budget and scope](https://www.palsec.agency/es/guias/presupuesto-web)
+- [Branding budget and deliverables](https://www.palsec.agency/es/guias/presupuesto-branding)
+- [Agency or freelancer](https://www.palsec.agency/es/guias/agencia-o-freelance)
+- [Website project timelines](https://www.palsec.agency/es/guias/plazos-proyecto-web)
+- [When to redesign a website](https://www.palsec.agency/es/guias/rediseno-web)
+- [Custom website or template](https://www.palsec.agency/es/guias/web-a-medida-o-plantilla)
