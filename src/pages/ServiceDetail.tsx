@@ -3,15 +3,41 @@ import { SiteFooter } from "@/components/SiteFooter"
 import { PageFrame } from "@/components/PageFrame"
 import { Seo } from "@/components/Seo"
 import { mailtoProjectInquiryHref } from "@/constants/contact"
+import { getCommercialPages, type CommercialId } from "@/content/commercialPages"
 import { projectBySlug } from "@/data/projects"
-import { getServicePage, isServiceSlug } from "@/content/servicePages"
+import { getServicePage, isServiceSlug, type ServiceSlug } from "@/content/servicePages"
+import type { Lang } from "@/i18n/lang"
 import { useLang } from "@/i18n/useLang"
 
 const LABELS = {
-  ca: { forWhom: "PER A QUI", decisions: "QUÈ RESOLEM", budget: "PRESSUPOST I ABAST", process: "COM TREBALLEM", deliverables: "ENTREGABLES", related: "PROJECTES RELACIONATS", faq: "PREGUNTES FREQÜENTS", contact: "PARLEM DEL PROJECTE" },
-  en: { forWhom: "WHO IT IS FOR", decisions: "WHAT WE SOLVE", budget: "BUDGET AND SCOPE", process: "HOW WE WORK", deliverables: "DELIVERABLES", related: "RELATED PROJECTS", faq: "FREQUENTLY ASKED QUESTIONS", contact: "DISCUSS YOUR PROJECT" },
-  es: { forWhom: "PARA QUIÉN", decisions: "QUÉ RESOLVEMOS", budget: "PRESUPUESTO Y ALCANCE", process: "CÓMO TRABAJAMOS", deliverables: "ENTREGABLES", related: "PROYECTOS RELACIONADOS", faq: "PREGUNTAS FRECUENTES", contact: "HABLEMOS DEL PROYECTO" },
+  ca: { forWhom: "PER A QUI", decisions: "QUÈ RESOLEM", local: "DEL SERVEI AL PROJECTE", budget: "PRESSUPOST I ABAST", process: "COM TREBALLEM", deliverables: "ENTREGABLES", related: "PROJECTES RELACIONATS", faq: "PREGUNTES FREQÜENTS", contact: "PARLEM DEL PROJECTE" },
+  en: { forWhom: "WHO IT IS FOR", decisions: "WHAT WE SOLVE", local: "FROM SERVICE TO PROJECT", budget: "BUDGET AND SCOPE", process: "HOW WE WORK", deliverables: "DELIVERABLES", related: "RELATED PROJECTS", faq: "FREQUENTLY ASKED QUESTIONS", contact: "DISCUSS YOUR PROJECT" },
+  es: { forWhom: "PARA QUIÉN", decisions: "QUÉ RESOLVEMOS", local: "DEL SERVICIO AL PROYECTO", budget: "PRESUPUESTO Y ALCANCE", process: "CÓMO TRABAJAMOS", deliverables: "ENTREGABLES", related: "PROYECTOS RELACIONADOS", faq: "PREGUNTAS FRECUENTES", contact: "HABLEMOS DEL PROYECTO" },
 } as const
+
+const LOCAL_DESTINATIONS: Record<ServiceSlug, CommercialId[]> = {
+  "brand-strategy": ["branding"],
+  "branding-visual-identity": ["branding", "graphic-design"],
+  "web-design-digital-products": ["web-design", "web-development"],
+}
+
+const LOCAL_CONTEXT: Record<Lang, Record<ServiceSlug, string>> = {
+  ca: {
+    "brand-strategy": "Quan l'estratègia ja té una direcció clara, la traslladem a una identitat i a les aplicacions que el projecte necessita. A les pàgines locals expliquem com concretem aquest pas per a marques de Girona i la Costa Brava.",
+    "branding-visual-identity": "Una identitat s'ha de provar en peces reals. Consulta com definim l'abast del branding i del disseny gràfic per a projectes de Girona i la Costa Brava.",
+    "web-design-digital-products": "Si necessites una web concreta, detallem per separat el disseny, el desenvolupament i les responsabilitats de publicació per a projectes de Girona i la Costa Brava.",
+  },
+  es: {
+    "brand-strategy": "Cuando la estrategia tiene una dirección clara, la trasladamos a una identidad y a las aplicaciones que necesita el proyecto. En las páginas locales explicamos cómo concretamos ese paso para marcas de Girona y Costa Brava.",
+    "branding-visual-identity": "Una identidad debe probarse en piezas reales. Consulta cómo definimos el alcance del branding y del diseño gráfico para proyectos de Girona y Costa Brava.",
+    "web-design-digital-products": "Si necesitas una web concreta, detallamos por separado el diseño, el desarrollo y las responsabilidades de publicación para proyectos de Girona y Costa Brava.",
+  },
+  en: {
+    "brand-strategy": "Once the strategy has a clear direction, we bring it into the identity and applications the project needs. The local service page explains how we scope that work for brands in Girona and Costa Brava.",
+    "branding-visual-identity": "An identity needs to work in real applications. Explore how we scope branding and graphic design projects in Girona and Costa Brava.",
+    "web-design-digital-products": "For a specific website, our local service pages set out the design, development and publishing responsibilities for projects in Girona and Costa Brava.",
+  },
+}
 
 export function ServiceDetail() {
   const lang = useLang()
@@ -22,6 +48,7 @@ export function ServiceDetail() {
 
   const page = getServicePage(serviceSlug, lang)
   const labels = LABELS[lang]
+  const localPages = getCommercialPages(lang).filter((item) => LOCAL_DESTINATIONS[serviceSlug].includes(item.id))
 
   return (
     <PageFrame className="relative">
@@ -58,6 +85,24 @@ export function ServiceDetail() {
               {page.details.map((paragraph) => (
                 <p key={paragraph} className="max-w-[680px] text-[14px] leading-[1.7] text-ink/80 normal-case md:text-[16px]">{paragraph}</p>
               ))}
+            </div>
+          </section>
+
+          <div className="my-10 h-px bg-frame" />
+
+          <section className="grid gap-8 md:grid-cols-[180px_1fr]">
+            <h2 className="text-nav uppercase tracking-nav text-ink/65">{labels.local}</h2>
+            <div className="max-w-[680px] space-y-4 normal-case">
+              <p className="text-[14px] leading-[1.7] text-ink/80 md:text-[16px]">{LOCAL_CONTEXT[lang][serviceSlug]}</p>
+              <ul className="flex flex-wrap gap-x-6 gap-y-2">
+                {localPages.map((item) => (
+                  <li key={item.id}>
+                    <Link to={item.path} className="text-[14px] underline decoration-frame underline-offset-4 transition-colors hover:decoration-ink md:text-[16px]">
+                      {item.label} <span aria-hidden="true">↗</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
           </section>
 
