@@ -311,7 +311,7 @@ export function ProjectDetail() {
     return <Navigate to={`/${lang}/projects`} replace />
   }
 
-  // cms (PALSEC AI LAB) is comingSoon with no slides — send to projects grid
+  // Projects without gallery media return to the projects grid.
   if (!project.localImages?.slides?.length && !project.carouselSeeds.length) {
     return <Navigate to={`/${lang}/projects`} replace />
   }
@@ -337,7 +337,6 @@ export function ProjectDetail() {
     project.slug === "el-xiringuito" ||
     project.slug === "enteza" ||
     project.slug === "gent-gran-de-calonge-i-sant-antoni" ||
-    project.slug === "cms" ||
     project.slug === "estudi-dental-carrera"
 
   const seo = isPublishedProjectSlug(project.slug)

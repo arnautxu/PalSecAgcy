@@ -1,0 +1,279 @@
+.aibrain-demo {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  background: #fff;
+  color: #181816;
+  font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+  text-transform: none;
+}
+.aibrain-demo *, .aibrain-demo *::before, .aibrain-demo *::after { box-sizing: border-box; }
+.aibrain-demo button, .aibrain-demo input, .aibrain-demo textarea { font: inherit; text-transform: none; }
+.aibrain-demo button:focus-visible, .aibrain-demo a:focus-visible, .aibrain-demo textarea:focus-visible, .aibrain-demo input:focus-visible {
+  outline: 2px solid #383835;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+.aibrain-demo button:active, .aibrain-demo a:active { transform: none; }
+.aibrain-icon-button {
+  display: inline-grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: #777772;
+  text-decoration: none;
+  cursor: pointer;
+}
+.aibrain-icon-button:hover { background: #edeeec; color: #232321; }
+.aibrain-icon-button:disabled { opacity: .35; cursor: default; }
+
+/* The floating mineral sidebar uses the same 260px island geometry as AiBrain. */
+.aibrain-sidebar {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  width: 260px;
+  min-width: 260px;
+  height: calc(100% - 24px);
+  margin: 12px;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #dededb;
+  border-radius: 20px;
+  background: linear-gradient(160deg, #fbfbfa, #fafaf9 58%, #f9f9f8);
+  box-shadow: 0 2px 4px rgb(24 24 22 / 9%), 0 20px 42px -16px rgb(24 24 22 / 20%);
+  transition: width .2s ease, min-width .2s ease;
+}
+.aibrain-sidebar-collapsed { width: 52px; min-width: 52px; }
+.aibrain-sidebar-head {
+  display: flex;
+  height: 64px;
+  min-height: 64px;
+  align-items: center;
+  gap: 4px;
+  padding: 0 12px 0 20px;
+}
+.aibrain-brand-logo { width: 24px; height: 24px; object-fit: cover; }
+.aibrain-brand-name { min-width: 0; flex: 1; overflow: hidden; margin-left: 14px; font-size: 14px; font-weight: 600; white-space: nowrap; }
+.aibrain-primary-nav { display: grid; gap: 4px; padding: 0 12px 8px; }
+.aibrain-new-chat, .aibrain-nav-row {
+  display: flex;
+  width: 100%;
+  height: 42px;
+  align-items: center;
+  gap: 11px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 12px;
+  text-align: left;
+  cursor: pointer;
+}
+.aibrain-new-chat { background: #2d2d2b; color: #fff; box-shadow: inset 0 1px #ffffff1f, 0 2px 4px #00000014; }
+.aibrain-new-chat:hover { background: #42423f; }
+.aibrain-nav-row { background: transparent; color: #5f5f5b; }
+.aibrain-nav-row:hover { background: #edeeec; color: #252523; }
+.aibrain-sidebar-scroll { min-height: 0; flex: 1; overflow-y: auto; overflow-x: hidden; padding: 23px 12px 14px; scrollbar-width: thin; }
+.aibrain-sidebar-section + .aibrain-sidebar-section { margin-top: 43px; }
+.aibrain-section-heading { display: flex; height: 30px; align-items: center; justify-content: space-between; padding-left: 8px; color: #888883; }
+.aibrain-section-heading > button:first-child { display: inline-flex; align-items: center; gap: 7px; border: 0; background: transparent; color: #888883; font-size: 12px; cursor: pointer; }
+.aibrain-section-heading > button:first-child:hover { color: #30302d; }
+.aibrain-section-heading .aibrain-icon-button { width: 27px; height: 27px; }
+.aibrain-project-list { margin-top: 2px; }
+.aibrain-project-row, .aibrain-thread-row, .aibrain-recent-row {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: #5b5b58;
+  text-align: left;
+  cursor: pointer;
+}
+.aibrain-project-row { display: flex; height: 32px; align-items: center; gap: 9px; padding: 0 9px; border-radius: 9px; font-size: 12px; }
+.aibrain-project-row.active { background: #f0f0ef; color: #282826; }
+.aibrain-project-row:hover, .aibrain-thread-row:hover, .aibrain-recent-row:hover { background: #f0f0ef; color: #292927; }
+.aibrain-project-row span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.aibrain-project-threads { margin: 4px 0 8px 17px; padding-left: 8px; border-left: 1px solid #e5e5e3; }
+.aibrain-thread-wrap { position: relative; }
+.aibrain-thread-wrap .aibrain-icon-button { position: absolute; top: 1px; right: 1px; width: 29px; height: 29px; opacity: 0; }
+.aibrain-thread-wrap:hover .aibrain-icon-button, .aibrain-thread-wrap:focus-within .aibrain-icon-button { opacity: 1; }
+.aibrain-thread-row { height: 31px; overflow: hidden; padding: 0 8px; border-radius: 8px; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.aibrain-thread-row.active, .aibrain-recent-row.active { background: #eee; color: #252523; }
+.aibrain-recent-list { display: grid; gap: 1px; margin-top: 3px; }
+.aibrain-recent-row { height: 30px; overflow: hidden; padding: 0 8px; border-radius: 8px; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.aibrain-account-wrap { padding: 8px 12px 12px; }
+.aibrain-account { display: flex; width: 100%; min-height: 58px; align-items: center; gap: 11px; padding: 6px 8px; border: 0; border-radius: 16px; background: #fafafa; box-shadow: inset 0 1px 1px #ffffffad, inset 0 -1px 1px #00000014, 0 4px 12px #0000000d; text-align: left; cursor: pointer; }
+.aibrain-account:hover { background: #f0f0ef; }
+.aibrain-avatar { display: grid; width: 36px; height: 36px; flex: 0 0 auto; place-items: center; border-radius: 50%; background: #ededed; color: #666; font-size: 12px; }
+.aibrain-account strong, .aibrain-account small { display: block; }
+.aibrain-account strong { font-size: 12px; font-weight: 500; }
+.aibrain-account small { color: #9a9a97; font-size: 11px; }
+.aibrain-rail { display: flex; height: 100%; align-items: center; gap: 5px; padding-top: 9px; flex-direction: column; }
+.aibrain-rail .aibrain-avatar { margin-top: auto; margin-bottom: 10px; }
+
+/* Main landing and conversation */
+.aibrain-workspace { position: relative; display: flex; min-width: 0; flex: 1; flex-direction: column; overflow: hidden; }
+.aibrain-workspace-head { display: flex; min-height: 64px; align-items: flex-start; justify-content: space-between; padding: 25px 16px 0; }
+.aibrain-breadcrumb { display: block; overflow: hidden; color: #898985; font-size: 12px; line-height: 17px; text-overflow: ellipsis; white-space: nowrap; }
+.aibrain-breadcrumb svg { display: inline; margin-right: 5px; vertical-align: -1px; }
+.aibrain-breadcrumb strong { display: inline-block; max-width: 100%; overflow: hidden; color: #262624; font-size: 13px; font-weight: 500; text-overflow: ellipsis; }
+.aibrain-demo-label { margin-top: 2px; color: #b6b6b1; font-size: 10px; font-weight: 500; letter-spacing: .13em; }
+.aibrain-mobile-menu { display: none; }
+.aibrain-empty { margin-top: clamp(75px, 14.5vh, 126px); text-align: center; }
+.aibrain-empty h3 { margin: 0; color: #292927; font-size: clamp(22px, 2.1vw, 26px); font-weight: 400; letter-spacing: -.025em; line-height: 1.4; }
+.aibrain-composer-area { width: min(768px, calc(100% - 48px)); margin: 41px auto 0; }
+.aibrain-composer-area.with-thread { width: min(760px, calc(100% - 48px)); margin: 0 auto 16px; }
+.aibrain-composer { position: relative; z-index: 2; min-height: 132px; overflow: visible; border: 1px solid #a9aaa7; border-radius: 18px; background: #fff; box-shadow: 0 2px 4px #0000000d, 0 9px 26px -16px #00000038; }
+.aibrain-composer-area.with-thread .aibrain-composer { min-height: 58px; border-color: #e0e0dd; }
+.aibrain-composer textarea { display: block; width: 100%; min-height: 80px; max-height: 170px; resize: none; padding: 18px 20px 2px; border: 0; background: transparent; color: #292927; font-size: 14px; line-height: 1.6; outline: none; }
+.aibrain-composer-area.with-thread textarea { min-height: 10px; height: 12px; padding: 9px 20px 0 62px; resize: none; }
+.aibrain-composer textarea::placeholder { color: #a0a09c; }
+.aibrain-composer textarea:focus-visible { outline: none; box-shadow: none; }
+.aibrain-composer:focus-within { border-color: #888985; }
+.aibrain-composer-controls { display: flex; height: 51px; align-items: center; justify-content: space-between; padding: 0 11px 8px 15px; }
+.aibrain-composer-area.with-thread .aibrain-composer-controls { height: 46px; padding-bottom: 4px; }
+.aibrain-composer-right { display: flex; align-items: center; gap: 4px; }
+.aibrain-experience { display: inline-flex; height: 38px; align-items: center; gap: 8px; padding: 0 9px; border: 0; border-radius: 9px; background: transparent; color: #666662; cursor: pointer; }
+.aibrain-experience:hover { background: #f2f2f1; }
+.aibrain-send { display: grid; width: 44px; height: 44px; margin-left: 7px; place-items: center; border: 0; border-radius: 50%; background: #171716; color: #fff; cursor: pointer; }
+.aibrain-send:disabled { background: #bdbdbd; cursor: default; }
+.aibrain-send:not(:disabled):hover { background: #41413e; }
+.aibrain-attachments { display: flex; gap: 6px; padding: 10px 12px 0; overflow-x: auto; }
+.aibrain-attachments > span { display: inline-flex; min-width: 0; align-items: center; gap: 5px; padding: 4px 6px; border: 1px solid #ddd; border-radius: 8px; background: #f7f7f6; color: #555; font-size: 11px; white-space: nowrap; }
+.aibrain-attachments button { display: grid; width: 20px; height: 20px; place-items: center; border: 0; border-radius: 4px; background: transparent; cursor: pointer; }
+.aibrain-landing-band { position: relative; z-index: 1; display: flex; min-height: 61px; align-items: center; gap: 8px; margin-top: -16px; padding: 16px 10px 0; border-radius: 0 0 21px 18px; background: #f7f7f6; }
+.aibrain-landing-band button { display: inline-flex; height: 30px; align-items: center; gap: 6px; padding: 0 7px; border: 0; border-radius: 7px; background: transparent; color: #686864; font-size: 12px; cursor: pointer; white-space: nowrap; }
+.aibrain-landing-band button:hover { background: #eee; }
+.aibrain-suggestions { display: grid; width: 100%; gap: 2px; margin-top: 21px; padding-left: 28px; }
+.aibrain-suggestions button { display: flex; height: 43px; align-items: center; gap: 13px; border: 0; border-radius: 10px; background: transparent; color: #464643; font-size: 13px; text-align: left; cursor: pointer; }
+.aibrain-suggestions button:hover { background: #f6f6f5; }
+.aibrain-suggestions img { width: 19px; height: 19px; object-fit: cover; }
+.aibrain-suggestions button > svg:last-child { margin-left: 4px; }
+.aibrain-conversation { min-height: 0; flex: 1; overflow: hidden; }
+.aibrain-messages { width: 100%; height: 100%; overflow-y: auto; scrollbar-width: thin; }
+.aibrain-messages-inner { width: min(760px, calc(100% - 48px)); margin: 0 auto; padding: 20px 0 30px; }
+.aibrain-user-message { max-width: 88%; margin: 22px 0 42px auto; padding: 14px 18px; border-radius: 17px; background: #f7f7f5; color: #323230; font-size: 13px; line-height: 1.8; white-space: pre-wrap; }
+.aibrain-assistant-message { color: #30302e; font-size: 14px; line-height: 1.8; }
+.aibrain-assistant-message > p { margin: 16px 0; white-space: pre-line; }
+.aibrain-assistant-message ul { padding-left: 27px; margin: 16px 0; }
+.aibrain-assistant-message li { margin: 5px 0; font-weight: 600; overflow-wrap: anywhere; }
+.aibrain-process { display: flex; align-items: center; gap: 8px; margin: 0 0 15px; padding: 4px 0; border: 0; background: transparent; color: #74746f; font-size: 12px; cursor: pointer; }
+.aibrain-changes { display: block; margin: 12px 0 22px; padding: 10px 14px; border: 1px solid #e6e6e5; border-radius: 16px; background: #fff; color: #3c3c39; font-size: 12px; text-align: left; cursor: pointer; }
+.aibrain-changes:hover { background: #fafafa; }
+.aibrain-changes small { display: block; margin-top: 2px; color: #999; font-size: 10px; }
+.aibrain-artifact { width: min(420px, 100%); margin: 14px 0; overflow: hidden; border: 1px solid #e0e0de; border-radius: 18px; background: #fff; }
+.aibrain-artifact-top { display: flex; min-height: 58px; align-items: center; gap: 8px; padding: 8px 10px 8px 14px; }
+.aibrain-artifact-icon { display: grid; width: 34px; height: 34px; flex: 0 0 auto; place-items: center; border-radius: 50%; background: #f4f4f3; color: #656561; }
+.aibrain-artifact-name { min-width: 0; flex: 1; line-height: 1.3; }
+.aibrain-artifact-name strong { display: block; overflow: hidden; font-size: 12px; font-weight: 500; text-overflow: ellipsis; white-space: nowrap; }
+.aibrain-artifact-name small { display: block; margin-top: 4px; color: #868681; font-size: 12px; }
+.aibrain-artifact-review { display: flex; width: 100%; min-height: 39px; align-items: center; justify-content: space-between; padding: 0 14px; border: 0; border-top: 1px solid #ededeb; background: #fff; color: #777772; font-size: 12px; text-align: left; cursor: pointer; }
+.aibrain-artifact-review:hover { background: #fafaf9; }
+.aibrain-copy { display: inline-flex; align-items: center; gap: 6px; margin-top: 7px; padding: 5px; border: 0; border-radius: 8px; background: transparent; color: #7a7a77; font-size: 11px; cursor: pointer; }
+.aibrain-copy span { opacity: 0; }.aibrain-copy:hover span, .aibrain-copy:focus span { opacity: 1; }
+
+/* Document preview */
+.aibrain-demo-previewing .aibrain-workspace { flex: 0 0 30.5%; }
+.aibrain-demo-previewing .aibrain-messages-inner, .aibrain-demo-previewing .aibrain-composer-area.with-thread { width: calc(100% - 30px); }
+.aibrain-demo-previewing .aibrain-user-message { max-width: 100%; }
+.aibrain-preview { position: relative; display: flex; min-width: 0; flex: 1; flex-direction: column; border-left: 1px solid #e9e9e7; background: #fff; }
+.aibrain-preview-head { display: flex; height: 54px; min-height: 54px; align-items: center; justify-content: space-between; gap: 8px; padding: 0 12px; border-bottom: 1px solid #ededeb; }
+.aibrain-preview-file { display: flex; min-width: 0; align-items: center; gap: 9px; }
+.aibrain-preview-file > span:first-child { display: grid; width: 33px; height: 33px; flex: 0 0 auto; place-items: center; border-radius: 50%; background: #f4f4f3; color: #777; }
+.aibrain-preview-file > span:last-child { min-width: 0; }
+.aibrain-preview-file strong { display: block; max-width: 175px; overflow: hidden; font-size: 12px; font-weight: 500; text-overflow: ellipsis; white-space: nowrap; }
+.aibrain-preview-file small { display: block; color: #8b8b87; font-size: 11px; }
+.aibrain-preview-controls { display: flex; min-width: 0; align-items: center; gap: 3px; color: #777; font-size: 12px; white-space: nowrap; }
+.aibrain-preview-controls > span { padding: 0 5px; }
+.aibrain-preview-controls .aibrain-icon-button { width: 30px; height: 30px; }
+.aibrain-preview-canvas { min-height: 0; flex: 1; overflow: auto; padding: 33px 27px; background: #fff; }
+.aibrain-preview-zoom { width: min(100%, 740px); margin: 0 auto; transform-origin: top center; }
+.aibrain-slide { position: relative; display: flex; width: 100%; aspect-ratio: 16 / 9; flex-direction: column; overflow: hidden; padding: 3.8% 4.8%; background: #fbf9f4; box-shadow: 0 18px 34px #0000001a; color: #273840; font-size: clamp(7px, .75vw, 11px); }
+.aibrain-slide-kicker { color: #bd6250; font-size: .7em; font-weight: 600; letter-spacing: .1em; }
+.aibrain-slide h3 { margin: 1.2% 0 0; font-size: 1.65em; font-weight: 600; }
+.aibrain-slide-lead { margin: 1% 0; color: #687378; }
+.aibrain-slide-columns { display: grid; grid-template-columns: .95fr 1.05fr; gap: 9%; margin-top: 7%; }
+.aibrain-slide-total { display: block; color: #c96554; font-size: 4.1em; font-weight: 600; line-height: 1.05; }
+.aibrain-slide-caption { display: block; margin-top: 2%; color: #708087; font-size: .65em; font-weight: 600; letter-spacing: .1em; }
+.aibrain-slide-stats { display: flex; gap: 3%; margin-top: 12%; }
+.aibrain-slide-stats p { margin: 0; }.aibrain-slide-stats p + p { padding-left: 3%; border-left: 1px solid #d9d9d3; }
+.aibrain-slide-stats b { display: block; font-size: 2.1em; line-height: 1.1; white-space: nowrap; }.aibrain-slide-stats small { color: #7d8587; font-size: .9em; }
+.aibrain-slide h4 { margin: 0 0 4%; font-size: 1.1em; font-weight: 600; }
+.aibrain-slide-bar { display: flex; height: 8%; min-height: 12px; width: 100%; }
+.aibrain-slide-bar i:nth-child(1) { width: 65%; background: #273940; }.aibrain-slide-bar i:nth-child(2) { width: 14%; background: #657b72; }.aibrain-slide-bar i:nth-child(3) { width: 6%; background: #97b0a7; }.aibrain-slide-bar i:nth-child(4) { width: 4%; background: #d8d3c7; }.aibrain-slide-bar i:nth-child(5) { width: 11%; background: #c96554; }
+.aibrain-slide ul { display: grid; gap: 6%; margin: 6% 0 0; padding: 0; list-style: none; }
+.aibrain-slide li { display: flex; justify-content: space-between; gap: 4px; }.aibrain-slide li::before { content: ""; width: 5px; height: 5px; margin: .55em 5px 0 0; background: #657b72; }.aibrain-slide li:first-child::before { background: #273940; }.aibrain-slide li:last-child::before { background: #c96554; }
+.aibrain-slide li b { margin-left: auto; font-weight: 600; white-space: nowrap; }
+.aibrain-slide-note { margin: auto 0 0; color: #798285; font-size: .9em; }
+.aibrain-slide footer { display: flex; justify-content: space-between; margin-top: 5%; padding-top: 1%; border-top: 1px solid #d9d7d0; color: #5e696d; font-size: .65em; font-weight: 600; letter-spacing: .1em; }
+.aibrain-waterfall { display: grid; gap: 5%; margin-top: 5%; flex: 1; }.aibrain-waterfall-row { display: grid; grid-template-columns: 22% 1fr 16%; align-items: center; gap: 3%; }.aibrain-waterfall-row div { height: 44%; background: #e9e8e2; }.aibrain-waterfall-row i { display: block; height: 100%; }.aibrain-waterfall-row b { text-align: right; font-weight: 600; }
+.aibrain-slide-list { display: grid; margin-top: 7%; flex: 1; }.aibrain-slide-list p { display: flex; gap: 5%; align-items: center; margin: 0; border-bottom: 1px solid #e2dfd8; font-size: 1.25em; }.aibrain-slide-list b { color: #c96554; }
+
+/* Popovers and demo dialogs */
+.aibrain-menu { position: absolute; z-index: 80; width: 235px; padding: 6px; border: 1px solid #e6e6e3; border-radius: 17px; background: #fff; box-shadow: 0 12px 40px #00000020; }
+.aibrain-menu button, .aibrain-menu a { display: flex; width: 100%; min-height: 39px; align-items: center; gap: 9px; padding: 0 10px; border: 0; border-radius: 10px; background: transparent; color: #474744; font-size: 12px; text-align: left; text-decoration: none; cursor: pointer; }
+.aibrain-menu button:hover, .aibrain-menu a:hover { background: #f3f3f2; }
+.aibrain-menu-title { padding: 7px 10px 11px; color: #8d8d89; font-size: 11px; }
+.aibrain-menu-add { left: min(32%, 430px); bottom: 136px; }.aibrain-menu-experience { right: 12%; bottom: 133px; }.aibrain-menu-destination, .aibrain-menu-connections { left: 34%; top: 415px; }.aibrain-menu-account { left: 21px; bottom: 82px; }.aibrain-menu-thread { left: 170px; top: 290px; }
+.aibrain-file-input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.aibrain-modal-backdrop { position: absolute; z-index: 100; display: grid; inset: 0; place-items: center; padding: 18px; background: #17171461; }
+.aibrain-modal { width: min(460px, 100%); max-height: min(600px, 90vh); overflow-y: auto; padding: 22px; border: 1px solid #e5e5e3; border-radius: 21px; background: #fff; box-shadow: 0 20px 65px #0000002b; }
+.aibrain-modal header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }.aibrain-modal h2 { margin: 0; font-size: 18px; font-weight: 500; }
+.aibrain-modal form label { display: block; color: #777; font-size: 12px; }.aibrain-modal form input, .aibrain-search-field input { width: 100%; height: 42px; margin-top: 7px; padding: 0 12px; border: 1px solid #ddd; border-radius: 10px; background: #fff; color: #222; font-size: 13px; outline: none; }
+.aibrain-modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px; }.aibrain-modal-actions button, .aibrain-automations button { min-height: 38px; padding: 0 13px; border: 1px solid #ddd; border-radius: 9px; background: #fff; color: #444; cursor: pointer; }.aibrain-modal-actions button[type="submit"], .aibrain-automations button { border-color: #2d2d2b; background: #2d2d2b; color: #fff; }.aibrain-modal-actions button:disabled { opacity: .45; cursor: default; }
+.aibrain-search-field { position: relative; }.aibrain-search-field svg { position: absolute; top: 18px; left: 12px; color: #999; }.aibrain-search-field input { margin: 0; padding-left: 39px; }
+.aibrain-search-results { display: grid; gap: 3px; max-height: 300px; margin-top: 12px; overflow: auto; }.aibrain-search-results button, .aibrain-demo-files button { display: flex; width: 100%; min-height: 42px; align-items: center; gap: 10px; padding: 8px; border: 0; border-radius: 9px; background: #fff; color: #555; font-size: 12px; text-align: left; cursor: pointer; }.aibrain-search-results button:hover, .aibrain-demo-files button:hover { background: #f4f4f3; }
+.aibrain-demo-files p, .aibrain-automations p { color: #777; font-size: 12px; line-height: 1.6; }.aibrain-demo-files button svg:last-child { margin-left: auto; }.aibrain-automations { display: flex; align-items: flex-start; flex-direction: column; }.aibrain-automations h3 { margin: 12px 0 0; font-size: 16px; font-weight: 500; }.aibrain-automations button { margin-top: 10px; }
+.aibrain-toast { position: absolute; right: 24px; bottom: 22px; z-index: 120; max-width: min(340px, calc(100vw - 48px)); padding: 10px 14px; border-radius: 11px; background: #2d2d2b; box-shadow: 0 8px 20px #0003; color: #fff; font-size: 12px; }
+.aibrain-mobile-scrim { display: none; }
+
+@media (max-width: 1000px) {
+  .aibrain-demo-previewing .aibrain-workspace { flex-basis: 33%; }
+  .aibrain-preview-file strong { max-width: 110px; }
+  .aibrain-preview-controls { gap: 0; }
+  .aibrain-preview-controls .aibrain-icon-button { width: 27px; }
+}
+@media (max-width: 760px) {
+  .aibrain-sidebar { position: absolute; inset: 0 auto 0 0; z-index: 71; width: min(280px, 88vw); min-width: 0; height: 100%; margin: 0; border-radius: 0 18px 18px 0; transform: translateX(-110%); transition: transform .2s ease; }
+  .aibrain-sidebar-mobile-open { transform: translateX(0); }
+  .aibrain-sidebar-collapsed { width: min(280px, 88vw); }
+  .aibrain-mobile-scrim { position: absolute; z-index: 70; display: block; inset: 0; border: 0; background: #0004; }
+  .aibrain-mobile-menu { display: inline-grid; margin: -4px 9px 0 -5px; }
+  .aibrain-workspace-head { justify-content: flex-start; padding-top: 19px; }
+  .aibrain-demo-label { margin-left: auto; }
+  .aibrain-empty { margin-top: clamp(85px, 17vh, 130px); padding: 0 20px; }
+  .aibrain-empty h3 { font-size: 22px; }
+  .aibrain-composer-area { width: calc(100% - 28px); margin-top: 35px; }
+  .aibrain-composer-area.with-thread { width: calc(100% - 24px); }
+  .aibrain-landing-band { gap: 0; padding-inline: 4px; }
+  .aibrain-landing-band button { min-width: 0; gap: 3px; padding-inline: 5px; font-size: 10px; }
+  .aibrain-landing-band button svg { display: none; }
+  .aibrain-suggestions { padding-left: 12px; }
+  .aibrain-suggestions button { font-size: 12px; }
+  .aibrain-messages-inner { width: calc(100% - 28px); }
+  .aibrain-demo-previewing .aibrain-workspace { flex: 1; }
+  .aibrain-preview { position: absolute; z-index: 65; inset: 0; }
+  .aibrain-preview-head { padding: 0 5px; }
+  .aibrain-preview-file strong { max-width: 95px; }
+  .aibrain-preview-controls .aibrain-icon-button { width: 24px; }
+  .aibrain-preview-controls .aibrain-icon-button[title="Pantalla completa"], .aibrain-preview-controls .aibrain-icon-button[title="Acercar"], .aibrain-preview-controls .aibrain-icon-button[title="Alejar"], .aibrain-preview-controls > span:nth-of-type(2) { display: none; }
+  .aibrain-preview-canvas { padding: 25px 10px; }
+  .aibrain-preview-zoom { width: 540px; margin: 0; zoom: .68; transform-origin: top left; }
+  .aibrain-slide { width: 540px; font-size: 9px; }
+  .aibrain-menu { width: min(235px, calc(100vw - 20px)); }
+  .aibrain-menu-add { left: 12px; bottom: 132px; }.aibrain-menu-experience { right: 12px; bottom: 132px; }.aibrain-menu-destination, .aibrain-menu-connections { left: 12px; top: 400px; }.aibrain-menu-account { left: 15px; bottom: 78px; }.aibrain-menu-thread { left: 55px; top: 300px; }
+}
+@media (max-width: 380px) {
+  .aibrain-preview-zoom { zoom: .6; }
+}
+@media (max-width: 340px) {
+  .aibrain-preview-zoom { zoom: .54; }
+}

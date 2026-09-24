@@ -27,6 +27,7 @@ export const PROJECT_SLUGS = [
   "gent-gran-de-calonge-i-sant-antoni",
   "logoteca",
   "weboteca",
+  "ai-lab",
 ] as const
 
 export type ProjectSlug = (typeof PROJECT_SLUGS)[number]
@@ -269,6 +270,17 @@ export const PROJECT_META: Record<
     client: "PALSEC",
     year: "2026",
   },
+  "ai-lab": {
+    displayTitle: "PALSEC AI LAB",
+    firstImage: "/media/projects/ai-lab/cover.png",
+    descriptions: {
+      ca: "PALSEC AI LAB presenta AiBrain, un prototip interactiu per explorar projectes, converses, documents i automatitzacions amb IA.",
+      es: "PALSEC AI LAB presenta AiBrain, un prototipo interactivo para explorar proyectos, conversaciones, documentos y automatizaciones con IA.",
+      en: "PALSEC AI LAB presents AiBrain, an interactive prototype for exploring AI projects, conversations, documents, and automations.",
+    },
+    client: "PALSEC",
+    year: "2026",
+  },
 }
 
 const PROJECT_SEO: Record<ProjectSlug, Record<Lang, PageMeta>> = {
@@ -312,6 +324,11 @@ const PROJECT_SEO: Record<ProjectSlug, Record<Lang, PageMeta>> = {
     en: { title: "WEBOTECA — Live Website Portfolio | PALSEC", description: "Five live websites in the PALSEC AGCY portfolio: Neutral Studio, Estudi Dental Carrera, Casino Castellarenc, Pocket Voice and Vueik, shown on desktop and mobile." },
     es: { title: "WEBOTECA — Portafolio de webs publicadas | PALSEC", description: "Cinco webs del portafolio de PALSEC AGCY: Neutral Studio, Estudi Dental Carrera, Casino Castellarenc, Pocket Voice y Vueik en escritorio y móvil." },
   },
+  "ai-lab": {
+    ca: { title: "PALSEC AI LAB — Prototip AiBrain | PALSEC", description: "Explora el prototip interactiu d'AiBrain: projectes, converses, documents i automatitzacions de mostra dins de PALSEC AI LAB." },
+    es: { title: "PALSEC AI LAB — Prototipo AiBrain | PALSEC", description: "Explora el prototipo interactivo de AiBrain: proyectos, conversaciones, documentos y automatizaciones de muestra dentro de PALSEC AI LAB." },
+    en: { title: "PALSEC AI LAB — AiBrain Prototype | PALSEC", description: "Explore the interactive AiBrain prototype: sample projects, conversations, documents, and automations inside PALSEC AI LAB." },
+  },
 }
 
 const PROJECT_PRIMARY_SERVICE: Record<ProjectSlug, ServiceSlug> = {
@@ -323,6 +340,7 @@ const PROJECT_PRIMARY_SERVICE: Record<ProjectSlug, ServiceSlug> = {
   "gent-gran-de-calonge-i-sant-antoni": "branding-visual-identity",
   logoteca: "branding-visual-identity",
   weboteca: "web-design-digital-products",
+  "ai-lab": "web-design-digital-products",
 }
 
 export function getProjectSeoMeta(slug: ProjectSlug, lang: Lang): PageMeta {

@@ -7,7 +7,7 @@ export type ProjectSlug =
   | "gent-gran-de-calonge-i-sant-antoni"
   | "logoteca"
   | "weboteca"
-  | "cms"
+  | "ai-lab"
   | "estudi-dental-carrera"
 
 export type Project = {
@@ -178,13 +178,12 @@ export const PROJECTS: Project[] = [
     },
   },
   {
-    slug: "cms",
+    slug: "ai-lab",
     title: "PALSEC AI LAB",
     carouselSeeds: [],
     thumbSeed: "ai-lab-thumb",
-    comingSoon: true,
     localImages: {
-      thumb: "/media/projects/ai-lab/thumb.jpg",
+      thumb: "/media/projects/ai-lab/cover.png",
       thumbFit: "cover",
     },
   },
@@ -239,12 +238,12 @@ export const INDEX_ROWS: IndexRow[] = [
     slug: "gent-gran-de-calonge-i-sant-antoni",
   },
   {
-    project: "BON DIA VEÏNAT",
-    direction: "CIVIC PLATFORM",
-    client: "AJUNTAMENT DE BARCELONA",
+    project: "PALSEC AI LAB",
+    direction: "AI PRODUCT",
+    client: "PALSEC",
     year: "2026",
     no: "007",
-    slug: "cms",
+    slug: "ai-lab",
   },
   {
     project: "ESTUDI DENTAL CARRERA",
@@ -273,6 +272,6 @@ export const PHOTO_GRID: PhotoCell[] = [
     slug: "gent-gran-de-calonge-i-sant-antoni",
     seed: "photo-gentgran-1",
   },
-  { label: "BON DIA VEÏNAT", slug: "cms", seed: "photo-cms-1" },
+  { label: "PALSEC AI LAB", slug: "ai-lab", seed: "photo-ai-lab-1" },
   { label: "ESTUDI DENTAL CARRERA", slug: "estudi-dental-carrera", seed: "photo-carrera-1" },
 ]

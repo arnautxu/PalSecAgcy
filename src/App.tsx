@@ -11,6 +11,7 @@ import { Services } from "./pages/Services"
 import { ServiceDetail } from "./pages/ServiceDetail"
 import { LegalPage } from "./pages/LegalPage"
 import { ProjectDetail } from "./pages/ProjectDetail"
+import { AiLab } from "./pages/AiLab"
 import { isLang, langPath } from "@/i18n/lang"
 
 function RootRedirect() {
@@ -49,6 +50,7 @@ export default function App() {
         <Route path="about-us" element={<AboutUs />} />
         <Route path="privacy" element={<LegalPage kind="privacy" />} />
         <Route path="legal-notice" element={<LegalPage kind="legal-notice" />} />
+        <Route path="project/ai-lab" element={<AiLab />} />
         <Route path="project/:slug" element={<ProjectDetail />} />
         <Route path="*" element={<NotFound />} />
       </Route>

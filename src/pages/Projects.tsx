@@ -10,6 +10,7 @@ import { t } from "@/i18n/strings"
 import { Seo } from "@/components/Seo"
 import { Picture } from "@/components/Picture"
 import { LazyAutoplayVideo } from "@/components/LazyAutoplayVideo"
+import { AiLabCardVisual } from "@/components/AiLabVisual"
 import { PROJECTS_META } from "@/lib/seoMeta"
 import { getProjectCase } from "@/content/projectCases"
 import type { Lang } from "@/i18n/lang"
@@ -79,7 +80,9 @@ function ProjectCard({
       ref={wrapRef}
       className="group/media relative overflow-hidden rounded-[2px] border border-frame bg-white transition-shadow duration-300 group-hover:shadow-[0_6px_24px_rgba(0,0,0,0.06)]"
     >
-      {videoSrc ? (
+      {slug === "ai-lab" ? (
+        <AiLabCardVisual />
+      ) : videoSrc ? (
         <LazyAutoplayVideo
           className="aspect-[3/4] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.015]"
           src={videoSrc}
@@ -156,6 +159,10 @@ function ProjectCard({
         <div className="mt-2 normal-case text-[12px] leading-[1.6] tracking-normal text-ink/65">
           <p>{projectCase.discipline}</p>
           <p className="text-ink/45">{projectCase.sector}</p>
+        </div>
+      ) : slug === "ai-lab" ? (
+        <div className="mt-2 normal-case text-[12px] leading-[1.6] tracking-normal text-ink/65">
+          {lang === "ca" ? "AiBrain · prototip interactiu" : lang === "es" ? "AiBrain · prototipo interactivo" : "AiBrain · interactive prototype"}
         </div>
       ) : slug === "weboteca" ? (
         <div className="mt-2 normal-case text-[12px] leading-[1.6] tracking-normal text-ink/65">
