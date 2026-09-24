@@ -26,6 +26,7 @@ export const PROJECT_SLUGS = [
   "enteza",
   "gent-gran-de-calonge-i-sant-antoni",
   "logoteca",
+  "weboteca",
 ] as const
 
 export type ProjectSlug = (typeof PROJECT_SLUGS)[number]
@@ -257,6 +258,17 @@ export const PROJECT_META: Record<
     client: "PALSEC",
     year: "2026",
   },
+  weboteca: {
+    displayTitle: "WEBOTECA",
+    firstImage: "/media/projects/weboteca/thumb.jpg",
+    descriptions: {
+      ca: "WEBOTECA REUNEIX CINC WEBS PUBLICADES EN UNA GALERIA DE CAPTURES D'ESCRIPTORI I MÒBIL.",
+      es: "WEBOTECA REÚNE CINCO WEBS PUBLICADAS EN UNA GALERÍA DE CAPTURAS DE ESCRITORIO Y MÓVIL.",
+      en: "WEBOTECA BRINGS TOGETHER FIVE LIVE WEBSITES IN A GALLERY OF DESKTOP AND MOBILE VIEWS.",
+    },
+    client: "PALSEC",
+    year: "2026",
+  },
 }
 
 const PROJECT_SEO: Record<ProjectSlug, Record<Lang, PageMeta>> = {
@@ -295,6 +307,11 @@ const PROJECT_SEO: Record<ProjectSlug, Record<Lang, PageMeta>> = {
     en: { title: "LOGOTECA — Logo & Brand System Design | PALSEC", description: "PALSEC AGCY Logoteca: selected logo design work exploring typography, symbol, proportion, and contrast to build recognizable brand identities." },
     es: { title: "LOGOTECA — Diseño de logotipos y marcas | PALSEC", description: "Logoteca de PALSEC AGCY: una selección de diseños de logotipo que explora tipografía, símbolo, proporción y contraste para crear identidades reconocibles." },
   },
+  weboteca: {
+    ca: { title: "WEBOTECA — Portfoli de webs publicades | PALSEC", description: "Una selecció de cinc webs del portfoli de PALSEC AGCY: Neutral Studio, Estudi Dental Carrera, Casino Castellarenc, Pocket Voice i Vueik en escriptori i mòbil." },
+    en: { title: "WEBOTECA — Live Website Portfolio | PALSEC", description: "Five live websites in the PALSEC AGCY portfolio: Neutral Studio, Estudi Dental Carrera, Casino Castellarenc, Pocket Voice and Vueik, shown on desktop and mobile." },
+    es: { title: "WEBOTECA — Portafolio de webs publicadas | PALSEC", description: "Cinco webs del portafolio de PALSEC AGCY: Neutral Studio, Estudi Dental Carrera, Casino Castellarenc, Pocket Voice y Vueik en escritorio y móvil." },
+  },
 }
 
 const PROJECT_PRIMARY_SERVICE: Record<ProjectSlug, ServiceSlug> = {
@@ -305,6 +322,7 @@ const PROJECT_PRIMARY_SERVICE: Record<ProjectSlug, ServiceSlug> = {
   enteza: "branding-visual-identity",
   "gent-gran-de-calonge-i-sant-antoni": "branding-visual-identity",
   logoteca: "branding-visual-identity",
+  weboteca: "web-design-digital-products",
 }
 
 export function getProjectSeoMeta(slug: ProjectSlug, lang: Lang): PageMeta {
@@ -685,15 +703,15 @@ export function alternateLinks(path: string) {
   const guide = BUYING_GUIDES.find(guide => guide.path === path)
   if (guide) {
     const equivalents = BUYING_GUIDES.filter(item => item.id === guide.id)
-    const spanish = equivalents.find(item => item.lang === "es")
+    const fallback = equivalents.find(item => item.lang === "ca") ?? equivalents.find(item => item.lang === "es")
     return [...equivalents.map(item => ({ lang: HREFLANG[item.lang], path: item.path })),
-      ...(spanish ? [{ lang: "x-default", path: spanish.path }] : [])]
+      ...(fallback ? [{ lang: "x-default", path: fallback.path }] : [])]
   }
   if (/^\/(ca|es)\/blog$/.test(path)) return [
-    { lang: "ca-ES", path: "/ca/blog" }, { lang: "es-ES", path: "/es/blog" }, { lang: "x-default", path: "/es/blog" },
+    { lang: "ca-ES", path: "/ca/blog" }, { lang: "es-ES", path: "/es/blog" }, { lang: "x-default", path: "/ca/blog" },
   ]
   return [...LANGS.map(lang => ({ lang: HREFLANG[lang], path: swapLang(path, lang) })),
-    { lang: "x-default", path: swapLang(path, "en") }]
+    { lang: "x-default", path: swapLang(path, "ca") }]
 }
 
 export function buildGuideSchema(guide: BuyingGuideContent) {

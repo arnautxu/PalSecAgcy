@@ -11,18 +11,17 @@ import { Services } from "./pages/Services"
 import { ServiceDetail } from "./pages/ServiceDetail"
 import { LegalPage } from "./pages/LegalPage"
 import { ProjectDetail } from "./pages/ProjectDetail"
-import { detectLang, isLang, langPath } from "@/i18n/lang"
+import { isLang, langPath } from "@/i18n/lang"
 
 function RootRedirect() {
-  return <Navigate to={`/${detectLang()}`} replace />
+  return <Navigate to="/ca" replace />
 }
 
 function LegacyPathRedirect() {
   const { pathname, search, hash } = useLocation()
   const seg = pathname.split("/").filter(Boolean)[0]
   if (isLang(seg)) return <Navigate to={pathname + search + hash} replace />
-  const lang = detectLang()
-  return <Navigate to={langPath(lang, pathname) + search + hash} replace />
+  return <Navigate to={langPath("ca", pathname) + search + hash} replace />
 }
 
 function GuideIndexRedirect() {

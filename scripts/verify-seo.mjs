@@ -128,7 +128,7 @@ async function run() {
     const h1s = [...html.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)]
     const language = pathname.split("/")[1]
     const expectedAlternates = expectedAlternatesFor(pathname)
-    const defaultLanguage = isEditorial(pathname) ? "es" : "en"
+    const defaultLanguage = isGuide(pathname) && !sitemapAlternates.some(link => link.hreflang === 'ca-ES') ? 'es' : 'ca'
     if (/^\/(ca\/guias|es\/guies|en\/(guias|guies|blog))(?:\/|$)/.test(pathname)) issues.push(`${pathname}: invalid editorial language path`)
 
     if (titleMatches.length !== 1) issues.push(`${pathname}: expected exactly one title`)

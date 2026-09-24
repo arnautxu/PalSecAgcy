@@ -19,7 +19,7 @@
           "value": "palsec.agency"
         }
       ],
-      "destination": "https://www.palsec.agency/en",
+      "destination": "https://www.palsec.agency/ca",
       "permanent": true
     },
     {
@@ -35,47 +35,47 @@
     },
     {
       "source": "/",
-      "destination": "/en",
+      "destination": "/ca",
       "permanent": true
     },
     {
       "source": "/home",
-      "destination": "/en",
+      "destination": "/ca",
       "permanent": true
     },
     {
       "source": "/services",
-      "destination": "/en/services",
+      "destination": "/ca/services",
       "permanent": true
     },
     {
       "source": "/projects",
-      "destination": "/en/projects",
+      "destination": "/ca/projects",
       "permanent": true
     },
     {
       "source": "/about-us",
-      "destination": "/en/about-us",
+      "destination": "/ca/about-us",
       "permanent": true
     },
     {
       "source": "/privacy",
-      "destination": "/en/privacy",
+      "destination": "/ca/privacy",
       "permanent": true
     },
     {
       "source": "/legal-notice",
-      "destination": "/en/legal-notice",
+      "destination": "/ca/legal-notice",
       "permanent": true
     },
     {
       "source": "/project/cms",
-      "destination": "/en/projects",
+      "destination": "/ca/projects",
       "permanent": true
     },
     {
       "source": "/project/estudi-dental-carrera",
-      "destination": "/en/projects",
+      "destination": "/ca/projects",
       "permanent": true
     },
     {
@@ -137,7 +137,7 @@
       "destination": "/index.html"
     },
     {
-      "source": "/(ca|en|es)/project/(arkuos|el-xiringuito|enteza|galeon|gent-gran-de-calonge-i-sant-antoni|logoteca|vira)",
+      "source": "/(ca|en|es)/project/(arkuos|el-xiringuito|enteza|galeon|gent-gran-de-calonge-i-sant-antoni|logoteca|vira|weboteca)",
       "destination": "/index.html"
     },
     {

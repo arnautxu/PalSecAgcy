@@ -1,0 +1,45 @@
+{
+  "capturedAt": "2026-09-24",
+  "viewport": {
+    "desktop": [
+      1440,
+      900
+    ],
+    "mobile": [
+      390,
+      844
+    ]
+  },
+  "sites": [
+    {
+      "slug": "neutral-studio",
+      "url": "https://www.neutralstudio.co/",
+      "desktop": "neutral-studio-desktop.jpg",
+      "mobile": "neutral-studio-mobile.jpg"
+    },
+    {
+      "slug": "estudi-dental-carrera",
+      "url": "https://www.estudidentalcarrera.com/",
+      "desktop": "estudi-dental-carrera-desktop.jpg",
+      "mobile": "estudi-dental-carrera-mobile.jpg"
+    },
+    {
+      "slug": "casino-castellarenc",
+      "url": "https://www.casinocastellarenc.org/",
+      "desktop": "casino-castellarenc-desktop.jpg",
+      "mobile": "casino-castellarenc-mobile.jpg"
+    },
+    {
+      "slug": "pocket-voice",
+      "url": "https://pocket-voice.vercel.app/",
+      "desktop": "pocket-voice-desktop.jpg",
+      "mobile": "pocket-voice-mobile.jpg"
+    },
+    {
+      "slug": "vueik",
+      "url": "https://vueik.com/",
+      "desktop": "vueik-desktop.jpg",
+      "mobile": "vueik-mobile.jpg"
+    }
+  ]
+}

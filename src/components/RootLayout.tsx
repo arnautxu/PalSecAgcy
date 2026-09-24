@@ -74,7 +74,7 @@ export function RootLayout() {
             ].join(" ")}
           >
             <div className="pointer-events-auto">
-              <BottomNav />
+              <BottomNav onTop={navOnTop} />
             </div>
           </div>
         </div>

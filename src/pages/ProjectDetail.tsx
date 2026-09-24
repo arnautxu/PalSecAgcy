@@ -13,6 +13,7 @@ import {
 import { publicUrl } from "@/utils/publicUrl"
 import { Picture } from "@/components/Picture"
 import { LazyAutoplayVideo } from "@/components/LazyAutoplayVideo"
+import { WebotecaGallery } from "@/components/WebotecaGallery"
 import { useLang } from "@/i18n/useLang"
 import { t } from "@/i18n/strings"
 import type { Lang } from "@/i18n/lang"
@@ -361,7 +362,9 @@ export function ProjectDetail() {
       />
       <div className="flex h-full min-h-0 flex-col">
         <div className="min-h-0 flex-1 overflow-y-auto px-5 pb-10 pt-[92px]">
-          {project.slug === "logoteca" ? (
+          {project.slug === "weboteca" ? (
+            <WebotecaGallery lang={lang} />
+          ) : project.slug === "logoteca" ? (
             <>
               <LogotecaGallery slides={slides} initialIndex={safeIndex} onIndexChange={setIndex} lang={lang} />
               {projectCase ? <div className="mx-auto mt-12 w-full max-w-[760px]"><ProjectStory entry={projectCase} lang={lang} includeIntro={false} /></div> : null}
@@ -491,7 +494,7 @@ export function ProjectDetail() {
           <div className="mx-auto w-full max-w-[1200px]"><SiteFooter /></div>
         </div>
 
-        <div className="mt-auto shrink-0 border-t border-frame px-4 py-4">
+        {project.slug !== "weboteca" && <div className="mt-auto shrink-0 border-t border-frame px-4 py-4">
           <div className="flex gap-4 overflow-x-auto pb-1">
             {others.map((p) => (
               <Link
@@ -530,7 +533,7 @@ export function ProjectDetail() {
               </Link>
             ))}
           </div>
-        </div>
+        </div>}
       </div>
     </PageFrame>
   )

@@ -1,320 +1,134 @@
 import { AnimatePresence, motion } from "framer-motion"
-import { useEffect, useRef, useState } from "react"
-import { Link, NavLink, useLocation } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { Link, useLocation } from "react-router-dom"
 import { INQUIRY_LABELS, useInquiry } from "./Inquiry"
 import { type Lang } from "@/i18n/lang"
 import { swapLang } from "@/lib/seoMeta"
 import { useLang } from "@/i18n/useLang"
 import { t } from "@/i18n/strings"
 
-function Sep() {
-  return (
-    <span className="mx-[6px] text-white/60">·</span>
-  )
-}
+const labels = {
+  ca: { home: "Inici", menu: "Menú", close: "Tanca el menú", navigation: "Navegació principal", language: "Idioma" },
+  es: { home: "Inicio", menu: "Menú", close: "Cerrar el menú", navigation: "Navegación principal", language: "Idioma" },
+  en: { home: "Home", menu: "Menu", close: "Close menu", navigation: "Main navigation", language: "Language" },
+} as const
 
-export function BottomNav() {
+export function BottomNav({ onTop }: { onTop: boolean }) {
   const lang = useLang()
-  const openInquiry = useInquiry()
+  const copy = labels[lang]
   const inquiry = INQUIRY_LABELS[lang]
+  const openInquiry = useInquiry()
   const location = useLocation()
-  const [isScrolling, setIsScrolling] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const scrollIdleTimer = useRef<number | null>(null)
 
+  useEffect(() => setMenuOpen(false), [location.pathname])
   useEffect(() => {
-    const onScroll = () => {
-      setIsScrolling(true)
-      if (scrollIdleTimer.current != null) {
-        window.clearTimeout(scrollIdleTimer.current)
-      }
-      scrollIdleTimer.current = window.setTimeout(() => {
-        setIsScrolling(false)
-      }, 170)
+    if (!menuOpen) return
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false)
     }
+    window.addEventListener("keydown", closeOnEscape)
+    return () => window.removeEventListener("keydown", closeOnEscape)
+  }, [menuOpen])
 
-    document.addEventListener("scroll", onScroll, { passive: true, capture: true })
-    return () => {
-      document.removeEventListener("scroll", onScroll, { capture: true })
-      if (scrollIdleTimer.current != null) {
-        window.clearTimeout(scrollIdleTimer.current)
-      }
-    }
-  }, [])
-
-  // Close mobile menu on route change
-  useEffect(() => {
-    setMenuOpen(false)
-  }, [location.pathname])
-
-  const linkClass = (active: boolean) =>
-    [
-      "text-nav uppercase tracking-nav transition-[opacity,color] duration-200",
-      "text-white hover:text-ink hover:opacity-100",
-      active
-        ? "opacity-100 underline underline-offset-4 decoration-white/70"
-        : "opacity-100",
-    ].join(" ")
-
-  const langItemClass = (active: boolean, size: "sm" | "md" = "sm") =>
-    [
-      size === "md" ? "px-2 text-[14px]" : "px-1 text-[11px]",
-      "inline-flex min-h-[48px] items-center uppercase tracking-[0.08em] transition-opacity duration-200",
-      active
-        ? "opacity-100 underline underline-offset-4 decoration-white/70"
-        : "opacity-100 hover:opacity-80",
-    ].join(" ")
-
-  const langLink = (l: Lang) => swapLang(location.pathname, l) + location.search + location.hash
-
-  const pillBase = [
-    "pointer-events-auto",
-    "text-nav uppercase tracking-nav",
-    "flex items-center",
-    "border backdrop-blur-[10px] rounded-full",
-    "bg-[#d50000]/95 border-white/20",
-  ].join(" ")
+  const links = [
+    { to: `/${lang}/services`, label: t(lang, "nav.services") },
+    { to: `/${lang}/projects`, label: t(lang, "nav.projects") },
+    { to: `/${lang === "en" ? "es" : lang}/blog`, label: lang === "en" ? "BLOG (ES)" : "BLOG" },
+    { to: `/${lang}/about-us`, label: t(lang, "nav.about") },
+  ]
+  const isCurrent = (to: string) => location.pathname === to || location.pathname.startsWith(`${to}/`) ||
+    (to === `/${lang}/projects` && location.pathname.startsWith(`/${lang}/project/`))
+  const langLink = (target: Lang) => swapLang(location.pathname, target) + location.search + location.hash
 
   return (
-    <>
-      {/* Mobile overlay menu */}
+    <div className="relative">
       <AnimatePresence>
         {menuOpen && (
-          <motion.div
-            className="fixed inset-x-0 bottom-[72px] z-50 flex justify-center px-6 pointer-events-auto md:hidden"
-            style={{ transformOrigin: "bottom center" }}
-            initial={{ opacity: 0, scaleY: 0.25, scaleX: 0.85, y: 28, filter: "blur(6px)" }}
-            animate={{ opacity: 1, scaleY: 1, scaleX: 1, y: 0, filter: "blur(0px)" }}
-            exit={{ opacity: 0, scaleY: 0.25, scaleX: 0.85, y: 28, filter: "blur(6px)" }}
-            transition={{ type: "spring", stiffness: 380, damping: 28, mass: 0.9 }}
-          >
+          <>
+            <motion.button
+              type="button"
+              aria-label={copy.close}
+              tabIndex={-1}
+              className="fixed inset-0 z-0 cursor-default bg-black/20 lg:hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMenuOpen(false)}
+            />
             <motion.div
-              className={[
-                "flex flex-col items-center gap-6",
-                "px-12 py-10 rounded-2xl w-full max-w-xs max-h-[calc(100svh-110px)] overflow-y-auto",
-                "bg-[#d50000]/95 border border-white/20 backdrop-blur-[10px]",
-              ].join(" ")}
-              variants={{
-                show: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } },
-                hide: { transition: { staggerChildren: 0.04, staggerDirection: -1 } },
-              }}
-              initial="hide"
-              animate="show"
-              exit="hide"
+              id="primary-menu"
+              className={`absolute left-0 z-10 w-full overflow-hidden rounded-[22px] border border-white/25 bg-[#c90000] p-3 text-white shadow-[0_18px_50px_rgba(75,0,0,0.25)] lg:hidden ${onTop ? "top-[calc(100%+10px)]" : "bottom-[calc(100%+10px)]"}`}
+              initial={{ opacity: 0, y: onTop ? -8 : 8, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: onTop ? -8 : 8, scale: 0.97 }}
+              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
             >
-              {[
-                { to: `/${lang}/services`, label: t(lang, "nav.services") },
-                { to: `/${lang}/projects`, label: t(lang, "nav.projects") },
-                { to: `/${lang === "en" ? "es" : lang}/blog`, label: lang === "en" ? "Blog (ES)" : "Blog" },
-                { to: `/${lang}/about-us`, label: t(lang, "nav.about") },
-              ].map(({ to, label }) => (
-                <motion.div
+              <div className="px-3 pb-2 pt-1 text-[10px] tracking-[0.14em] text-white/60">{copy.navigation}</div>
+              {links.map(({ to, label }, index) => (
+                <Link
                   key={to}
-                  variants={{
-                    show: { opacity: 1, y: 0, filter: "blur(0px)" },
-                    hide: { opacity: 0, y: 14, filter: "blur(4px)" },
-                  }}
-                  transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+                  to={to}
+                  aria-current={isCurrent(to) ? "page" : undefined}
+                  className={`flex min-h-12 items-center justify-between border-t border-white/20 px-3 py-2 text-[14px] tracking-[0.035em] transition-colors hover:bg-white/10 ${isCurrent(to) ? "text-white" : "text-white/85"}`}
                 >
-                  <NavLink
-                    to={to}
-                    className={({ isActive }) => [
-                      "flex min-h-[48px] items-center py-3 text-[16px] uppercase tracking-[0.1em] font-normal",
-                      "transition-[opacity,color] duration-200 text-white hover:text-ink hover:opacity-100",
-                      isActive ? "opacity-100" : "opacity-100",
-                    ].join(" ")}
-                  >
-                    {label}
-                  </NavLink>
-                </motion.div>
+                  <span>{label}</span><span className="text-[11px] text-white/60">{isCurrent(to) ? "●" : `0${index + 1}`}</span>
+                </Link>
               ))}
-
-              <motion.div
-                className="h-px w-full bg-white/20"
-                variants={{ show: { opacity: 1, scaleX: 1 }, hide: { opacity: 0, scaleX: 0.4 } }}
-                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              />
-
-              {/* Language selector */}
-              <motion.div
-                variants={{ show: { opacity: 1, y: 0, filter: "blur(0px)" }, hide: { opacity: 0, y: 14, filter: "blur(4px)" } }}
-                transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-                className="inline-flex items-center rounded-full border border-white/25 bg-white/5 px-4 py-2.5 text-white/90"
-              >
-                <Link
-                  to={langLink("en")}
-                  className={langItemClass(lang === "en", "md")}
-                  aria-label="Switch language to English"
-                  aria-current={lang === "en" ? "true" : undefined}
-                >
-                  EN
-                </Link>
-                <span className="mx-2 text-white/40">·</span>
-                <Link
-                  to={langLink("ca")}
-                  className={langItemClass(lang === "ca", "md")}
-                  aria-label="Canvia l'idioma a català"
-                  aria-current={lang === "ca" ? "true" : undefined}
-                >
-                  CA
-                </Link>
-                <span className="mx-2 text-white/40">·</span>
-                <Link
-                  to={langLink("es")}
-                  className={langItemClass(lang === "es", "md")}
-                  aria-label="Cambiar idioma a español"
-                  aria-current={lang === "es" ? "true" : undefined}
-                >
-                  ES
-                </Link>
-              </motion.div>
-
-              <motion.button
-                type="button"
-                onClick={() => { setMenuOpen(false); openInquiry("quote") }}
-                className={[
-                "inline-flex items-center min-h-[48px]",
-                  "rounded-full border px-6 py-2.5",
-                  "text-[14px] uppercase tracking-[0.1em]",
-                  "transition-[opacity,color,background-color,border-color] duration-200",
-                  "border-white/35 bg-white/10 text-white hover:text-ink",
-                ].join(" ")}
-                variants={{ show: { opacity: 1, y: 0, filter: "blur(0px)" }, hide: { opacity: 0, y: 14, filter: "blur(4px)" } }}
-                transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.99 }}
-                aria-label={inquiry.quote}
-              >
-                {inquiry.nav}
-              </motion.button>
+              <div className="mt-2 flex items-center justify-between border-t border-white/20 px-3 pt-3">
+                <span className="text-[10px] tracking-[0.14em] text-white/60">{copy.language}</span>
+                <div className="flex items-center gap-1" aria-label={copy.language}>
+                  {(["ca", "es", "en"] as const).map((target) => (
+                    <Link key={target} to={langLink(target)} aria-current={lang === target ? "page" : undefined}
+                      className={`flex min-h-10 min-w-10 items-center justify-center rounded-full text-[11px] transition-colors ${lang === target ? "bg-white text-[#b40000]" : "text-white/80 hover:bg-white/15"}`}>
+                      {target.toUpperCase()}
+                    </Link>
+                  ))}
+                </div>
+              </div>
             </motion.div>
-          </motion.div>
+          </>
         )}
       </AnimatePresence>
 
-      {/* Nav pill */}
       <motion.nav
         layoutId="nav-pill"
-        className={pillBase}
-        aria-label="Primary"
-        animate={{
-          opacity: isScrolling ? 0 : 1,
-          y: isScrolling ? 14 : 0,
-        }}
-        transition={{
-          opacity: { duration: 0.12, ease: "easeOut" },
-          y: { duration: 0.22, ease: [0.22, 1, 0.36, 1] },
-        }}
-        style={{ pointerEvents: isScrolling ? "none" : "auto" }}
+        aria-label={copy.navigation}
+        className="relative z-20 flex w-[calc(100vw-32px)] max-w-[380px] items-center rounded-full border border-white/25 bg-[#d50000]/95 p-1 text-white shadow-[0_12px_36px_rgba(89,0,0,0.18)] backdrop-blur-[12px] lg:w-auto lg:max-w-none"
       >
-        {/* Mobile pill: original identity, visible enquiry, menu. */}
-        <div className="flex items-center px-4 py-[10px] md:hidden">
-          <NavLink
-            to={`/${lang}`}
-            className={["mr-3 inline-flex items-center hover:opacity-100", linkClass(false)].join(" ")}
-            aria-label="PALSEC AGCY HOME"
-          >
-            PALSEC AGCY
-          </NavLink>
-          <button
-            type="button"
-            onClick={() => openInquiry("quote")}
-            className="mr-1 inline-flex min-h-[40px] items-center rounded-full border border-white/35 bg-white/10 px-3 text-[10px] uppercase tracking-nav text-white transition-colors hover:bg-white/15"
-            aria-label={inquiry.quote}
-          >
-            {inquiry.nav}
-          </button>
-          <button
-            type="button"
-            onClick={() => setMenuOpen((o) => !o)}
-            data-inquiry-focus-fallback
-            className="ml-auto inline-flex min-h-[48px] min-w-[48px] items-center justify-center text-white/80 transition-colors duration-200 hover:text-white"
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={menuOpen}
-          >
-            <span className="text-[16px] leading-none">{menuOpen ? "×" : "≡"}</span>
-          </button>
+        <Link to={`/${lang}`} aria-label={`PALSEC AGCY · ${copy.home}`}
+          className="ml-3 mr-auto flex min-h-11 shrink-0 items-center gap-2 whitespace-nowrap text-[11px] font-medium tracking-[0.07em] transition-opacity hover:opacity-75 lg:ml-4 lg:mr-5">
+          <span className="h-[7px] w-[7px] rounded-full bg-white" aria-hidden="true" />PALSEC AGCY
+        </Link>
+
+        <div className="hidden items-center gap-0.5 border-l border-white/25 pl-2 lg:flex">
+          {links.map(({ to, label }) => (
+            <Link key={to} to={to} aria-current={isCurrent(to) ? "page" : undefined}
+              className={`inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-3 text-[10px] tracking-[0.055em] transition-[background-color,color] duration-200 ${isCurrent(to) ? "bg-white text-[#b40000]" : "text-white/85 hover:bg-white/15 hover:text-white"}`}>
+              {label}
+            </Link>
+          ))}
         </div>
 
-        {/* ── Desktop pill: full nav ── */}
-        <div className="hidden md:flex items-center px-4 py-[10px]">
-          <NavLink
-            to={`/${lang}`}
-            className={[
-              "mr-[10px] inline-flex items-center hover:opacity-100",
-              linkClass(false),
-            ].join(" ")}
-            aria-label="PALSEC AGCY HOME"
-          >
-            PALSEC AGCY
-          </NavLink>
-          <Sep />
-          <NavLink to={`/${lang}/services`} className={({ isActive }) => linkClass(isActive)}>
-            {t(lang, "nav.services")}
-          </NavLink>
-          <Sep />
-          <NavLink to={`/${lang}/projects`} className={({ isActive }) => linkClass(isActive)}>
-            {t(lang, "nav.projects")}
-          </NavLink>
-          <Sep />
-          <NavLink to={`/${lang === "en" ? "es" : lang}/blog`} className={({ isActive }) => linkClass(isActive)}>Blog{lang === "en" ? " (ES)" : ""}</NavLink>
-          <Sep />
-          <NavLink to={`/${lang}/about-us`} className={({ isActive }) => linkClass(isActive)}>
-            {t(lang, "nav.about")}
-          </NavLink>
-          <Sep />
-
-          <div className="ml-[2px] inline-flex items-center rounded-full border border-white/25 bg-white/5 px-2 py-[6px] text-white/90">
-            <Link
-              to={langLink("en")}
-              className={langItemClass(lang === "en")}
-              aria-label="Switch language to English"
-              aria-current={lang === "en" ? "true" : undefined}
-            >
-              EN
+        <div className="hidden items-center gap-0.5 border-l border-white/25 pl-2 lg:flex" aria-label={copy.language}>
+          {(["ca", "es", "en"] as const).map((target) => (
+            <Link key={target} to={langLink(target)} aria-current={lang === target ? "page" : undefined}
+              className={`inline-flex min-h-10 min-w-8 items-center justify-center rounded-full text-[10px] transition-colors ${lang === target ? "bg-white/20 text-white" : "text-white/70 hover:bg-white/15 hover:text-white"}`}>
+              {target.toUpperCase()}
             </Link>
-            <span className="mx-[6px] text-white/40">·</span>
-            <Link
-              to={langLink("ca")}
-              className={langItemClass(lang === "ca")}
-              aria-label="Canvia l'idioma a català"
-              aria-current={lang === "ca" ? "true" : undefined}
-            >
-              CA
-            </Link>
-            <span className="mx-[6px] text-white/40">·</span>
-            <Link
-              to={langLink("es")}
-              className={langItemClass(lang === "es")}
-              aria-label="Cambiar idioma a español"
-              aria-current={lang === "es" ? "true" : undefined}
-            >
-              ES
-            </Link>
-          </div>
-
-          <Sep />
-
-          <motion.button
-            type="button"
-            onClick={() => openInquiry("quote")}
-            className={[
-              "ml-[2px] inline-flex items-center",
-              "rounded-full border px-3 py-[6px]",
-              "text-nav uppercase tracking-nav",
-              "transition-[opacity,color,background-color,border-color] duration-200",
-              "border-white/35 bg-white/10 text-white hover:text-ink",
-            ].join(" ")}
-            initial={false}
-            animate={{ boxShadow: "0 0 0 0 rgba(0,0,0,0)" }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.99 }}
-            aria-label={inquiry.quote}
-          >
-            {inquiry.nav}
-          </motion.button>
+          ))}
         </div>
+
+        <button type="button" onClick={() => { setMenuOpen(false); openInquiry("quote") }} aria-label={inquiry.quote}
+          className="ml-1 inline-flex min-h-11 shrink-0 items-center gap-1 rounded-full bg-white px-3 text-[10px] tracking-[0.05em] text-[#b40000] transition-colors hover:bg-white/90 lg:ml-2 lg:px-4">
+          <span>{inquiry.nav}</span><span aria-hidden="true">↗</span>
+        </button>
+        <button type="button" onClick={() => setMenuOpen(value => !value)} data-inquiry-focus-fallback
+          aria-label={menuOpen ? copy.close : copy.menu} aria-expanded={menuOpen} aria-controls="primary-menu"
+          className="ml-1 flex min-h-11 min-w-11 items-center justify-center rounded-full text-[18px] leading-none transition-colors hover:bg-white/15 lg:hidden">
+          <span aria-hidden="true">{menuOpen ? "×" : "≡"}</span>
+        </button>
       </motion.nav>
-    </>
+    </div>
   )
 }

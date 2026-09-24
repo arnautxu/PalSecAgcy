@@ -4,6 +4,16 @@ import type { ProjectSlug } from "@/data/projects"
 export const COMMERCIAL_IDS = ["web-design", "web-development", "branding", "graphic-design"] as const
 export type CommercialId = (typeof COMMERCIAL_IDS)[number]
 
+const NAV_LABELS: Record<Lang, Record<CommercialId, string>> = {
+  ca: { "web-design": "Disseny web", "web-development": "Desenvolupament web", branding: "Branding", "graphic-design": "Disseny gràfic" },
+  es: { "web-design": "Diseño web", "web-development": "Desarrollo web", branding: "Branding", "graphic-design": "Diseño gráfico" },
+  en: { "web-design": "Web design", "web-development": "Web development", branding: "Branding", "graphic-design": "Graphic design" },
+}
+
+export function commercialNavLabel(lang: Lang, id: CommercialId): string {
+  return NAV_LABELS[lang][id]
+}
+
 export const COMMERCIAL_PATHS: Record<CommercialId, Record<Lang, string>> = {
   "web-design": { es: "/es/diseno-web-girona", ca: "/ca/disseny-web-girona", en: "/en/web-design-girona" },
   "web-development": { es: "/es/desarrollo-web-girona", ca: "/ca/desenvolupament-web-girona", en: "/en/web-development-girona" },

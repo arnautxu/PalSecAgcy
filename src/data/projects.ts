@@ -6,6 +6,7 @@ export type ProjectSlug =
   | "enteza"
   | "gent-gran-de-calonge-i-sant-antoni"
   | "logoteca"
+  | "weboteca"
   | "cms"
   | "estudi-dental-carrera"
 
@@ -32,6 +33,22 @@ export type Project = {
 }
 
 export const PROJECTS: Project[] = [
+  {
+    slug: "weboteca",
+    title: "WEBOTECA",
+    carouselSeeds: [],
+    thumbSeed: "weboteca-thumb",
+    localImages: {
+      slides: [
+        "/media/projects/weboteca/neutral-studio-desktop.jpg",
+        "/media/projects/weboteca/estudi-dental-carrera-desktop.jpg",
+        "/media/projects/weboteca/casino-castellarenc-desktop.jpg",
+        "/media/projects/weboteca/pocket-voice-desktop.jpg",
+        "/media/projects/weboteca/vueik-desktop.jpg",
+      ],
+      thumb: "/media/projects/weboteca/thumb.jpg",
+    },
+  },
   {
     slug: "logoteca",
     title: "LOGOTECA",

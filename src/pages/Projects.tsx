@@ -157,6 +157,10 @@ function ProjectCard({
           <p>{projectCase.discipline}</p>
           <p className="text-ink/45">{projectCase.sector}</p>
         </div>
+      ) : slug === "weboteca" ? (
+        <div className="mt-2 normal-case text-[12px] leading-[1.6] tracking-normal text-ink/65">
+          {lang === "ca" ? "Portfoli web · 5 webs publicades" : lang === "es" ? "Portafolio web · 5 webs publicadas" : "Website portfolio · 5 live sites"}
+        </div>
       ) : null}
     </Link>
   )
