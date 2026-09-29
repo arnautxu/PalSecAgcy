@@ -1,3 +1,4 @@
+import { Disclosure } from "@/components/Editorial"
 import { useEffect, useMemo, useRef, useState } from "react"
 import { Link, Navigate, useLocation, useParams } from "react-router-dom"
 import { motion } from "framer-motion"
@@ -256,25 +257,15 @@ function ProjectStory({ entry, lang, includeIntro = true }: { entry: ProjectCase
   const labels = PROJECT_CASE_LABELS[lang]
   return (
     <article className="normal-case text-[14px] leading-[1.8] tracking-normal text-ink/80 md:text-[15px]">
-      <dl className="mb-7 grid gap-3 border-y border-frame py-4 text-[12px] leading-[1.7]">
+      <dl className="mb-7 grid grid-cols-2 gap-6 text-[11px] leading-[1.7]">
         <div><dt className="text-ink/50">{labels.sector}</dt><dd>{entry.sector}</dd></div>
         <div><dt className="text-ink/50">{labels.scope}</dt><dd>{entry.discipline}</dd></div>
       </dl>
       {includeIntro ? <p className="mb-8">{entry.intro}</p> : null}
-      {entry.sections.map((section) => (
-        <section key={section.title} className="mb-7">
-          <h2 className="mb-2 text-[16px] font-medium leading-[1.4] text-ink md:text-[18px]">{section.title}</h2>
-          <p>{section.body}</p>
-        </section>
-      ))}
-      <section className="mb-7">
-        <h2 className="mb-3 text-[16px] font-medium leading-[1.4] text-ink md:text-[18px]">{labels.deliverables}</h2>
-        <ul className="list-disc space-y-1 pl-5">
-          {entry.deliverables.map((item) => <li key={item}>{item}</li>)}
-        </ul>
-      </section>
-      <nav aria-label={labels.services} className="border-t border-frame pt-5">
-        <h2 className="mb-3 text-[16px] font-medium text-ink">{labels.services}</h2>
+      {entry.sections.map((section) => <Disclosure key={section.title} title={section.title}><p>{section.body}</p></Disclosure>)}
+      <Disclosure title={labels.deliverables}><ul className="space-y-2">{entry.deliverables.map(item => <li key={item}>{item}</li>)}</ul></Disclosure>
+      <nav aria-label={labels.services} className="pt-8">
+        <h2 className="mb-3 text-[11px] uppercase tracking-nav text-ink/55">{labels.services}</h2>
         <ul className="flex flex-wrap gap-x-5 gap-y-3">
           {entry.services.map((id) => {
             const service = getCommercialPage(id, lang)
@@ -331,6 +322,7 @@ export function ProjectDetail() {
   const copy = getProjectCopy(project.slug, lang)
   const projectCase = getProjectCase(project.slug, lang)
   const twoCol =
+    project.slug === "pocket-voice" ||
     project.slug === "vira" ||
     project.slug === "galeon" ||
     project.slug === "arkuos" ||
@@ -377,7 +369,7 @@ export function ProjectDetail() {
                     key={`${project.slug}-${safeIndex}`}
                     initial={false}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, ease: "easeInOut" }}
+                    transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
                     className="w-full overflow-hidden rounded-[2px] border border-frame bg-white"
                     drag="x"
                     dragConstraints={{ left: 0, right: 0 }}
@@ -420,9 +412,11 @@ export function ProjectDetail() {
                 {/* RIGHT: INFO */}
                 <div className="min-w-0">
                   <div className="mb-3 text-nav uppercase tracking-nav opacity-60">{t(lang, "project.label")}</div>
-                  <h1 className="mb-6 text-[clamp(24px,3vw,40px)] font-normal leading-[1.1] tracking-[-0.025em]">{project.title}</h1>
+                  <h1 className="mb-8 text-[clamp(32px,4vw,56px)] font-normal leading-[1.05] tracking-[-0.045em]">{project.title}</h1>
 
                   {projectCase ? <ProjectStory entry={projectCase} lang={lang} /> : null}
+
+                  {project.slug === "pocket-voice" && <a href="https://pocket-voice.vercel.app/" target="_blank" rel="noopener noreferrer" className="mt-6 inline-block text-[13px] underline underline-offset-4">{lang === "ca" ? "Visita la web del projecte" : lang === "es" ? "Visita la web del proyecto" : "Visit the project website"} ↗</a>}
 
                   <div className="mt-7 flex flex-wrap items-center gap-2">
                     {slides.map((seed, i) => (
@@ -468,7 +462,7 @@ export function ProjectDetail() {
                   key={`${project.slug}-${safeIndex}`}
                   initial={false}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, ease: "easeInOut" }}
+                  transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
                   className="w-[75vw] max-w-[1200px] overflow-hidden rounded-[2px] border border-frame bg-white"
                   drag="x"
                   dragConstraints={{ left: 0, right: 0 }}

@@ -1,4 +1,4 @@
-import { AnimatePresence, LayoutGroup, motion } from "framer-motion"
+import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "framer-motion"
 import { Outlet, useLocation } from "react-router-dom"
 import { InquiryProvider } from "./Inquiry"
 import { BottomNav } from "./BottomNav"
@@ -12,24 +12,22 @@ const warp = {
     opacity: 0,
     y: 14,
     scale: 0.985,
-    filter: "blur(8px)",
   },
   animate: {
     opacity: 1,
     y: 0,
     scale: 1,
-    filter: "blur(0px)",
   },
   exit: {
     opacity: 0,
     y: -10,
     scale: 1.01,
-    filter: "blur(6px)",
   },
 }
 
 export function RootLayout() {
   const location = useLocation()
+  const reduced = useReducedMotion()
   const pathnameSegs = location.pathname.split("/").filter(Boolean)
   const lang = isLang(pathnameSegs[0]) ? pathnameSegs[0] : "en"
   const restPath = isLang(pathnameSegs[0]) ? `/${pathnameSegs.slice(1).join("/")}` : location.pathname
@@ -50,12 +48,12 @@ export function RootLayout() {
           <motion.div
             key={location.key ?? location.pathname}
             variants={warp}
-            initial="initial"
+            initial={reduced ? false : "initial"}
             animate="animate"
             exit="exit"
-            transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: reduced ? 0 : 0.42, ease: [0.22, 1, 0.36, 1] }}
             className="absolute inset-0 overflow-hidden"
-            style={{ willChange: "filter, transform, opacity" }}
+            style={{ willChange: "transform, opacity" }}
           >
             <ErrorBoundary>
               <main id="main-content" className="h-full">

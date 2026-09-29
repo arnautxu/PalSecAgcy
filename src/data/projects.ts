@@ -1,4 +1,5 @@
 export type ProjectSlug =
+  | "pocket-voice"
   | "vira"
   | "arkuos"
   | "galeon"
@@ -33,6 +34,16 @@ export type Project = {
 }
 
 export const PROJECTS: Project[] = [
+  {
+    slug: "pocket-voice",
+    title: "POCKETVOICE",
+    carouselSeeds: [],
+    thumbSeed: "pocket-voice-thumb",
+    localImages: {
+      thumb: "/media/projects/pocket-voice/cover.png",
+      slides: ["/media/projects/pocket-voice/cover.png", "/media/projects/pocket-voice/voice-keyboard.jpg", "/media/projects/pocket-voice/creative-02.jpg", "/media/projects/pocket-voice/creative-03.jpg", "/media/projects/pocket-voice/creative-04.jpg", "/media/projects/weboteca/pocket-voice-desktop.jpg", "/media/projects/weboteca/pocket-voice-mobile.jpg"],
+    },
+  },
   {
     slug: "weboteca",
     title: "WEBOTECA",
@@ -217,6 +228,7 @@ export type IndexRow = {
 }
 
 export const INDEX_ROWS: IndexRow[] = [
+  { project: "POCKETVOICE", direction: "BRANDING / WEB", client: "POCKETVOICE", year: "2026", no: "009", slug: "pocket-voice" },
   { project: "VIRA", direction: "WEBSITE", client: "PALSEC", year: "2026", no: "001", slug: "vira" },
   { project: "ARKUOS", direction: "WEBSITE", client: "PALSEC", year: "2026", no: "002", slug: "arkuos" },
   { project: "GALEÓN", direction: "WEBSITE", client: "PALSEC", year: "2026", no: "003", slug: "galeon" },
@@ -262,6 +274,7 @@ export type PhotoCell = {
 }
 
 export const PHOTO_GRID: PhotoCell[] = [
+  { label: "POCKETVOICE", slug: "pocket-voice", seed: "pocket-voice-thumb" },
   { label: "VIRA", slug: "vira", seed: "photo-vira-1" },
   { label: "ARKUOS", slug: "arkuos", seed: "photo-arkuos-1" },
   { label: "GALEÓN", slug: "galeon", seed: "photo-galeon-1" },

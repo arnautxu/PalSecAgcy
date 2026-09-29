@@ -12,7 +12,7 @@ import { Picture } from "@/components/Picture"
 import { LazyAutoplayVideo } from "@/components/LazyAutoplayVideo"
 import { AiLabCardVisual } from "@/components/AiLabVisual"
 import { PROJECTS_META } from "@/lib/seoMeta"
-import { getProjectCase } from "@/content/projectCases"
+import { EDITORIAL } from "@/content/editorialCopy"
 import type { Lang } from "@/i18n/lang"
 
 const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect
@@ -41,7 +41,6 @@ function ProjectCard({
   lang: Lang
   priority?: boolean
 }) {
-  const projectCase = getProjectCase(slug, lang)
   const wrapRef = useRef<HTMLDivElement>(null)
   const titleViewportRef = useRef<HTMLDivElement>(null)
   const titleTextRef = useRef<HTMLSpanElement>(null)
@@ -96,7 +95,7 @@ function ProjectCard({
           src={imageSrc}
           alt={`${title} — ${lang === "ca" ? "projecte de PALSEC AGCY" : lang === "es" ? "proyecto de PALSEC AGCY" : "project by PALSEC AGCY"}`}
           className={`${mediaClass} transition-transform duration-500 ease-out group-hover:scale-[1.015]`}
-          sizes="(max-width: 767px) calc(100vw - 40px), 33vw"
+          sizes="(max-width: 639px) calc((100vw - 44px) / 2), (max-width: 767px) calc((100vw - 52px) / 2), calc((100vw - 108px) / 6)"
           loading={priority ? "eager" : "lazy"}
           fetchPriority={priority ? "high" : "auto"}
         />
@@ -158,20 +157,7 @@ function ProjectCard({
           {title}
         </motion.span>
       </div>
-      {projectCase ? (
-        <div className="mt-2 normal-case text-[12px] leading-[1.6] tracking-normal text-ink/65">
-          <p>{projectCase.discipline}</p>
-          <p className="text-ink/45">{projectCase.sector}</p>
-        </div>
-      ) : slug === "ai-lab" ? (
-        <div className="mt-2 normal-case text-[12px] leading-[1.6] tracking-normal text-ink/65">
-          {lang === "ca" ? "AiBrain · prototip interactiu" : lang === "es" ? "AiBrain · prototipo interactivo" : "AiBrain · interactive prototype"}
-        </div>
-      ) : slug === "weboteca" ? (
-        <div className="mt-2 normal-case text-[12px] leading-[1.6] tracking-normal text-ink/65">
-          {lang === "ca" ? "Portfoli web · 5 webs publicades" : lang === "es" ? "Portafolio web · 5 webs publicadas" : "Website portfolio · 5 live sites"}
-        </div>
-      ) : null}
+
     </Link>
   )
 }
@@ -189,12 +175,9 @@ export function Projects() {
         lang={lang}
         isProjectsList
       />
-      <div className="h-full w-full overflow-y-auto px-4 pb-8 pt-[92px] sm:px-5 md:px-6">
-        <h1 className="mb-2 text-nav uppercase tracking-nav opacity-80">{t(lang, "projects.title")}</h1>
-        <p className="mb-6 max-w-[640px] normal-case text-bodymd leading-[1.8] tracking-nav text-ink/70 md:text-body md:leading-[1.6]">
-          {t(lang, "projects.lead")}
-        </p>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+      <div className="h-full w-full overflow-y-auto px-4 pb-8 pt-[108px] sm:px-5 md:px-6">
+        <header className="mb-12 flex flex-wrap items-end justify-between gap-6 normal-case"><div><span className="editorial-eyebrow">PALSEC / {t(lang, "projects.title")}</span><h1 className="editorial-title">{EDITORIAL[lang].work}</h1></div><span className="text-[11px] text-ink/50">{String(PROJECTS.length).padStart(2, '0')} {t(lang, "projects.title")}</span></header>
+        <div className="grid grid-cols-2 gap-x-3 gap-y-6 md:grid-cols-6">
           {PROJECTS.map((p, index) => {
             const src = p.localImages?.thumb
               ? publicUrl(p.localImages.thumb)

@@ -277,7 +277,7 @@ const [activeProjectId, setActiveProjectId] = useState("examples")
       <aside className={`aibrain-sidebar ${sidebarOpen ? "" : "aibrain-sidebar-collapsed"} ${mobileOpen ? "aibrain-sidebar-mobile-open" : ""}`} aria-label="Navegación">
         {sidebarOpen || mobileOpen ? <>
           <div className="aibrain-sidebar-head">
-            <img src="/media/projects/ai-lab/aibrain-mark.svg" alt="" className="aibrain-brand-logo" />
+            <img src="/media/projects/ai-lab/aibrain-mark.svg" alt="" width={48} height={48} className="aibrain-brand-logo" />
             <span className="aibrain-brand-name">AiBrain</span>
             <IconButton label="Buscar" onClick={() => setModal("search")}><MagnifyingGlass size={16} /></IconButton>
             <IconButton label="Ocultar barra lateral" onClick={() => { setSidebarOpen(false); setMobileOpen(false) }}><SidebarSimple size={17} /></IconButton>
@@ -382,7 +382,7 @@ const [activeProjectId, setActiveProjectId] = useState("examples")
           {!activeThread && <div className="aibrain-suggestions" aria-label="Sugerencias para empezar">
             <button type="button" onClick={() => send("Prepara una presentación ejecutiva con datos ficticios para una empresa de muestra")}><FilePpt size={19} weight="fill" color="#c96953" />Prepárame una presentación</button>
             <button type="button" onClick={() => send("Trabajemos con estos Excels de demostración")}><File size={19} weight="fill" color="#3d986d" />Trabajemos con estos Excels</button>
-            <button type="button" onClick={() => send("Prepara un horario semanal para un equipo ficticio")}><img src="/media/projects/ai-lab/aibrain-mark.svg" alt="" />Planifiquemos los horarios del equipo <CaretRight size={14} /></button>
+            <button type="button" onClick={() => send("Prepara un horario semanal para un equipo ficticio")}><img src="/media/projects/ai-lab/aibrain-mark.svg" alt="" width={48} height={48} />Planifiquemos los horarios del equipo <CaretRight size={14} /></button>
           </div>}
         </div>
       </div>

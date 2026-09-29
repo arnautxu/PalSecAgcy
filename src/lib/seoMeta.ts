@@ -19,6 +19,7 @@ export const DEFAULT_OG_IMAGE = `${BASE_URL}/og/palsec-og.png`
 
 // ─── Page slugs that have a detail page ──────────────────────────────────────
 export const PROJECT_SLUGS = [
+  "pocket-voice",
   "vira",
   "arkuos",
   "galeon",
@@ -182,6 +183,17 @@ export const PROJECT_META: Record<
     year: string
   }
 > = {
+  "pocket-voice": {
+    displayTitle: "POCKETVOICE",
+    firstImage: "/media/projects/pocket-voice/cover.png",
+    descriptions: {
+      ca: "Identitat visual, manual de marca i web de PocketVoice, un projecte de PALSEC de 2026.",
+      es: "Identidad visual, manual de marca y web de PocketVoice, un proyecto de PALSEC de 2026.",
+      en: "PocketVoice visual identity, brand guidelines and website, a 2026 project by PALSEC.",
+    },
+    client: "PocketVoice",
+    year: "2026",
+  },
   vira: {
     displayTitle: "VIRA",
     firstImage: "/media/projects/vira/01.png",
@@ -284,6 +296,11 @@ export const PROJECT_META: Record<
 }
 
 const PROJECT_SEO: Record<ProjectSlug, Record<Lang, PageMeta>> = {
+  "pocket-voice": {
+    ca: { title: "PocketVoice — Identitat visual i web | PALSEC", description: "Cas PocketVoice de PALSEC: identitat visual, manual de marca, direcció d’art, peces de llançament i web per a un producte d’escriptura per veu." },
+    es: { title: "PocketVoice — Identidad visual y web | PALSEC", description: "Caso PocketVoice de PALSEC: identidad visual, manual de marca, dirección de arte, piezas de lanzamiento y web para un producto de escritura por voz." },
+    en: { title: "PocketVoice — Brand Identity & Website | PALSEC", description: "PocketVoice by PALSEC: visual identity, brand guidelines, art direction, launch materials and a product website for a voice typing experience." },
+  },
   vira: {
     ca: { title: "VIRA — UX/UI i identitat per a una app TDAH | PALSEC", description: "Cas VIRA: disseny UX/UI, identitat i sistema visual per a una aplicació que transforma hàbits i regulació emocional en microaccions clares." },
     en: { title: "VIRA — ADHD App UX/UI & Identity | PALSEC", description: "VIRA case study: UX/UI, identity, and a visual system for an app that turns habits and emotional regulation into clear, approachable micro-actions." },
@@ -332,6 +349,7 @@ const PROJECT_SEO: Record<ProjectSlug, Record<Lang, PageMeta>> = {
 }
 
 const PROJECT_PRIMARY_SERVICE: Record<ProjectSlug, ServiceSlug> = {
+  "pocket-voice": "branding-visual-identity",
   vira: "web-design-digital-products",
   arkuos: "branding-visual-identity",
   galeon: "web-design-digital-products",

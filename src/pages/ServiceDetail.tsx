@@ -4,7 +4,7 @@ import { PageFrame } from "@/components/PageFrame"
 import { Seo } from "@/components/Seo"
 import { mailtoProjectInquiryHref } from "@/constants/contact"
 import { getCommercialPages, type CommercialId } from "@/content/commercialPages"
-import { projectBySlug } from "@/data/projects"
+import { Arrow, Disclosure, WorkStrip } from "@/components/Editorial"
 import { getServicePage, isServiceSlug, type ServiceSlug } from "@/content/servicePages"
 import type { Lang } from "@/i18n/lang"
 import { useLang } from "@/i18n/useLang"
@@ -60,120 +60,14 @@ export function ServiceDetail() {
         lang={lang}
         service={page}
       />
-      <article className="h-full w-full overflow-y-auto px-4 pb-28 pt-[92px] sm:px-5 md:px-6">
-        <div className="mx-auto max-w-[980px]">
-          <p className="mb-4 text-nav uppercase tracking-nav text-ink/65">PALSEC AGCY · {lang === "ca" ? "SERVEIS" : lang === "es" ? "SERVICIOS" : "SERVICES"}</p>
-          <h1 className="max-w-[780px] text-[clamp(24px,4vw,54px)] font-normal leading-[1.04] tracking-[-0.035em] text-ink normal-case">
-            {page.title}
-          </h1>
-          <p className="mt-6 max-w-[720px] text-[15px] leading-[1.65] text-ink/85 normal-case md:text-[18px]">
-            {page.intro}
-          </p>
-
-          <div className="my-10 h-px bg-frame" />
-
-          <section className="grid gap-8 md:grid-cols-[180px_1fr]">
-            <h2 className="text-nav uppercase tracking-nav text-ink/65">{labels.forWhom}</h2>
-            <p className="max-w-[680px] text-[14px] leading-[1.7] text-ink/80 normal-case md:text-[16px]">{page.forWhom}</p>
-          </section>
-
-          <div className="my-10 h-px bg-frame" />
-
-          <section className="grid gap-8 md:grid-cols-[180px_1fr]">
-            <h2 className="text-nav uppercase tracking-nav text-ink/65">{labels.decisions}</h2>
-            <div className="space-y-4">
-              {page.details.map((paragraph) => (
-                <p key={paragraph} className="max-w-[680px] text-[14px] leading-[1.7] text-ink/80 normal-case md:text-[16px]">{paragraph}</p>
-              ))}
-            </div>
-          </section>
-
-          <div className="my-10 h-px bg-frame" />
-
-          <section className="grid gap-8 md:grid-cols-[180px_1fr]">
-            <h2 className="text-nav uppercase tracking-nav text-ink/65">{labels.local}</h2>
-            <div className="max-w-[680px] space-y-4 normal-case">
-              <p className="text-[14px] leading-[1.7] text-ink/80 md:text-[16px]">{LOCAL_CONTEXT[lang][serviceSlug]}</p>
-              <ul className="flex flex-wrap gap-x-6 gap-y-2">
-                {localPages.map((item) => (
-                  <li key={item.id}>
-                    <Link to={item.path} className="text-[14px] underline decoration-frame underline-offset-4 transition-colors hover:decoration-ink md:text-[16px]">
-                      {item.label} <span aria-hidden="true">↗</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </section>
-
-          <div className="my-10 h-px bg-frame" />
-
-          <section className="grid gap-8 md:grid-cols-[180px_1fr]">
-            <h2 className="text-nav uppercase tracking-nav text-ink/65">{labels.budget}</h2>
-            <p className="max-w-[680px] text-[14px] leading-[1.7] text-ink/80 normal-case md:text-[16px]">{page.budget}</p>
-          </section>
-
-          <div className="my-10 h-px bg-frame" />
-
-          <div className="grid gap-10 md:grid-cols-2">
-            <section>
-              <h2 className="mb-5 text-nav uppercase tracking-nav text-ink/65">{labels.process}</h2>
-              <ol className="space-y-3 normal-case">
-                {page.process.map((item, index) => (
-                  <li key={item} className="flex gap-4 text-[14px] leading-[1.6] md:text-[15px]">
-                    <span className="text-ink/65">{String(index + 1).padStart(2, "0")}</span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ol>
-            </section>
-            <section>
-              <h2 className="mb-5 text-nav uppercase tracking-nav text-ink/65">{labels.deliverables}</h2>
-              <ul className="space-y-3 normal-case">
-                {page.deliverables.map((item) => (
-                  <li key={item} className="text-[14px] leading-[1.6] md:text-[15px]">— {item}</li>
-                ))}
-              </ul>
-            </section>
-          </div>
-
-          <div className="my-10 h-px bg-frame" />
-
-          <section>
-            <h2 className="mb-5 text-nav uppercase tracking-nav text-ink/65">{labels.faq}</h2>
-            <div className="grid gap-5 md:grid-cols-3">
-              {page.faqs.map((faq) => (
-                <div key={faq.question} className="border-t border-frame pt-4">
-                  <h3 className="text-[12px] font-normal leading-[1.5] tracking-nav">{faq.question}</h3>
-                  <p className="mt-3 text-[13px] leading-[1.7] text-ink/70 normal-case md:text-[14px]">{faq.answer}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <div className="my-10 h-px bg-frame" />
-
-          <section>
-            <h2 className="mb-5 text-nav uppercase tracking-nav text-ink/65">{labels.related}</h2>
-            <div className="flex flex-wrap gap-3">
-              {page.relatedProjects.map((slug) => {
-                const project = projectBySlug(slug)
-                if (!project) return null
-                return (
-                  <Link key={slug} to={`/${lang}/project/${slug}`} className="rounded-full border border-frame px-4 py-3 text-[11px] uppercase tracking-nav transition-colors hover:border-ink">
-                    {project.title}
-                  </Link>
-                )
-              })}
-            </div>
-          </section>
-
-          <a href={mailtoProjectInquiryHref(lang)} className="mt-12 inline-flex min-h-12 items-center rounded-full bg-[#d50000] px-6 text-[11px] uppercase tracking-nav text-white transition-opacity hover:opacity-75">
-            {labels.contact}
-          </a>
-          <SiteFooter />
-        </div>
-      </article>
+      <article className="editorial-scroll"><div className="editorial-wrap">
+        <header><Link to={`/${lang}/services`} className="editorial-eyebrow">PALSEC / {lang === 'en' ? 'Services' : lang === 'es' ? 'Servicios' : 'Serveis'}</Link><h1 className="editorial-title">{page.title}</h1><p className="editorial-lead">{page.intro}</p><a href={mailtoProjectInquiryHref(lang)} className="editorial-cta mt-8">{labels.contact}<Arrow /></a></header>
+        <section className="editorial-section"><span className="editorial-eyebrow">01 / {labels.related}</span><WorkStrip slugs={page.relatedProjects.slice(0,2)} lang={lang} /></section>
+        <section className="editorial-section editorial-split"><div><span className="editorial-eyebrow">02 / {labels.forWhom}</span><h2 className="editorial-heading">{page.forWhom}</h2></div><div><h2 className="editorial-eyebrow">{labels.deliverables}</h2><ul className="mb-10 space-y-3 text-[18px]">{page.deliverables.map(item => <li key={item}>{item}</li>)}</ul><Disclosure title={labels.decisions}>{page.details.map(paragraph => <p key={paragraph}>{paragraph}</p>)}</Disclosure><Disclosure title={labels.budget}><p>{page.budget}</p></Disclosure><Disclosure title={labels.process}><ol className="space-y-3">{page.process.map((item,index) => <li key={item}>{String(index+1).padStart(2,'0')} / {item}</li>)}</ol></Disclosure></div></section>
+        <section className="editorial-section editorial-split"><h2 className="editorial-heading">{labels.faq}</h2><div>{page.faqs.map(faq => <Disclosure key={faq.question} title={faq.question}><p>{faq.answer}</p></Disclosure>)}</div></section>
+        <section className="editorial-section editorial-split"><h2 className="editorial-heading">{labels.local}</h2><div><p className="editorial-copy text-ink/70">{LOCAL_CONTEXT[lang][serviceSlug]}</p><nav className="mt-6 flex flex-wrap gap-6">{localPages.map(item => <Link key={item.id} to={item.path} className="inline-flex min-h-12 items-center gap-4 text-[14px]">{item.label}<Arrow /></Link>)}</nav></div></section>
+        <a href={mailtoProjectInquiryHref(lang)} className="editorial-cta">{labels.contact}<Arrow /></a><SiteFooter />
+      </div></article>
     </PageFrame>
   )
 }

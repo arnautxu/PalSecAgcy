@@ -10,7 +10,7 @@ export default {
         accent: "#ff1a1a",
       },
       fontFamily: {
-        mono: ['"Geist Mono"', "ui-monospace", "monospace"],
+        mono: ['"Geist Mono Variable"', "ui-monospace", "monospace"],
       },
       fontSize: {
         nav: "11px",

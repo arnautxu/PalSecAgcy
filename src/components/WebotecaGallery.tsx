@@ -5,6 +5,7 @@ import { Picture } from "./Picture"
 import { PORTFOLIO_WEBSITES } from "@/data/websites"
 import type { Lang } from "@/i18n/lang"
 import { publicUrl } from "@/utils/publicUrl"
+import { WEBSITE_NOTES } from "@/content/studioProof"
 
 const COPY = {
   ca: {
@@ -111,6 +112,8 @@ export function WebotecaGallery({ lang }: { lang: Lang }) {
                 <Picture src={publicUrl(site.mobile)} alt="" className="aspect-[390/844] w-full object-cover object-top" sizes="135px" loading="lazy" />
               </span>
             </button>
+            <p className="mt-4 max-w-xl text-[14px] normal-case leading-[1.7] tracking-normal text-ink/70">{WEBSITE_NOTES[site.slug]?.[lang]}</p>
+            {site.slug === "pocket-voice" && <Link to={`/${lang}/project/pocket-voice`} className="mt-2 inline-block text-[12px] normal-case underline underline-offset-4">{lang === "ca" ? "Veure el cas de marca i web" : lang === "es" ? "Ver el caso de marca y web" : "View the brand and website case"} →</Link>}
             <div className="mt-3 flex items-center justify-between gap-4 text-[11px] normal-case text-ink/55">
               <span className="min-w-0 truncate">{site.domain}</span>
               <a href={site.url} target="_blank" rel="noopener noreferrer" className="shrink-0 border-b border-ink/40 pb-0.5 text-ink transition-colors hover:border-[#d50000] hover:text-[#d50000]" aria-label={`${copy.visit}: ${site.title}`}>

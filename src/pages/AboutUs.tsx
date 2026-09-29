@@ -7,8 +7,11 @@ import { CONTACT_EMAIL, mailtoProjectInquiryHref } from "@/constants/contact"
 import { useLang } from "@/i18n/useLang"
 import { t } from "@/i18n/strings"
 import { Seo } from "@/components/Seo"
-import { ABOUT_APPROACH, ABOUT_META, ABOUT_TEAM_COPY } from "@/lib/seoMeta"
+import { ABOUT_APPROACH, ABOUT_META } from "@/lib/seoMeta"
 import { Link } from "react-router-dom"
+import { STUDIO_PROOF } from "@/content/studioProof"
+import { EDITORIAL } from "@/content/editorialCopy"
+import { Arrow, Reveal, WorkStrip } from "@/components/Editorial"
 
 // Lazy-load Three.js — only pulled in when About Us is visited
 const Logo3D = lazy(() =>
@@ -34,6 +37,8 @@ export function AboutUs() {
   const lang = useLang()
   const { pathname } = useLocation()
   const extra = ABOUT_APPROACH[lang]
+  const proof = STUDIO_PROOF[lang]
+  const copy = EDITORIAL[lang]
   const [mounted, setMounted] = useState(false)
   useEffect(() => setMounted(true), [])
   return (
@@ -45,68 +50,16 @@ export function AboutUs() {
         path={pathname}
         lang={lang}
       />
-      <div className="flex h-full min-h-0 flex-col overflow-y-auto pt-[92px]">
-
-        {/* ── 3D Logo — full width, dominant ── */}
-        <div className="w-full flex-shrink-0" style={{ height: "clamp(220px, 45vh, 460px)" }}>
-          {mounted && <Logo3DBoundary>
-            <Suspense fallback={null}>
-              <Logo3D reduced={prefersReducedMotion} />
-            </Suspense>
-          </Logo3DBoundary>}
-        </div>
-
-        {/* ── Text content — centred below ── */}
-        <div className="mx-auto w-full max-w-2xl px-4 pb-10 sm:px-5 md:px-6">
-          <h1 className="mb-4 text-nav uppercase tracking-nav opacity-80">
-            {t(lang, "about.title")}
-          </h1>
-          <p className="normal-case text-bodymd leading-[1.8] tracking-nav text-ink md:text-body md:leading-[1.6]">
-            {t(lang, "about.p1")} {t(lang, "about.p2")}
-          </p>
-          <p className="mt-4 normal-case text-bodymd leading-[1.8] tracking-nav text-ink/75 md:text-body md:leading-[1.6]">
-            {ABOUT_TEAM_COPY[lang]}
-          </p>
-
-          <section className="mt-8 grid gap-4 border-t border-frame pt-6 md:grid-cols-[160px_1fr]">
-            <h2 className="text-nav uppercase tracking-nav text-ink/55">{extra.approach}</h2>
-            <div>
-              <p className="normal-case text-[14px] leading-[1.75] text-ink/80 md:text-[16px]">{extra.body}</p>
-              <ul className="mt-5 space-y-2 text-[12px] uppercase tracking-nav text-ink/65">
-                {extra.principles.map((principle) => <li key={principle}>— {principle}</li>)}
-              </ul>
-            </div>
-          </section>
-
-          <section className="mt-8 grid gap-4 border-t border-frame pt-6 md:grid-cols-[160px_1fr]">
-            <h2 className="text-nav uppercase tracking-nav text-ink/55">{extra.follow}</h2>
-            <div className="flex flex-wrap gap-x-5 gap-y-3 text-[12px] uppercase tracking-nav">
-              <a href="https://www.linkedin.com/company/palsec-agency" rel="me noopener noreferrer" target="_blank" className="underline underline-offset-4 hover:opacity-60">LinkedIn</a>
-              <a href="https://www.instagram.com/palsec.agency/" rel="me noopener noreferrer" target="_blank" className="underline underline-offset-4 hover:opacity-60">Instagram</a>
-              <Link to={`/${lang}/legal-notice`} className="underline underline-offset-4 hover:opacity-60">{extra.legal}</Link>
-              <Link to={`/${lang}/privacy`} className="underline underline-offset-4 hover:opacity-60">{extra.privacy}</Link>
-            </div>
-          </section>
-
-          <nav className="mt-7 flex gap-5 text-[12px]">
-            <Link to={`/${lang}/services`} className="underline underline-offset-4">{t(lang, "nav.services")}</Link>
-            <Link to={`/${lang}/projects`} className="underline underline-offset-4">{t(lang, "nav.projects")}</Link>
-          </nav>
-          <div className="my-5 h-px w-full bg-frame" />
-
-          <p className="normal-case text-bodymd leading-[1.8] tracking-nav text-ink/70 md:text-body md:leading-[1.6]">
-            {t(lang, "about.contactPrefix")}{" "}
-            <a
-              href={mailtoProjectInquiryHref(lang)}
-              className="underline underline-offset-4 transition-opacity duration-200 hover:opacity-60"
-            >
-              {CONTACT_EMAIL}
-            </a>
-          </p>
-          <SiteFooter />
-        </div>
-
-      </div>
+      <div className="editorial-scroll"><div className="editorial-wrap">
+        <header className="editorial-split items-center">
+          <div><span className="editorial-eyebrow">{t(lang, "about.title")}</span><h1 className="editorial-title whitespace-pre-line">{copy.about}</h1><p className="editorial-lead">{copy.aboutBody}</p></div>
+          <div className="h-[260px] md:h-[460px]">{mounted && <Logo3DBoundary><Suspense fallback={null}><Logo3D reduced={prefersReducedMotion} /></Suspense></Logo3DBoundary>}</div>
+        </header>
+        <Reveal className="editorial-section editorial-split"><div><span className="editorial-eyebrow">01 / {extra.approach}</span><h2 className="editorial-heading whitespace-pre-line">{copy.process}</h2></div><ol>{copy.steps.map(([title, body], index) => <li className="editorial-step" key={title}><span className="text-[11px] opacity-50">0{index + 1}</span><div><h3>{title}</h3><p>{body}</p></div></li>)}</ol></Reveal>
+        <Reveal className="editorial-section"><span className="editorial-eyebrow">02 / {proof.title}</span><h2 className="editorial-heading">{copy.work}</h2><WorkStrip slugs={['pocket-voice', 'weboteca']} lang={lang} /></Reveal>
+        <section className="editorial-section editorial-split"><h2 className="editorial-heading">{copy.contact}</h2><div><a href={mailtoProjectInquiryHref(lang)} className="editorial-cta">{CONTACT_EMAIL}<Arrow /></a><nav aria-label={extra.follow} className="mt-8 flex gap-6 text-[13px]"><a href="https://www.linkedin.com/company/palsec-agency" rel="me noopener noreferrer" target="_blank">LinkedIn ↗</a><a href="https://www.instagram.com/palsec.agency/" rel="me noopener noreferrer" target="_blank">Instagram ↗</a><Link to={`/${lang}/services`}>{t(lang, "nav.services")}</Link></nav></div></section>
+        <SiteFooter />
+      </div></div>
     </PageFrame>
   )
 }

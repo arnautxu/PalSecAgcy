@@ -84,7 +84,7 @@ export const STRINGS: Record<Lang, Dict> = {
     "about.title": "SOBRE NOSALTRES",
     "about.p1":
       "Palsec Agcy és una agència de disseny que treballa en marca, digital i sistemes visuals.",
-    "about.p2": "Construïm experiències precíses, minimals i d'alt contrast.",
+    "about.p2": "Construïm experiències precises, minimals i d'alt contrast.",
     "about.contactPrefix": "Basats a la Costa Brava · Disponibles arreu ·",
     "notfound.title": "404",
     "notfound.body": "AQUESTA PÀGINA NO EXISTEIX.",
