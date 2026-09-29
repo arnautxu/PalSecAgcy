@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async'
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { publicUrl } from '@/utils/publicUrl'
@@ -29,6 +30,7 @@ export function Home() {
 
   return <div className="h-full w-full overflow-y-auto bg-black text-white">
     <Seo title={HOME_META[lang].title} bare description={HOME_META[lang].description} path={pathname} lang={lang} isHome />
+    <Helmet><link rel="preload" as="image" href={publicUrl('/hero-home-poster.webp')} /></Helmet>
     <section className="relative min-h-[100svh] bg-black">
       <div className="hero-home absolute inset-0" aria-hidden />
       <video ref={videoRef} className="absolute inset-0 h-full w-full object-cover" poster={publicUrl('/hero-home-poster.webp')} autoPlay muted loop playsInline preload="metadata" aria-label="PALSEC showreel">

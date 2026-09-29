@@ -1,18 +1,20 @@
+import { lazy, Suspense } from "react"
 import { Navigate, Route, Routes, useLocation } from "react-router-dom"
-import { BuyingGuide } from "./pages/BuyingGuide"
-import { Blog } from "./pages/Blog"
-import { CommercialLanding } from "./pages/CommercialLanding"
 import { RootLayout } from "./components/RootLayout"
-import { AboutUs } from "./pages/AboutUs"
-import { Home } from "./pages/Home"
-import { NotFound } from "./pages/NotFound"
-import { Projects } from "./pages/Projects"
-import { Services } from "./pages/Services"
-import { ServiceDetail } from "./pages/ServiceDetail"
-import { LegalPage } from "./pages/LegalPage"
-import { ProjectDetail } from "./pages/ProjectDetail"
-import { AiLab } from "./pages/AiLab"
 import { isLang, langPath } from "@/i18n/lang"
+
+const BuyingGuide = lazy(() => import("./pages/BuyingGuide").then(module => ({ default: module.BuyingGuide })))
+const Blog = lazy(() => import("./pages/Blog").then(module => ({ default: module.Blog })))
+const CommercialLanding = lazy(() => import("./pages/CommercialLanding").then(module => ({ default: module.CommercialLanding })))
+const AboutUs = lazy(() => import("./pages/AboutUs").then(module => ({ default: module.AboutUs })))
+const Home = lazy(() => import("./pages/Home").then(module => ({ default: module.Home })))
+const NotFound = lazy(() => import("./pages/NotFound").then(module => ({ default: module.NotFound })))
+const Projects = lazy(() => import("./pages/Projects").then(module => ({ default: module.Projects })))
+const Services = lazy(() => import("./pages/Services").then(module => ({ default: module.Services })))
+const ServiceDetail = lazy(() => import("./pages/ServiceDetail").then(module => ({ default: module.ServiceDetail })))
+const LegalPage = lazy(() => import("./pages/LegalPage").then(module => ({ default: module.LegalPage })))
+const ProjectDetail = lazy(() => import("./pages/ProjectDetail").then(module => ({ default: module.ProjectDetail })))
+const AiLab = lazy(() => import("./pages/AiLab").then(module => ({ default: module.AiLab })))
 
 function RootRedirect() {
   return <Navigate to="/ca" replace />
@@ -33,30 +35,32 @@ function GuideIndexRedirect() {
 
 export default function App() {
   return (
-    <Routes>
-      <Route path="/" element={<RootRedirect />} />
+    <Suspense fallback={null}>
+      <Routes>
+        <Route path="/" element={<RootRedirect />} />
 
-      <Route path="/:lang" element={<RootLayout />}>
-        <Route index element={<Home />} />
-        <Route path="blog" element={<Blog />} />
-        <Route path="guies" element={<GuideIndexRedirect />} />
-        <Route path="guias" element={<GuideIndexRedirect />} />
-        <Route path="guies/:guideSlug" element={<BuyingGuide />} />
-        <Route path="guias/:guideSlug" element={<BuyingGuide />} />
-        <Route path=":commercialSlug" element={<CommercialLanding />} />
-        <Route path="services" element={<Services />} />
-        <Route path="services/:serviceSlug" element={<ServiceDetail />} />
-        <Route path="projects" element={<Projects />} />
-        <Route path="about-us" element={<AboutUs />} />
-        <Route path="privacy" element={<LegalPage kind="privacy" />} />
-        <Route path="legal-notice" element={<LegalPage kind="legal-notice" />} />
-        <Route path="project/ai-lab" element={<AiLab />} />
-        <Route path="project/:slug" element={<ProjectDetail />} />
-        <Route path="*" element={<NotFound />} />
-      </Route>
+        <Route path="/:lang" element={<RootLayout />}>
+          <Route index element={<Home />} />
+          <Route path="blog" element={<Blog />} />
+          <Route path="guies" element={<GuideIndexRedirect />} />
+          <Route path="guias" element={<GuideIndexRedirect />} />
+          <Route path="guies/:guideSlug" element={<BuyingGuide />} />
+          <Route path="guias/:guideSlug" element={<BuyingGuide />} />
+          <Route path=":commercialSlug" element={<CommercialLanding />} />
+          <Route path="services" element={<Services />} />
+          <Route path="services/:serviceSlug" element={<ServiceDetail />} />
+          <Route path="projects" element={<Projects />} />
+          <Route path="about-us" element={<AboutUs />} />
+          <Route path="privacy" element={<LegalPage kind="privacy" />} />
+          <Route path="legal-notice" element={<LegalPage kind="legal-notice" />} />
+          <Route path="project/ai-lab" element={<AiLab />} />
+          <Route path="project/:slug" element={<ProjectDetail />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
 
-      {/* If someone hits a legacy non-prefixed path (e.g. /projects), prefix detected language. */}
-      <Route path="*" element={<LegacyPathRedirect />} />
-    </Routes>
+        {/* If someone hits a legacy non-prefixed path (e.g. /projects), prefix detected language. */}
+        <Route path="*" element={<LegacyPathRedirect />} />
+      </Routes>
+    </Suspense>
   )
 }

@@ -10,7 +10,7 @@ const DIST = path.join(ROOT, 'dist')
 const template = fs.readFileSync(path.join(DIST, 'index.html'), 'utf8')
 const routes = buildAllRoutes()
 for (const route of routes) {
-  const { body, head } = renderPage(route.path)
+  const { body, head } = await renderPage(route.path)
   const html = template
     .replace(/<html([^>]*)lang="[^"]*"/, `<html$1lang="${route.lang}"`)
     .replace(/<title>[^<]*<\/title>\s*/, '')

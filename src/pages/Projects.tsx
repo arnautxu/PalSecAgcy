@@ -29,6 +29,7 @@ function ProjectCard({
   padded = false,
   comingSoon = false,
   lang,
+  priority = false,
 }: {
   slug: ProjectSlug
   title: string
@@ -38,6 +39,7 @@ function ProjectCard({
   padded?: boolean
   comingSoon?: boolean
   lang: Lang
+  priority?: boolean
 }) {
   const projectCase = getProjectCase(slug, lang)
   const wrapRef = useRef<HTMLDivElement>(null)
@@ -95,7 +97,8 @@ function ProjectCard({
           alt={`${title} — ${lang === "ca" ? "projecte de PALSEC AGCY" : lang === "es" ? "proyecto de PALSEC AGCY" : "project by PALSEC AGCY"}`}
           className={`${mediaClass} transition-transform duration-500 ease-out group-hover:scale-[1.015]`}
           sizes="(max-width: 767px) calc(100vw - 40px), 33vw"
-          loading="lazy"
+          loading={priority ? "eager" : "lazy"}
+          fetchPriority={priority ? "high" : "auto"}
         />
       ) : <div className="aspect-[3/4] w-full bg-page" aria-hidden="true" />}
       {comingSoon && (
@@ -192,7 +195,7 @@ export function Projects() {
           {t(lang, "projects.lead")}
         </p>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          {PROJECTS.map((p) => {
+          {PROJECTS.map((p, index) => {
             const src = p.localImages?.thumb
               ? publicUrl(p.localImages.thumb)
               : undefined
@@ -211,6 +214,7 @@ export function Projects() {
                 padded={padded}
                 comingSoon={p.comingSoon}
                 lang={lang}
+                priority={index === 0}
               />
             )
           })}
