@@ -13,6 +13,7 @@ import { LazyAutoplayVideo } from "@/components/LazyAutoplayVideo"
 import { AiLabCardVisual } from "@/components/AiLabVisual"
 import { PROJECTS_META } from "@/lib/seoMeta"
 import { EDITORIAL } from "@/content/editorialCopy"
+import { EDITORIAL_CONTEXT } from "@/content/editorialContext"
 import type { Lang } from "@/i18n/lang"
 
 const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect
@@ -164,6 +165,7 @@ function ProjectCard({
 
 export function Projects() {
   const lang = useLang()
+  const context = EDITORIAL_CONTEXT[lang]
   const { pathname } = useLocation()
   return (
     <PageFrame className="relative">
@@ -177,6 +179,7 @@ export function Projects() {
       />
       <div className="h-full w-full overflow-y-auto px-4 pb-8 pt-[108px] sm:px-5 md:px-6">
         <header className="mb-12 flex flex-wrap items-end justify-between gap-6 normal-case"><div><span className="editorial-eyebrow">PALSEC / {t(lang, "projects.title")}</span><h1 className="editorial-title">{EDITORIAL[lang].work}</h1></div><span className="text-[11px] text-ink/50">{String(PROJECTS.length).padStart(2, '0')} {t(lang, "projects.title")}</span></header>
+        <div className="mb-10 max-w-[760px] normal-case"><p className="editorial-lead !mt-0">{context.projects}</p><p className="editorial-lead !mt-4">{context.collections}</p></div>
         <div className="grid grid-cols-2 gap-x-3 gap-y-6 md:grid-cols-6">
           {PROJECTS.map((p, index) => {
             const src = p.localImages?.thumb

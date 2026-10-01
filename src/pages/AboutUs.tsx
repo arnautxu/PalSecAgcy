@@ -11,6 +11,7 @@ import { ABOUT_APPROACH, ABOUT_META } from "@/lib/seoMeta"
 import { Link } from "react-router-dom"
 import { STUDIO_PROOF } from "@/content/studioProof"
 import { EDITORIAL } from "@/content/editorialCopy"
+import { EDITORIAL_CONTEXT } from "@/content/editorialContext"
 import { Arrow, Reveal, WorkStrip } from "@/components/Editorial"
 
 // Lazy-load Three.js — only pulled in when About Us is visited
@@ -39,6 +40,7 @@ export function AboutUs() {
   const extra = ABOUT_APPROACH[lang]
   const proof = STUDIO_PROOF[lang]
   const copy = EDITORIAL[lang]
+  const context = EDITORIAL_CONTEXT[lang]
   const [mounted, setMounted] = useState(false)
   useEffect(() => setMounted(true), [])
   return (
@@ -55,8 +57,8 @@ export function AboutUs() {
           <div><span className="editorial-eyebrow">{t(lang, "about.title")}</span><h1 className="editorial-title whitespace-pre-line">{copy.about}</h1><p className="editorial-lead">{copy.aboutBody}</p></div>
           <div className="h-[260px] md:h-[460px]">{mounted && <Logo3DBoundary><Suspense fallback={null}><Logo3D reduced={prefersReducedMotion} /></Suspense></Logo3DBoundary>}</div>
         </header>
-        <Reveal className="editorial-section editorial-split"><div><span className="editorial-eyebrow">01 / {extra.approach}</span><h2 className="editorial-heading whitespace-pre-line">{copy.process}</h2></div><ol>{copy.steps.map(([title, body], index) => <li className="editorial-step" key={title}><span className="text-[11px] opacity-50">0{index + 1}</span><div><h3>{title}</h3><p>{body}</p></div></li>)}</ol></Reveal>
-        <Reveal className="editorial-section"><span className="editorial-eyebrow">02 / {proof.title}</span><h2 className="editorial-heading">{copy.work}</h2><WorkStrip slugs={['pocket-voice', 'weboteca']} lang={lang} /></Reveal>
+        <Reveal className="editorial-section editorial-split"><div><span className="editorial-eyebrow">01 / {extra.approach}</span><h2 className="editorial-heading whitespace-pre-line">{copy.process}</h2></div><ol>{copy.steps.map(([title], index) => <li className="editorial-step" key={title}><span className="text-[11px] opacity-50">0{index + 1}</span><div><h3>{title}</h3><p>{context.steps[index]}</p></div></li>)}</ol></Reveal>
+        <Reveal className="editorial-section"><span className="editorial-eyebrow">02 / {proof.title}</span><h2 className="editorial-heading">{copy.work}</h2><p className="editorial-lead mb-8">{context.proof}</p><WorkStrip slugs={['pocket-voice', 'weboteca']} lang={lang} /></Reveal>
         <section className="editorial-section editorial-split"><h2 className="editorial-heading">{copy.contact}</h2><div><a href={mailtoProjectInquiryHref(lang)} className="editorial-cta">{CONTACT_EMAIL}<Arrow /></a><nav aria-label={extra.follow} className="mt-8 flex gap-6 text-[13px]"><a href="https://www.linkedin.com/company/palsec-agency" rel="me noopener noreferrer" target="_blank">LinkedIn ↗</a><a href="https://www.instagram.com/palsec.agency/" rel="me noopener noreferrer" target="_blank">Instagram ↗</a><Link to={`/${lang}/services`}>{t(lang, "nav.services")}</Link></nav></div></section>
         <SiteFooter />
       </div></div>

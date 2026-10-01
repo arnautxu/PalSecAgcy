@@ -9,6 +9,7 @@ import { Seo } from '@/components/Seo'
 import { SiteFooter } from '@/components/SiteFooter'
 import { commercialNavLabel, getCommercialPages } from '@/content/commercialPages'
 import { EDITORIAL } from '@/content/editorialCopy'
+import { EDITORIAL_CONTEXT } from '@/content/editorialContext'
 import { Arrow, Reveal, WorkStrip } from '@/components/Editorial'
 import { HOME_META } from '@/lib/seoMeta'
 import { useInquiry } from '@/components/Inquiry'
@@ -19,8 +20,9 @@ export function Home() {
   const { pathname } = useLocation()
   const reduced = useReducedMotion()
   const videoRef = useRef<HTMLVideoElement>(null)
-  const [paused, setPaused] = useState(Boolean(reduced))
+  const [paused, setPaused] = useState(false)
   const copy = EDITORIAL[lang]
+  const context = EDITORIAL_CONTEXT[lang]
   const services = getCommercialPages(lang)
   useEffect(() => {
     const el = videoRef.current
@@ -28,6 +30,8 @@ export function Home() {
     if (paused) el.pause()
     else void el.play().catch(() => {})
   }, [paused])
+  // Keep the initial client tree identical to the prerendered HTML.
+  useEffect(() => { if (reduced) setPaused(true) }, [reduced])
   const projects = ['pocket-voice', 'el-xiringuito']
 
   return <div className="h-full w-full overflow-y-auto bg-black text-white normal-case">
@@ -35,7 +39,7 @@ export function Home() {
     <Helmet><link rel="preload" as="image" href={publicUrl('/hero-home-poster.webp')} /></Helmet>
     <section className="relative min-h-[100dvh] bg-black">
       <div className="hero-home absolute inset-0" aria-hidden />
-      <video ref={videoRef} className="absolute inset-0 h-full w-full object-cover" poster={publicUrl('/hero-home-poster.webp')} autoPlay={!reduced} muted loop playsInline preload="metadata" aria-label="PALSEC showreel">
+      <video ref={videoRef} className="absolute inset-0 h-full w-full object-cover" poster={publicUrl('/hero-home-poster.webp')} autoPlay={!paused} muted loop playsInline preload="metadata" aria-label="PALSEC showreel">
         <source src={publicUrl('/hero-home-720.mp4')} media="(max-width: 768px)" type="video/mp4" />
         <source src={publicUrl('/hero-home.mp4')} type="video/mp4" />
       </video>
@@ -52,18 +56,19 @@ export function Home() {
     </section>
     <div className="editorial-wrap px-6 pb-24 normal-case">
       <Reveal className="editorial-section editorial-split">
-        <div><span className="editorial-eyebrow">PALSEC AGCY</span><p className="editorial-heading">{copy.intro}</p></div>
+        <div><span className="editorial-eyebrow">PALSEC AGCY</span><p className="editorial-heading">{copy.intro}</p><p className="editorial-lead">{context.home}</p></div>
         <div className="self-end md:pl-20"><Link to={`/${lang}/about-us`} className="inline-flex min-h-12 items-center gap-6 text-[13px]">{copy.more}<Arrow /></Link></div>
       </Reveal>
       <Reveal className="editorial-section">
         <span className="editorial-eyebrow">01 / {copy.selected}</span>
         <h2 className="editorial-heading">{copy.work}</h2>
+        <p className="editorial-lead mb-8">{context.selected}</p>
         <WorkStrip slugs={projects} lang={lang} />
         <Link to={`/${lang}/projects`} className="mt-10 inline-flex min-h-12 items-center gap-6 text-[13px]">{copy.all}<Arrow /></Link>
       </Reveal>
       <Reveal className="editorial-section editorial-split">
         <div><span className="editorial-eyebrow">02 / {copy.scope}</span><h2 className="editorial-heading whitespace-pre-line">{copy.services}</h2></div>
-        <div>{services.map((service, index) => <Link key={service.id} to={service.path} className="editorial-service-row"><span className="text-[11px] opacity-50">0{index + 1}</span><h3>{commercialNavLabel(lang, service.id)}</h3><Arrow /></Link>)}</div>
+        <div>{services.map((service, index) => <Link key={service.id} to={service.path} className="editorial-service-row"><span className="text-[11px] opacity-50">0{index + 1}</span><div><h3>{commercialNavLabel(lang, service.id)}</h3><p>{context.services[service.id]}</p></div><Arrow /></Link>)}</div>
       </Reveal>
       <Reveal className="editorial-section"><h2 className="editorial-title">{copy.contact}</h2><button type="button" onClick={() => openInquiry('quote')} className="editorial-cta mt-8 !bg-white !text-black">{copy.cta}<Arrow /></button></Reveal>
       <SiteFooter />
