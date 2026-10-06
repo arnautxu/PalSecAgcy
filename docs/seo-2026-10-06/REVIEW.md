@@ -39,9 +39,15 @@ JS inicial comprimit: 197,65 KB → 131,16 KB; CSS comprimit: aproximadament 14 
 
 - GA4: el compte arnautxu no mostra la propietat de PALSEC. El codi apunta a G-1KHW7BDQV0; proves locals de consentiment i esdeveniments no acrediten recepció al compte ni conversions reals. Cal accés a aquesta propietat.
 - Google Business: Pal Sec Agcy., Calonge, identificador 00538045319712170391. Sessió arnautxu confirmada; verificació requerida. Google demana vídeo del lloc, equipament i prova de gestió: el titular l'ha de gravar.
-- Enllaços: revisió preliminar 245 enllaços/135 dominis, AS 6 i fort pes de dominis amb AS baix. Classificació completa i exportació de dominis encara pendents. No s'ha enviat outreach ni disavow. Prioritzar crèdits legítims de clients i referències de disseny acreditades; revisar cada pàgina d'origen abans de contactar.
+- Enllaços: exportació completa del 6/10 de 137 dominis (247 enllaços, 132 dominis amb AS ≤10, 16 a la IP 195.20.19.178) i classificació inicial a [refdomains-review.csv](refdomains-review.csv), conservant puntuació, IP, volum i dates. Cal completar la verificació de les pàgines d’origen i el context editorial; la classificació per dades de domini no confirma qualitat ni toxicitat. No s'ha enviat outreach ni disavow. Prioritzar crèdits legítims de clients i referències de disseny acreditades; revisar cada pàgina d'origen abans de contactar.
 - Seguiment: lectures al cap de 30/60/90 dies després de publicar. Mesurar GSC marca/no marca i mòbil/escriptori, consultes comercials de Semrush, URLs detectades i contactes realment rebuts. Cap millora de rànquing s'atribueix als canvis sense dades posteriors.
 
 Baseline GSC llegida el 5/10: 11 clics, 1.638 impressions, CTR aproximat 0,7%, posició mitjana 29,9 (5/9–2/10). Els filtres de consulta ometen dades anònimes i no se sumen com si fossin totals exhaustius. Indexació: 47 indexades, 13 no indexades; sense dades CWV de camp.
 
 La publicació es registra separadament amb URL de deployment i verificació del domini. Aquest document no acredita verificació GBP, recepció GA4, nous enllaços ni posicionament posterior.
+
+## Versió preparada per publicar
+
+Commit de codi: `9e9bc391d9736e38eb73ae5e681607bc36413272`. Deployment READY: `dpl_Gq3nzNJoByhMgq1nnXESdzxdoiAt`, https://pal-sec-agcy-f9pfrf9yr-arnautxus-projects.vercel.app. La API de Vercel confirma aquest SHA. Set documents autenticats (portada, branding, desenvolupament ES, disseny gràfic EN, projectes, VIRA i sitemap) coincideixen byte a byte amb el build validat. La protecció de preview es manté; accés mitjançant `vercel curl`. Verificació completa del domini públic després de promocionar.
+
+LCP mòbil local final a VIRA, tres execucions Lighthouse amb throttling devtools: 1,929 / 1,821 / 1,823 s; mediana 1,823 s. La mostra anterior només tenia una execució comparable (1,762 s), de manera que no es presenta com una millora demostrada. Les dades de camp de GSC encara no estan disponibles.
