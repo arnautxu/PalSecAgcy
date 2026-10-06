@@ -49,13 +49,14 @@ function responsiveWebpSrcSet(src: string): string | undefined {
   return candidates.join(", ")
 }
 
-export function Picture({ src, alt = "", ...imgProps }: PictureProps) {
+export function Picture({ src, alt = "", fetchPriority, ...imgProps }: PictureProps) {
   const webp = webpSiblingOf(src)
   const dimensions = intrinsicDimensions(src)
   const responsiveSrcSet = responsiveWebpSrcSet(src)
   const width = imgProps.width ?? dimensions?.width
   const height = imgProps.height ?? dimensions?.height
-  const props = { ...imgProps, width, height }
+  // React 18 passes the lowercase HTML attribute without an unknown-prop warning.
+  const props = { ...imgProps, width, height, ...(fetchPriority ? { fetchpriority: fetchPriority } : {}) }
   if (!webp) {
     // eslint-disable-next-line jsx-a11y/alt-text
     return <img src={src} alt={alt} srcSet={responsiveSrcSet} {...props} />

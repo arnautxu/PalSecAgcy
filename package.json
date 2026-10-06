@@ -7,11 +7,12 @@
     "dev": "vite",
     "ai-lab:artifacts": "node scripts/generate-aibrain-demo-artifacts.mjs",
     "ai-lab:cover": "node scripts/generate-aibrain-cover.mjs",
-    "build": "node scripts/convert-images.mjs && node scripts/generate-image-dimensions.mjs && tsc --noEmit && vite build && npm run prerender && npm run seo:verify",
+    "build": "node --import tsx scripts/generate-seo-catalog.ts && node scripts/convert-images.mjs && node scripts/generate-image-dimensions.mjs && tsc --noEmit && vite build && npm run prerender && npm run seo:verify",
     "prerender": "node --import tsx scripts/prerender.mjs",
     "seo:verify": "node scripts/verify-seo.mjs",
     "preview": "vite preview",
-    "seo:rendered": "node scripts/verify-rendered-seo.mjs"
+    "seo:rendered": "node scripts/verify-rendered-seo.mjs",
+    "predev": "node --import tsx scripts/generate-seo-catalog.ts"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.3.0",

@@ -4,9 +4,10 @@
  * and the postbuild prerender script (scripts/prerender.mjs).
  */
 
-import { BUYING_GUIDES, getBuyingGuides, type BuyingGuideContent, type GuideLang } from "../content/buyingGuides"
-import { getAllServicePages, type ServiceSlug } from "../content/servicePages"
-import { getCommercialPages, getCommercialPageByPath, COMMERCIAL_PATHS, type CommercialPage } from "../content/commercialPages"
+import { GUIDE_CATALOG, getGuideSummaries, type GuideSummary } from "../content/guideCatalog"
+import type { GuideLang } from "../content/guideTypes"
+import type { ServiceSlug } from "../content/servicePages"
+import { getCommercialSummaries, getCommercialSummaryByPath, getServiceSummaries, equivalentCommercialPath, type CommercialSummary } from "../content/serviceCatalog"
 
 export type Lang = "en" | "ca" | "es"
 
@@ -391,11 +392,11 @@ export interface RouteMeta {
 }
 
 export function swapLang(path: string, newLang: Lang): string {
-  const guide = BUYING_GUIDES.find(guide => guide.path === path)
-  if (guide) return BUYING_GUIDES.find(item => item.id === guide.id && item.lang === newLang)?.path ?? `/${newLang}`
+  const guide = GUIDE_CATALOG.find(guide => guide.path === path)
+  if (guide) return GUIDE_CATALOG.find(item => item.id === guide.id && item.lang === newLang)?.path ?? `/${newLang}`
   if (/^\/(ca|es)\/blog$/.test(path)) return newLang === "en" ? "/en" : `/${newLang}/blog`
-  const commercial = getCommercialPageByPath(path)
-  if (commercial) return COMMERCIAL_PATHS[commercial.id][newLang]
+  const commercial = getCommercialSummaryByPath(path)
+  if (commercial) return equivalentCommercialPath(commercial.id, newLang)
   const parts = path.split("/").filter(Boolean)
   if (parts.length === 0) return `/${newLang}`
   parts[0] = newLang
@@ -418,7 +419,7 @@ export function buildAllRoutes(): RouteMeta[] {
       ogImage: DEFAULT_OG_IMAGE,
     })
 
-    for (const service of getAllServicePages(lang)) {
+    for (const service of getServiceSummaries(lang)) {
       routes.push({
         path: `/${lang}/services/${service.slug}`,
         distPath: `${lang}/services/${service.slug}/index.html`,
@@ -432,7 +433,7 @@ export function buildAllRoutes(): RouteMeta[] {
       })
     }
 
-    for (const page of getCommercialPages(lang)) {
+    for (const page of getCommercialSummaries(lang)) {
       routes.push({ path: page.path, distPath: `${page.path.slice(1)}/index.html`, lang,
         kind: "commercial", title: page.seoTitle, description: page.description,
         canonicalUrl: `${BASE_URL}${page.path}`, ogImage: DEFAULT_OG_IMAGE })
@@ -520,7 +521,7 @@ export function buildAllRoutes(): RouteMeta[] {
       kind: "blog", title: BLOG_META[lang].title, description: BLOG_META[lang].description,
       canonicalUrl: `${BASE_URL}/${lang}/blog`, ogImage: DEFAULT_OG_IMAGE })
   }
-  for (const guide of BUYING_GUIDES) {
+  for (const guide of GUIDE_CATALOG) {
     routes.push({ path: guide.path, distPath: `${guide.path.slice(1)}/index.html`, lang: guide.lang, publishedAt: guide.publishedAt,
       kind: "guide", title: guide.seoTitle, description: guide.description,
       canonicalUrl: `${BASE_URL}${guide.path}`, ogImage: DEFAULT_OG_IMAGE })
@@ -596,7 +597,7 @@ export function buildServiceSchema(opts: {
   lang: Lang
   canonicalUrl: string
 }) {
-  const service = getAllServicePages(opts.lang).find((item) => item.slug === opts.serviceSlug)!
+  const service = getServiceSummaries(opts.lang).find((item) => item.slug === opts.serviceSlug)!
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -625,7 +626,7 @@ export function buildServiceSchema(opts: {
 }
 
 export function buildServicesCatalogSchema(lang: Lang, canonicalUrl: string) {
-  const services = getCommercialPages(lang)
+  const services = getCommercialSummaries(lang)
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -717,7 +718,7 @@ export function servicesLabel(lang: Lang): string {
   return lang === "ca" ? "Serveis" : lang === "es" ? "Servicios" : "Services"
 }
 
-export function buildCommercialServiceSchema(page: CommercialPage) {
+export function buildCommercialServiceSchema(page: CommercialSummary) {
   const url = `${BASE_URL}${page.path}`
   return {
     "@context": "https://schema.org",
@@ -736,9 +737,9 @@ export function buildCommercialServiceSchema(page: CommercialPage) {
 }
 
 export function alternateLinks(path: string) {
-  const guide = BUYING_GUIDES.find(guide => guide.path === path)
+  const guide = GUIDE_CATALOG.find(guide => guide.path === path)
   if (guide) {
-    const equivalents = BUYING_GUIDES.filter(item => item.id === guide.id)
+    const equivalents = GUIDE_CATALOG.filter(item => item.id === guide.id)
     const fallback = equivalents.find(item => item.lang === "ca") ?? equivalents.find(item => item.lang === "es")
     return [...equivalents.map(item => ({ lang: HREFLANG[item.lang], path: item.path })),
       ...(fallback ? [{ lang: "x-default", path: fallback.path }] : [])]
@@ -750,7 +751,7 @@ export function alternateLinks(path: string) {
     { lang: "x-default", path: swapLang(path, "ca") }]
 }
 
-export function buildGuideSchema(guide: BuyingGuideContent) {
+export function buildGuideSchema(guide: GuideSummary) {
   const url = `${BASE_URL}${guide.path}`
   return {
     "@context": "https://schema.org", "@type": "Article", "@id": `${url}#article`,
@@ -770,7 +771,7 @@ export function buildBlogSchema(lang: GuideLang) {
     isPartOf: { "@id": `${BASE_URL}/#website` },
     mainEntity: {
       "@type": "ItemList",
-      itemListElement: getBuyingGuides(lang).map((guide, index) => ({
+      itemListElement: getGuideSummaries(lang).map((guide, index) => ({
         "@type": "ListItem", position: index + 1,
         item: { "@type": "Article", "@id": `${BASE_URL}${guide.path}#article`, url: `${BASE_URL}${guide.path}`, headline: guide.title, inLanguage: lang },
       })),

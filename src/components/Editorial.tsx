@@ -15,11 +15,11 @@ export function Disclosure({ title, children }: { title: string; children: React
 export function Arrow({ down = false }: { down?: boolean }) {
   return <span className="editorial-arrow" aria-hidden="true">{down ? '↓' : '↗'}</span>
 }
-export function WorkStrip({ slugs, lang }: { slugs: readonly string[]; lang: Lang }) {
+export function WorkStrip({ slugs, lang, notes }: { slugs: readonly string[]; lang: Lang; notes?: Record<string, string> }) {
   return <div className="editorial-work-grid">{slugs.map(slug => {
     const project = projectBySlug(slug as ProjectSlug)
     const image = project?.localImages?.thumb ?? project?.localImages?.slides?.[0]
     if (!project || project.comingSoon || !image) return null
-    return <Link className="editorial-work" key={slug} to={`/${lang}/project/${slug}`}><div className="editorial-image-shell"><Picture src={image} alt={project.title} loading="lazy" sizes="(max-width: 767px) 90vw, 430px" className="aspect-[4/3] w-full object-cover" /></div><span>{project.title}<span aria-hidden="true">↗</span></span></Link>
+    return <Link className="editorial-work" key={slug} to={`/${lang}/project/${slug}`}><div className="editorial-image-shell"><Picture src={image} alt={project.title} loading="lazy" sizes="(max-width: 767px) 90vw, 430px" className="aspect-[4/3] w-full object-cover" /></div><span>{project.title}<span aria-hidden="true">↗</span></span>{notes?.[slug] && <p className="mt-3 text-[14px] leading-[1.7] opacity-70">{notes[slug]}</p>}</Link>
   })}</div>
 }

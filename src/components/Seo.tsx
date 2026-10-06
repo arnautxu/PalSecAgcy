@@ -1,5 +1,5 @@
-import { BUYING_GUIDES } from "@/content/buyingGuides"
-import { getCommercialPageByPath } from "@/content/commercialPages"
+import { GUIDE_CATALOG } from "@/content/guideCatalog"
+import { getCommercialSummaryByPath } from "@/content/serviceCatalog"
 import { Helmet } from "react-helmet-async"
 import type { Project } from "@/data/projects"
 import type { ServicePage } from "@/content/servicePages"
@@ -69,9 +69,9 @@ export function Seo({
   const fullTitle = bare ? title : `${title} | PALSEC AGCY`
   path = path.replace(/\/+$/, "") || "/"
   const canonicalUrl = `${BASE_URL}${path}`
-  const commercial = getCommercialPageByPath(path)
+  const commercial = getCommercialSummaryByPath(path)
   const ogImage = image ?? DEFAULT_OG_IMAGE
-  const guide = BUYING_GUIDES.find(guide => guide.path === path)
+  const guide = GUIDE_CATALOG.find(guide => guide.path === path)
   const isBlog = (lang === 'ca' || lang === 'es') && path === `/${lang}/blog`
 
   const organizationJson = isHome || path.endsWith("/about-us")

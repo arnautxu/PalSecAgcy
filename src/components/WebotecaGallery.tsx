@@ -6,6 +6,13 @@ import { PORTFOLIO_WEBSITES } from "@/data/websites"
 import type { Lang } from "@/i18n/lang"
 import { publicUrl } from "@/utils/publicUrl"
 import { WEBSITE_NOTES } from "@/content/studioProof"
+import { getCommercialPage } from "@/content/commercialPages"
+
+const CONTEXT = {
+  ca: { title: "Què pots valorar en aquests exemples", text: "Compara com cada web ordena els serveis, presenta els projectes i facilita el contacte. Les captures mostren dues escales de pantalla; els enllaços permeten explorar la navegació i el contingut publicat. Per preparar una web pròpia, concreta les pàgines, els idiomes i les accions que ha de poder completar una visita. A partir d’aquest abast es poden definir el disseny, el desenvolupament i els materials necessaris per publicar.", links: "Serveis per al teu projecte web" },
+  es: { title: "Qué puedes valorar en estos ejemplos", text: "Compara cómo cada web ordena los servicios, presenta los proyectos y facilita el contacto. Las capturas muestran dos escalas de pantalla; los enlaces permiten explorar la navegación y el contenido publicado. Para preparar una web propia, concreta las páginas, los idiomas y las acciones que debe poder completar una visita. A partir de ese alcance se pueden definir el diseño, el desarrollo y los materiales necesarios para publicar.", links: "Servicios para tu proyecto web" },
+  en: { title: "What to assess in these examples", text: "Compare how each website organises services, presents projects and helps visitors get in touch. The screenshots show two screen sizes; the links let you explore navigation and published content. To prepare your own website, define its pages, languages and the actions a visitor should be able to complete. That scope provides the basis for agreeing on design, development and the materials needed for publication.", links: "Services for your website project" },
+} as const
 
 const COPY = {
   ca: {
@@ -107,7 +114,7 @@ export function WebotecaGallery({ lang }: { lang: Lang }) {
               <Picture src={publicUrl(site.desktop)} alt={`${site.title} — ${copy.desktop.toLowerCase()}`}
                 className={`w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.015] ${index === PORTFOLIO_WEBSITES.length - 1 ? "aspect-[16/8] md:aspect-[21/9]" : "aspect-[16/10]"}`}
                 sizes={index === PORTFOLIO_WEBSITES.length - 1 ? "(max-width: 767px) calc(100vw - 40px), 1200px" : "(max-width: 767px) calc(100vw - 40px), 590px"}
-                loading="lazy" />
+                loading={index === 0 ? "eager" : "lazy"} fetchPriority={index === 0 ? "high" : "auto"} />
               <span className="absolute bottom-3 right-3 w-[23%] max-w-[135px] overflow-hidden rounded-[7px] border-[3px] border-white bg-white shadow-[0_10px_24px_rgba(0,0,0,0.25)] md:bottom-4 md:right-4" aria-hidden="true">
                 <Picture src={publicUrl(site.mobile)} alt="" className="aspect-[390/844] w-full object-cover object-top" sizes="135px" loading="lazy" />
               </span>
@@ -123,6 +130,14 @@ export function WebotecaGallery({ lang }: { lang: Lang }) {
           </article>
         ))}
       </div>
+
+      <section className="mt-14 border-t border-frame pt-8 normal-case">
+        <h2 className="text-[24px] font-normal tracking-[-.03em]">{CONTEXT[lang].title}</h2>
+        <p className="mt-4 max-w-[760px] text-[16px] leading-[1.8] text-ink/70">{CONTEXT[lang].text}</p>
+        <nav aria-label={CONTEXT[lang].links} className="mt-6 flex flex-wrap gap-6 text-[14px]">
+          {(['web-design', 'web-development'] as const).map(id => { const page = getCommercialPage(id, lang); return <Link key={id} to={page.path} className="inline-flex min-h-12 items-center underline underline-offset-4">{page.label} ↗</Link> })}
+        </nav>
+      </section>
 
       {website && typeof document !== "undefined" ? createPortal(
         <dialog ref={dialogRef} onCancel={() => setActive(null)}

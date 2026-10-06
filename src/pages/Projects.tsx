@@ -14,6 +14,8 @@ import { AiLabCardVisual } from "@/components/AiLabVisual"
 import { PROJECTS_META } from "@/lib/seoMeta"
 import { EDITORIAL } from "@/content/editorialCopy"
 import { EDITORIAL_CONTEXT } from "@/content/editorialContext"
+import projectSummaries from "@/content/projectCatalog.json"
+import { getCommercialSummaries } from "@/content/serviceCatalog"
 import type { Lang } from "@/i18n/lang"
 
 const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect
@@ -205,6 +207,14 @@ export function Projects() {
             )
           })}
         </div>
+        <section className="editorial-section normal-case">
+          <h2 className="editorial-heading">{lang === 'ca' ? 'Àmbit dels projectes' : lang === 'es' ? 'Alcance de los proyectos' : 'Project scope'}</h2>
+          <div className="grid gap-x-12 gap-y-10 md:grid-cols-2">{projectSummaries.filter(project => project.lang === lang).map(project => <article key={project.slug}>
+            <h3 className="text-[20px]"><Link to={`/${lang}/project/${project.slug}`} className="inline-flex min-h-12 items-center gap-4">{project.title} ↗</Link></h3>
+            <p className="mt-2 text-[15px] leading-[1.8] text-ink/70">{project.intro}</p>
+            <nav aria-label={`${project.title} — ${lang === 'ca' ? 'serveis' : lang === 'es' ? 'servicios' : 'services'}`} className="mt-3 flex flex-wrap gap-4 text-[12px]">{getCommercialSummaries(lang).filter(service => project.services.includes(service.id)).map(service => <Link key={service.id} to={service.path} className="inline-flex min-h-12 items-center underline underline-offset-4">{service.label}</Link>)}</nav>
+          </article>)}</div>
+        </section>
         <SiteFooter />
       </div>
     </PageFrame>

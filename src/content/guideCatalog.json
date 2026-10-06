@@ -1,0 +1,350 @@
+[
+  {
+    "id": "presupuesto-web",
+    "lang": "es",
+    "category": "web",
+    "publishedAt": "2026-09-22",
+    "slug": "presupuesto-web",
+    "path": "/es/guias/presupuesto-web",
+    "title": "Cómo comparar presupuestos para una web a medida",
+    "seoTitle": "Presupuesto web a medida: alcance y entregables | PALSEC",
+    "description": "Qué determina el presupuesto de una web profesional en Girona: alcance, diseño, contenido, desarrollo y mantenimiento. Preguntas para comparar propuestas.",
+    "relatedService": [
+      "web-design",
+      "web-development"
+    ]
+  },
+  {
+    "id": "presupuesto-branding",
+    "lang": "es",
+    "category": "branding",
+    "publishedAt": "2026-09-22",
+    "slug": "presupuesto-branding",
+    "path": "/es/guias/presupuesto-branding",
+    "title": "Qué debe incluir un proyecto de branding",
+    "seoTitle": "Presupuesto de branding: alcance y entregables | PALSEC",
+    "description": "Cómo valorar un presupuesto de branding: estrategia, identidad visual, aplicaciones, archivos y criterios de uso. Qué preguntar antes de contratar.",
+    "relatedService": [
+      "branding",
+      "graphic-design"
+    ]
+  },
+  {
+    "id": "agencia-o-freelance",
+    "lang": "es",
+    "category": "web",
+    "publishedAt": "2026-09-22",
+    "slug": "agencia-o-freelance",
+    "path": "/es/guias/agencia-o-freelance",
+    "title": "Agencia de diseño o profesional freelance: cómo elegir",
+    "seoTitle": "Agencia de diseño o freelance: qué comparar | PALSEC",
+    "description": "Cómo elegir entre agencia y freelance según alcance, coordinación y continuidad. Qué cubre un presupuesto de diseño y qué responsabilidades acordar.",
+    "relatedService": [
+      "branding",
+      "web-design"
+    ]
+  },
+  {
+    "id": "plazos-proyecto-web",
+    "lang": "es",
+    "category": "web",
+    "publishedAt": "2026-09-22",
+    "slug": "plazos-proyecto-web",
+    "path": "/es/guias/plazos-proyecto-web",
+    "title": "Cuánto tarda una web y de qué depende el calendario",
+    "seoTitle": "Cuánto tarda un proyecto web: fases y dependencias | PALSEC",
+    "description": "Cómo planificar los plazos de una web: contenidos, diseño, desarrollo, revisiones e integraciones. Dependencias que conviene resolver antes de empezar.",
+    "relatedService": [
+      "web-design",
+      "web-development"
+    ]
+  },
+  {
+    "id": "rediseno-web",
+    "lang": "es",
+    "category": "web",
+    "publishedAt": "2026-09-22",
+    "slug": "rediseno-web",
+    "path": "/es/guias/rediseno-web",
+    "title": "Cuándo merece la pena rediseñar una web y cómo preparar el cambio",
+    "seoTitle": "Cuándo rediseñar una web y cómo preparar la migración | PALSEC",
+    "description": "Señales para valorar un rediseño web, qué conservar y cómo preparar contenidos, URLs y redirecciones. Una guía para decidir el alcance del cambio.",
+    "relatedService": [
+      "web-design",
+      "web-development"
+    ]
+  },
+  {
+    "id": "web-a-medida-o-plantilla",
+    "lang": "es",
+    "category": "web",
+    "publishedAt": "2026-09-22",
+    "slug": "web-a-medida-o-plantilla",
+    "path": "/es/guias/web-a-medida-o-plantilla",
+    "title": "Web a medida o plantilla: qué encaja con tu proyecto",
+    "seoTitle": "Web a medida o plantilla: ventajas y decisiones | PALSEC",
+    "description": "Cómo elegir entre una web a medida y una plantilla según contenido, marca, funciones y mantenimiento. Decisiones para facilitar consultas y contactos.",
+    "relatedService": [
+      "web-design",
+      "web-development"
+    ]
+  },
+  {
+    "id": "presupuesto-web",
+    "lang": "ca",
+    "category": "web",
+    "publishedAt": "2026-09-22",
+    "slug": "pressupost-web",
+    "path": "/ca/guies/pressupost-web",
+    "title": "Què ha d’incloure un pressupost web i com comparar propostes",
+    "seoTitle": "Què ha d’incloure un pressupost web a Girona | PALSEC",
+    "description": "Què ha d’incloure un pressupost web: abast, disseny, continguts, desenvolupament i manteniment. Preguntes per comparar propostes abans de contractar.",
+    "relatedService": [
+      "web-design",
+      "web-development"
+    ]
+  },
+  {
+    "id": "presupuesto-branding",
+    "lang": "ca",
+    "category": "branding",
+    "publishedAt": "2026-09-22",
+    "slug": "pressupost-branding",
+    "path": "/ca/guies/pressupost-branding",
+    "title": "Què ha d’incloure un pressupost de branding i com definir-ne l’abast",
+    "seoTitle": "Pressupost de branding: abast i lliurables | PALSEC",
+    "description": "Què ha d’incloure una proposta de branding: estratègia, identitat visual, aplicacions, fitxers i criteris d’ús. Preguntes abans de contractar.",
+    "relatedService": [
+      "branding",
+      "graphic-design"
+    ]
+  },
+  {
+    "id": "agencia-o-freelance",
+    "lang": "ca",
+    "category": "web",
+    "publishedAt": "2026-09-22",
+    "slug": "agencia-o-freelance",
+    "path": "/ca/guies/agencia-o-freelance",
+    "title": "Agència de disseny o professional freelance: com triar",
+    "seoTitle": "Agència de disseny o freelance: què comparar | PALSEC",
+    "description": "Com triar entre agència i freelance segons l’abast, la coordinació i la continuïtat. Què ha d’incloure la proposta i quines responsabilitats cal acordar.",
+    "relatedService": [
+      "branding",
+      "web-design"
+    ]
+  },
+  {
+    "id": "plazos-proyecto-web",
+    "lang": "ca",
+    "category": "web",
+    "publishedAt": "2026-09-22",
+    "slug": "terminis-projecte-web",
+    "path": "/ca/guies/terminis-projecte-web",
+    "title": "Quant es triga a fer una web i de què depèn el calendari",
+    "seoTitle": "Terminis d’un projecte web: fases i dependències | PALSEC",
+    "description": "Com planificar els terminis d’una web: continguts, disseny, desenvolupament, revisions i integracions. Dependències que convé resoldre abans de començar.",
+    "relatedService": [
+      "web-design",
+      "web-development"
+    ]
+  },
+  {
+    "id": "rediseno-web",
+    "lang": "ca",
+    "category": "web",
+    "publishedAt": "2026-09-22",
+    "slug": "redisseny-web",
+    "path": "/ca/guies/redisseny-web",
+    "title": "Quan val la pena redissenyar una web i com preparar el canvi",
+    "seoTitle": "Quan redissenyar una web i com preparar la migració | PALSEC",
+    "description": "Senyals per valorar un redisseny web, què conservar i com preparar continguts, URLs i redireccions. Una guia per decidir l’abast del canvi.",
+    "relatedService": [
+      "web-design",
+      "web-development"
+    ]
+  },
+  {
+    "id": "web-a-medida-o-plantilla",
+    "lang": "ca",
+    "category": "web",
+    "publishedAt": "2026-09-22",
+    "slug": "web-a-mida-o-plantilla",
+    "path": "/ca/guies/web-a-mida-o-plantilla",
+    "title": "Web a mida o plantilla: què encaixa amb el teu projecte",
+    "seoTitle": "Web a mida o plantilla: avantatges i decisions | PALSEC",
+    "description": "Com triar entre una web a mida i una plantilla segons el contingut, la marca, les funcions i el manteniment. Decisions per facilitar consultes i contactes.",
+    "relatedService": [
+      "web-design",
+      "web-development"
+    ]
+  },
+  {
+    "id": "when-to-rebrand",
+    "lang": "ca",
+    "category": "branding",
+    "publishedAt": "2026-09-22",
+    "slug": "quan-fer-rebranding",
+    "path": "/ca/guies/quan-fer-rebranding",
+    "title": "Quan convé fer un rebranding i què hauries de conservar",
+    "seoTitle": "Quan fer un rebranding: senyals i decisions | PALSEC",
+    "description": "Com decidir si la marca necessita un rebranding, un ajust visual o millors aplicacions. Senyals, materials i decisions per preparar el projecte.",
+    "relatedService": [
+      "branding"
+    ]
+  },
+  {
+    "id": "when-to-rebrand",
+    "lang": "es",
+    "category": "branding",
+    "publishedAt": "2026-09-22",
+    "slug": "cuando-hacer-rebranding",
+    "path": "/es/guias/cuando-hacer-rebranding",
+    "title": "Cuándo conviene hacer un rebranding y qué deberías conservar",
+    "seoTitle": "Cuándo hacer un rebranding: señales y decisiones | PALSEC",
+    "description": "Cómo decidir si tu marca necesita un rebranding, un ajuste visual o mejores aplicaciones. Señales, materiales y decisiones para preparar el proyecto.",
+    "relatedService": [
+      "branding"
+    ]
+  },
+  {
+    "id": "branding-identity-logo",
+    "lang": "ca",
+    "category": "branding",
+    "publishedAt": "2026-09-22",
+    "slug": "branding-identitat-visual-logotip",
+    "path": "/ca/guies/branding-identitat-visual-logotip",
+    "title": "Branding, identitat visual i logotip: quin treball necessites?",
+    "seoTitle": "Branding, identitat visual i logotip: diferències | PALSEC",
+    "description": "Distingeix branding, identitat visual i logotip amb exemples d’abast i entregables. Prepara un encàrrec de marca adequat al moment del teu negoci.",
+    "relatedService": [
+      "branding"
+    ]
+  },
+  {
+    "id": "branding-identity-logo",
+    "lang": "es",
+    "category": "branding",
+    "publishedAt": "2026-09-22",
+    "slug": "branding-identidad-visual-logotipo",
+    "path": "/es/guias/branding-identidad-visual-logotipo",
+    "title": "Branding, identidad visual y logotipo: ¿qué trabajo necesitas?",
+    "seoTitle": "Branding, identidad visual y logotipo: diferencias | PALSEC",
+    "description": "Distingue branding, identidad visual y logotipo con ejemplos de alcance y entregables. Prepara un encargo de marca adecuado al momento de tu negocio.",
+    "relatedService": [
+      "branding"
+    ]
+  },
+  {
+    "id": "mobile-app-or-webapp",
+    "lang": "ca",
+    "category": "apps",
+    "publishedAt": "2026-09-22",
+    "slug": "app-mobil-o-webapp",
+    "path": "/ca/guies/app-mobil-o-webapp",
+    "title": "App mòbil o webapp: com decidir el format del teu producte",
+    "seoTitle": "App mòbil o webapp: criteris per decidir | PALSEC",
+    "description": "Compara una app mòbil i una webapp segons l’ús, els dispositius, la connexió i el manteniment. Defineix els requisits abans d’escollir el format.",
+    "relatedService": [
+      "web-development"
+    ]
+  },
+  {
+    "id": "mobile-app-or-webapp",
+    "lang": "es",
+    "category": "apps",
+    "publishedAt": "2026-09-22",
+    "slug": "app-movil-o-webapp",
+    "path": "/es/guias/app-movil-o-webapp",
+    "title": "App móvil o webapp: cómo decidir el formato de tu producto",
+    "seoTitle": "App móvil o webapp: criterios para decidir | PALSEC",
+    "description": "Compara una app móvil y una webapp según el uso, los dispositivos, la conexión y el mantenimiento. Define los requisitos antes de elegir el formato.",
+    "relatedService": [
+      "web-development"
+    ]
+  },
+  {
+    "id": "define-app-mvp",
+    "lang": "ca",
+    "category": "apps",
+    "publishedAt": "2026-09-22",
+    "slug": "definir-mvp-app-abans-pressupost",
+    "path": "/ca/guies/definir-mvp-app-abans-pressupost",
+    "title": "Com definir el MVP d’una app abans de demanar pressupost",
+    "seoTitle": "Definir el MVP d’una app abans del pressupost | PALSEC",
+    "description": "Acota la primera versió de la teva app amb una tasca principal, recorreguts complets i criteris de validació. Prepara un MVP que es pugui pressupostar.",
+    "relatedService": [
+      "web-development"
+    ]
+  },
+  {
+    "id": "define-app-mvp",
+    "lang": "es",
+    "category": "apps",
+    "publishedAt": "2026-09-22",
+    "slug": "definir-mvp-app-antes-presupuesto",
+    "path": "/es/guias/definir-mvp-app-antes-presupuesto",
+    "title": "Cómo definir el MVP de una app antes de pedir presupuesto",
+    "seoTitle": "Definir el MVP de una app antes del presupuesto | PALSEC",
+    "description": "Acota la primera versión de tu app con una tarea principal, recorridos completos y criterios de validación. Prepara un MVP que se pueda presupuestar.",
+    "relatedService": [
+      "web-development"
+    ]
+  },
+  {
+    "id": "app-proposal-scope",
+    "lang": "ca",
+    "category": "apps",
+    "publishedAt": "2026-09-22",
+    "slug": "que-incloure-pressupost-app",
+    "path": "/ca/guies/que-incloure-pressupost-app",
+    "title": "Què ha d’incloure un pressupost de desenvolupament d’una app",
+    "seoTitle": "Què ha d’incloure un pressupost d’app | PALSEC",
+    "description": "Revisa l’abast d’un pressupost d’app: recorreguts, disseny, gestió, integracions, proves, publicació i manteniment. Preguntes per comparar propostes.",
+    "relatedService": [
+      "web-development"
+    ]
+  },
+  {
+    "id": "app-proposal-scope",
+    "lang": "es",
+    "category": "apps",
+    "publishedAt": "2026-09-22",
+    "slug": "que-incluir-presupuesto-app",
+    "path": "/es/guias/que-incluir-presupuesto-app",
+    "title": "Qué debe incluir un presupuesto de desarrollo de una app",
+    "seoTitle": "Qué debe incluir un presupuesto de app | PALSEC",
+    "description": "Revisa el alcance de un presupuesto de app: recorridos, diseño, gestión, integraciones, pruebas, publicación y mantenimiento. Cómo comparar propuestas.",
+    "relatedService": [
+      "web-development"
+    ]
+  },
+  {
+    "id": "choose-app-development-partner",
+    "lang": "ca",
+    "category": "apps",
+    "publishedAt": "2026-09-22",
+    "slug": "triar-empresa-desenvolupament-apps",
+    "path": "/ca/guies/triar-empresa-desenvolupament-apps",
+    "title": "Com triar una empresa de desenvolupament d’apps",
+    "seoTitle": "Com triar empresa de desenvolupament d’apps | PALSEC",
+    "description": "Què revisar en una empresa de desenvolupament d’apps: casos, rol real, equip, validació, entrega i suport. Preguntes per comparar proveïdors amb criteri.",
+    "relatedService": [
+      "web-development"
+    ]
+  },
+  {
+    "id": "choose-app-development-partner",
+    "lang": "es",
+    "category": "apps",
+    "publishedAt": "2026-09-22",
+    "slug": "elegir-empresa-desarrollo-apps",
+    "path": "/es/guias/elegir-empresa-desarrollo-apps",
+    "title": "Cómo elegir una empresa de desarrollo de apps",
+    "seoTitle": "Cómo elegir empresa de desarrollo de apps | PALSEC",
+    "description": "Qué revisar en una empresa de desarrollo de apps: casos, rol real, equipo, validación, entrega y soporte. Preguntas para comparar proveedores con criterio.",
+    "relatedService": [
+      "web-development"
+    ]
+  }
+]

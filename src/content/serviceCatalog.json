@@ -1,0 +1,405 @@
+{
+  "commercial": [
+    {
+      "id": "web-design",
+      "lang": "ca",
+      "path": "/ca/disseny-web-girona",
+      "label": "Disseny web a Girona",
+      "title": "Disseny web a Girona per a marques que volen destacar",
+      "seoTitle": "Disseny web a Girona | Pàgines web a mida — PALSEC",
+      "description": "Dissenyem pàgines web a Girona amb estratègia, UX/UI i desenvolupament. Webs a mida que expliquen la teva marca i faciliten el contacte amb nous clients.",
+      "serviceType": "Disseny web",
+      "faqs": [
+        {
+          "question": "Quant costa dissenyar una pàgina web?",
+          "answer": "Depèn de les pàgines, els idiomes, la complexitat visual i les funcionalitats. Després de conèixer el projecte podem definir un abast i un pressupost. Convé comparar què inclou cada proposta: disseny, desenvolupament, contingut, llançament i suport."
+        },
+        {
+          "question": "Us podem encarregar el disseny i el desenvolupament?",
+          "answer": "Sí. Podem treballar el procés complet o col·laborar amb un equip de desenvolupament existent. A l'inici aclarim qui implementa, qui aporta el contingut i com es revisa el resultat perquè les responsabilitats siguin clares."
+        },
+        {
+          "question": "Quant de temps necessita una web?",
+          "answer": "El calendari depèn de l'abast i de la disponibilitat de continguts i validacions. El plantegem per fases amb lliuraments concrets. Una pàgina de llançament i una web multilingüe amb integracions requereixen planificacions diferents."
+        },
+        {
+          "question": "La podré actualitzar després?",
+          "answer": "Si necessites editar contingut, definim quines parts ha de gestionar el teu equip i triem una solució adequada. La formació, els permisos i el manteniment es concreten a la proposta perquè la web continuï sent útil després de publicar-la."
+        }
+      ]
+    },
+    {
+      "id": "web-development",
+      "lang": "ca",
+      "path": "/ca/desenvolupament-web-girona",
+      "label": "Desenvolupament web a Girona",
+      "title": "Desenvolupament web a Girona, del disseny a una web real",
+      "seoTitle": "Desenvolupament web a Girona | Webs a mida — PALSEC",
+      "description": "Desenvolupament web a mida a Girona. Implementació fidel al disseny, adaptació mòbil, rendiment, gestió de continguts i preparació per al llançament.",
+      "serviceType": "Desenvolupament web",
+      "faqs": [
+        {
+          "question": "Podeu desenvolupar un disseny existent?",
+          "answer": "Sí. Primer revisem l'arxiu de disseny, les seves versions mòbils i els comportaments previstos. Si falten estats o decisions funcionals, els identifiquem abans de tancar l'abast."
+        },
+        {
+          "question": "Quina tecnologia utilitzeu?",
+          "answer": "La tria depèn del contingut, les funcionalitats i la capacitat de manteniment de l'equip. Expliquem les opcions i les seves implicacions abans de decidir; l'eina ha de respondre al projecte."
+        },
+        {
+          "question": "Inclou manteniment?",
+          "answer": "El llançament i el manteniment són fases que es concreten a la proposta. Acordem quines actualitzacions, suport i evolucions necessitarà la web i qui es responsabilitza de cada part."
+        },
+        {
+          "question": "Garantiu una puntuació de velocitat?",
+          "answer": "Definim objectius i mesurem per orientar les millores. El resultat varia segons continguts, integracions, dispositiu i connexió. Les proves permeten acordar prioritats sense convertir una puntuació aïllada en l'única mesura de qualitat."
+        }
+      ]
+    },
+    {
+      "id": "branding",
+      "lang": "ca",
+      "path": "/ca/branding-girona",
+      "label": "Branding a Girona",
+      "title": "Branding a Girona per a marques que volen significar alguna cosa",
+      "seoTitle": "Branding a Girona | Estratègia i identitat de marca — PALSEC",
+      "description": "Estratègia, identitat visual i direcció d'art a Girona. Creem marques amb personalitat i sistemes que funcionen en aplicacions físiques i digitals.",
+      "serviceType": "Branding i identitat visual",
+      "faqs": [
+        {
+          "question": "Quina diferència hi ha entre branding i un logotip?",
+          "answer": "El logotip és un dels signes de la marca. Un projecte de branding també pot definir posicionament, personalitat, llenguatge i un sistema visual que permeti aplicar la identitat amb coherència."
+        },
+        {
+          "question": "Podeu actualitzar una marca existent?",
+          "answer": "Sí. Primer revisem què funciona, què genera confusió i què ha canviat al negoci. Amb aquesta informació acordem si convé ajustar el sistema o desenvolupar una nova direcció."
+        },
+        {
+          "question": "Què necessito per començar?",
+          "answer": "Una explicació del projecte, els seus públics, els seus objectius i els materials disponibles. Si encara hi ha decisions obertes, la fase inicial ajuda a ordenar-les abans d'avançar amb la part visual."
+        },
+        {
+          "question": "La identitat es pot aplicar després a una web?",
+          "answer": "Sí. Dissenyem el sistema tenint en compte els usos digitals. El disseny i desenvolupament de la web poden formar part d'una fase posterior o d'un projecte conjunt, amb abast i lliurables definits."
+        }
+      ]
+    },
+    {
+      "id": "graphic-design",
+      "lang": "ca",
+      "path": "/ca/disseny-grafic-girona",
+      "label": "Disseny gràfic a Girona",
+      "title": "Disseny gràfic a Girona amb una idea al darrere",
+      "seoTitle": "Disseny gràfic a Girona | Identitat i comunicació — PALSEC",
+      "description": "Disseny gràfic a Girona per comunicar amb claredat. Sistemes visuals, peces editorials, presentacions i aplicacions coherents amb la teva marca.",
+      "serviceType": "Disseny gràfic",
+      "faqs": [
+        {
+          "question": "Treballeu amb la nostra identitat actual?",
+          "answer": "Sí. Revisem la guia i els arxius disponibles per aplicar la marca de manera coherent. Si detectem elements que falten, proposem com resoldre'ls dins de l'abast."
+        },
+        {
+          "question": "Puc encarregar només una presentació o un cartell?",
+          "answer": "Sí, podem valorar una necessitat concreta. És important conèixer el contingut, el format, l'ús i la data prevista per definir una proposta ajustada a la peça."
+        },
+        {
+          "question": "Lliureu arxius editables?",
+          "answer": "El lliurament s'acorda a l'inici. Si el teu equip ha d'actualitzar els materials, definim l'eina, les plantilles i els arxius necessaris, juntament amb les condicions de les tipografies i les imatges utilitzades."
+        },
+        {
+          "question": "Us encarregueu també d'imprimir?",
+          "answer": "La preparació d'originals i la producció es concreten a la proposta. Podem coordinar els requisits gràfics amb el proveïdor; quantitats, materials, acabats i costos d'impressió s'han d'acordar expressament."
+        }
+      ]
+    },
+    {
+      "id": "web-design",
+      "lang": "es",
+      "path": "/es/diseno-web-girona",
+      "label": "Diseño web en Girona",
+      "title": "Diseño web en Girona para marcas que quieren destacar",
+      "seoTitle": "Diseño web en Girona | Páginas web a medida — PALSEC",
+      "description": "Diseñamos páginas web en Girona con estrategia, UX/UI y desarrollo. Webs a medida que explican tu marca y facilitan el contacto con tus próximos clientes.",
+      "serviceType": "Diseño web",
+      "faqs": [
+        {
+          "question": "¿Cuánto cuesta diseñar una página web?",
+          "answer": "Depende de las páginas, los idiomas, la complejidad visual y las funcionalidades. Después de conocer el proyecto podemos definir un alcance y un presupuesto. Conviene comparar qué incluye cada propuesta: diseño, desarrollo, contenido, lanzamiento y soporte."
+        },
+        {
+          "question": "¿Podéis encargaros del diseño y del desarrollo?",
+          "answer": "Sí. Podemos trabajar el proceso completo o colaborar con un equipo de desarrollo existente. Al inicio aclaramos quién implementa, quién aporta el contenido y cómo se revisa el resultado para que las responsabilidades sean claras."
+        },
+        {
+          "question": "¿Cuánto tiempo necesita una web?",
+          "answer": "El calendario depende del alcance y de la disponibilidad de contenidos y validaciones. Lo planteamos por fases con entregas concretas. Una página de lanzamiento y una web multilingüe con integraciones requieren planificaciones distintas."
+        },
+        {
+          "question": "¿Podré actualizarla después?",
+          "answer": "Si necesitas editar contenido, definimos qué partes debe gestionar tu equipo y elegimos una solución adecuada. La formación, los permisos y el mantenimiento se concretan en la propuesta para que la web siga siendo útil después de publicarla."
+        }
+      ]
+    },
+    {
+      "id": "web-development",
+      "lang": "es",
+      "path": "/es/desarrollo-web-girona",
+      "label": "Desarrollo web en Girona",
+      "title": "Desarrollo web en Girona, del diseño a una web real",
+      "seoTitle": "Desarrollo web en Girona | Webs a medida — PALSEC",
+      "description": "Desarrollo web a medida en Girona. Implementación fiel al diseño, adaptación móvil, rendimiento, gestión de contenidos y preparación para el lanzamiento.",
+      "serviceType": "Desarrollo web",
+      "faqs": [
+        {
+          "question": "¿Podéis desarrollar un diseño existente?",
+          "answer": "Sí. Primero revisamos el archivo de diseño, sus versiones móviles y los comportamientos previstos. Si faltan estados o decisiones funcionales, los identificamos antes de cerrar el alcance."
+        },
+        {
+          "question": "¿Qué tecnología utilizáis?",
+          "answer": "La elección depende del contenido, las funcionalidades y la capacidad de mantenimiento del equipo. Explicamos las opciones y sus implicaciones antes de decidir; la herramienta debe responder al proyecto."
+        },
+        {
+          "question": "¿Incluye mantenimiento?",
+          "answer": "El lanzamiento y el mantenimiento son fases que se concretan en la propuesta. Acordamos qué actualizaciones, soporte y evoluciones necesitará la web y quién se responsabiliza de cada parte."
+        },
+        {
+          "question": "¿Garantizáis una puntuación de velocidad?",
+          "answer": "Definimos objetivos y medimos para orientar las mejoras. El resultado varía según contenidos, integraciones, dispositivo y conexión. Las pruebas permiten acordar prioridades sin convertir una puntuación aislada en la única medida de calidad."
+        }
+      ]
+    },
+    {
+      "id": "branding",
+      "lang": "es",
+      "path": "/es/branding-girona",
+      "label": "Branding en Girona",
+      "title": "Branding en Girona para marcas que quieren significar algo",
+      "seoTitle": "Branding en Girona | Estrategia e identidad de marca — PALSEC",
+      "description": "Estrategia, identidad visual y dirección de arte en Girona. Creamos marcas con personalidad y sistemas que funcionan en aplicaciones físicas y digitales.",
+      "serviceType": "Branding e identidad visual",
+      "faqs": [
+        {
+          "question": "¿Qué diferencia hay entre branding y un logotipo?",
+          "answer": "El logotipo es uno de los signos de la marca. Un proyecto de branding también puede definir posicionamiento, personalidad, lenguaje y un sistema visual que permita aplicar la identidad con coherencia."
+        },
+        {
+          "question": "¿Podéis actualizar una marca existente?",
+          "answer": "Sí. Primero revisamos qué funciona, qué genera confusión y qué ha cambiado en el negocio. Con esa información acordamos si conviene ajustar el sistema o desarrollar una nueva dirección."
+        },
+        {
+          "question": "¿Qué necesito para empezar?",
+          "answer": "Una explicación del proyecto, sus públicos, sus objetivos y los materiales disponibles. Si todavía hay decisiones abiertas, la fase inicial ayuda a ordenarlas antes de avanzar con la parte visual."
+        },
+        {
+          "question": "¿La identidad puede aplicarse después a una web?",
+          "answer": "Sí. Diseñamos el sistema teniendo en cuenta sus usos digitales. El diseño y desarrollo de la web pueden formar parte de una fase posterior o de un proyecto conjunto, con alcance y entregables definidos."
+        }
+      ]
+    },
+    {
+      "id": "graphic-design",
+      "lang": "es",
+      "path": "/es/diseno-grafico-girona",
+      "label": "Diseño gráfico en Girona",
+      "title": "Diseño gráfico en Girona con una idea detrás",
+      "seoTitle": "Diseño gráfico en Girona | Identidad y comunicación — PALSEC",
+      "description": "Diseño gráfico en Girona para comunicar con claridad. Sistemas visuales, piezas editoriales, presentaciones y aplicaciones coherentes con tu marca.",
+      "serviceType": "Diseño gráfico",
+      "faqs": [
+        {
+          "question": "¿Trabajáis con nuestra identidad actual?",
+          "answer": "Sí. Revisamos la guía y los archivos disponibles para aplicar la marca de forma coherente. Si detectamos elementos que faltan, proponemos cómo resolverlos dentro del alcance."
+        },
+        {
+          "question": "¿Puedo encargar solo una presentación o un cartel?",
+          "answer": "Sí, podemos valorar una necesidad concreta. Es importante conocer el contenido, el formato, el uso y la fecha prevista para definir una propuesta ajustada a la pieza."
+        },
+        {
+          "question": "¿Entregáis archivos editables?",
+          "answer": "La entrega se acuerda al inicio. Si tu equipo debe actualizar los materiales, definimos la herramienta, las plantillas y los archivos necesarios, junto con las condiciones de las tipografías e imágenes utilizadas."
+        },
+        {
+          "question": "¿Os encargáis también de imprimir?",
+          "answer": "La preparación de originales y la producción se concretan en la propuesta. Podemos coordinar los requisitos gráficos con el proveedor; cantidades, materiales, acabados y costes de impresión se deben acordar expresamente."
+        }
+      ]
+    },
+    {
+      "id": "web-design",
+      "lang": "en",
+      "path": "/en/web-design-girona",
+      "label": "Web design in Girona",
+      "title": "Web design in Girona for brands that want to stand out",
+      "seoTitle": "Web Design in Girona | Bespoke Websites — PALSEC",
+      "description": "Web design in Girona combining strategy, UX/UI and development. Bespoke websites that explain your brand and help future customers get in touch.",
+      "serviceType": "Web design",
+      "faqs": [
+        {
+          "question": "How much does a website cost?",
+          "answer": "Cost depends on the pages, languages, visual complexity and functionality. Once we understand the project, we can define a scope and budget. Compare what each proposal includes: design, development, content, launch and support."
+        },
+        {
+          "question": "Can you handle design and development?",
+          "answer": "Yes. We can work on the complete process or collaborate with an existing development team. At the outset, we clarify who implements, who provides content and how the result will be reviewed, so responsibilities are clear."
+        },
+        {
+          "question": "How long does a website take?",
+          "answer": "The schedule depends on scope and the availability of content and approvals. We plan phases with specific deliverables. A launch page and a multilingual website with integrations need different schedules."
+        },
+        {
+          "question": "Will I be able to update it?",
+          "answer": "If you need to edit content, we define which areas your team should manage and choose a suitable solution. Training, permissions and maintenance are specified in the proposal so the website remains useful after publication."
+        }
+      ]
+    },
+    {
+      "id": "web-development",
+      "lang": "en",
+      "path": "/en/web-development-girona",
+      "label": "Web development in Girona",
+      "title": "Web development in Girona, from design to a working website",
+      "seoTitle": "Web Development in Girona | Bespoke Websites — PALSEC",
+      "description": "Bespoke web development in Girona. Faithful implementation, mobile layouts, performance, content management and preparation for launch.",
+      "serviceType": "Web development",
+      "faqs": [
+        {
+          "question": "Can you develop an existing design?",
+          "answer": "Yes. We first review the design file, mobile versions and intended behaviour. If states or functional decisions are missing, we identify them before confirming the scope."
+        },
+        {
+          "question": "Which technology do you use?",
+          "answer": "The choice depends on content, functionality and the team's ability to maintain the website. We explain the options and their implications before deciding; the tool should serve the project."
+        },
+        {
+          "question": "Is maintenance included?",
+          "answer": "Launch and maintenance are phases specified in the proposal. We agree what updates, support and future changes the website will need and who is responsible for each part."
+        },
+        {
+          "question": "Do you guarantee a speed score?",
+          "answer": "We define objectives and measure performance to guide improvements. Results vary with content, integrations, device and connection. Testing helps agree priorities without treating one score as the only measure of quality."
+        }
+      ]
+    },
+    {
+      "id": "branding",
+      "lang": "en",
+      "path": "/en/branding-girona",
+      "label": "Branding in Girona",
+      "title": "Branding in Girona for brands that want to mean something",
+      "seoTitle": "Branding in Girona | Strategy & Visual Identity — PALSEC",
+      "description": "Brand strategy, visual identity and art direction in Girona. We create brands with personality and systems for physical and digital applications.",
+      "serviceType": "Branding and visual identity",
+      "faqs": [
+        {
+          "question": "How does branding differ from a logo?",
+          "answer": "The logo is one of the brand's identifying signs. A branding project may also define positioning, personality, language and a visual system that supports consistent applications."
+        },
+        {
+          "question": "Can you update an existing brand?",
+          "answer": "Yes. We first review what works, what creates confusion and what has changed in the business. That information helps us agree whether to adjust the system or develop a new direction."
+        },
+        {
+          "question": "What do I need to get started?",
+          "answer": "An explanation of the project, its audiences, objectives and available materials. If decisions are still open, the initial phase helps organise them before progressing to visual work."
+        },
+        {
+          "question": "Can the identity be applied to a website later?",
+          "answer": "Yes. We design the system with digital uses in mind. Website design and development can be a later phase or part of a combined project, with a defined scope and deliverables."
+        }
+      ]
+    },
+    {
+      "id": "graphic-design",
+      "lang": "en",
+      "path": "/en/graphic-design-girona",
+      "label": "Graphic design in Girona",
+      "title": "Graphic design in Girona with an idea behind it",
+      "seoTitle": "Graphic Design in Girona | Identity & Communication — PALSEC",
+      "description": "Graphic design in Girona for clear communication. Visual systems, editorial pieces, presentations and applications consistent with your brand.",
+      "serviceType": "Graphic design",
+      "faqs": [
+        {
+          "question": "Can you work with our current identity?",
+          "answer": "Yes. We review the guidelines and available files to apply the brand consistently. If elements are missing, we propose how to address them within the scope."
+        },
+        {
+          "question": "Can I commission just a presentation or a poster?",
+          "answer": "Yes, we can assess a specific need. Understanding the content, format, use and target date helps us define a proposal suited to the piece."
+        },
+        {
+          "question": "Do you provide editable files?",
+          "answer": "Delivery is agreed at the outset. If your team needs to update materials, we define the tool, templates and files required, along with the terms for any fonts and images used."
+        },
+        {
+          "question": "Do you also arrange printing?",
+          "answer": "Artwork preparation and production are specified in the proposal. We can coordinate graphic requirements with the supplier; quantities, materials, finishes and printing costs must be expressly agreed."
+        }
+      ]
+    }
+  ],
+  "services": [
+    {
+      "lang": "ca",
+      "slug": "brand-strategy",
+      "title": "ESTRATÈGIA DE MARCA",
+      "seoTitle": "Estratègia de marca a Girona i Costa Brava | PALSEC",
+      "description": "Estratègia de marca, posicionament, nomenclatura i to de veu per convertir una idea o una marca en evolució en un sistema clar i executable."
+    },
+    {
+      "lang": "ca",
+      "slug": "branding-visual-identity",
+      "title": "BRANDING I IDENTITAT VISUAL",
+      "seoTitle": "Identitat visual: procés, sistema i aplicacions | PALSEC",
+      "description": "Coneix el procés d'identitat visual de PALSEC: direcció creativa, logotip, tipografia, color, proves d'aplicació i criteris per mantenir la marca coherent."
+    },
+    {
+      "lang": "ca",
+      "slug": "web-design-digital-products",
+      "title": "DISSENY WEB I PRODUCTE DIGITAL",
+      "seoTitle": "Disseny UX/UI i producte digital: procés | PALSEC",
+      "description": "Com dissenyem productes digitals a PALSEC: arquitectura d'informació, fluxos UX, prototips, interfícies accessibles i sistemes de components per implementar."
+    },
+    {
+      "lang": "es",
+      "slug": "brand-strategy",
+      "title": "ESTRATEGIA DE MARCA",
+      "seoTitle": "Estrategia de marca en Girona y Costa Brava | PALSEC",
+      "description": "Estrategia de marca, posicionamiento, naming y tono de voz para convertir una idea o marca en evolución en un sistema claro y ejecutable."
+    },
+    {
+      "lang": "es",
+      "slug": "branding-visual-identity",
+      "title": "BRANDING E IDENTIDAD VISUAL",
+      "seoTitle": "Identidad visual: proceso, sistema y aplicaciones | PALSEC",
+      "description": "Conoce el proceso de identidad visual de PALSEC: dirección creativa, logotipo, tipografía, color, pruebas de aplicación y criterios de coherencia de marca."
+    },
+    {
+      "lang": "es",
+      "slug": "web-design-digital-products",
+      "title": "DISEÑO WEB Y PRODUCTO DIGITAL",
+      "seoTitle": "Diseño UX/UI y producto digital: proceso | PALSEC",
+      "description": "Cómo diseñamos productos digitales en PALSEC: arquitectura de información, flujos UX, prototipos, interfaces accesibles y sistemas de componentes para implementar."
+    },
+    {
+      "lang": "en",
+      "slug": "brand-strategy",
+      "title": "BRAND STRATEGY",
+      "seoTitle": "Brand Strategy in Girona & Costa Brava | PALSEC",
+      "description": "Brand strategy, positioning, naming, and tone of voice to turn a new idea or evolving brand into a clear, executable system."
+    },
+    {
+      "lang": "en",
+      "slug": "branding-visual-identity",
+      "title": "BRANDING & VISUAL IDENTITY",
+      "seoTitle": "Visual Identity: Process, Systems & Applications | PALSEC",
+      "description": "Explore PALSEC's visual identity process: creative direction, logo, typography, colour, application testing, and guidance for a consistent brand system."
+    },
+    {
+      "lang": "en",
+      "slug": "web-design-digital-products",
+      "title": "WEB DESIGN & DIGITAL PRODUCTS",
+      "seoTitle": "UX/UI & Digital Product Design Process | PALSEC",
+      "description": "How PALSEC designs digital products: information architecture, user journeys, prototypes, accessible interfaces, and component systems for implementation."
+    }
+  ]
+}

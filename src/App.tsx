@@ -14,7 +14,10 @@ const Services = lazy(() => import("./pages/Services").then(module => ({ default
 const ServiceDetail = lazy(() => import("./pages/ServiceDetail").then(module => ({ default: module.ServiceDetail })))
 const LegalPage = lazy(() => import("./pages/LegalPage").then(module => ({ default: module.LegalPage })))
 const ProjectDetail = lazy(() => import("./pages/ProjectDetail").then(module => ({ default: module.ProjectDetail })))
-const AiLab = lazy(() => import("./pages/AiLab").then(module => ({ default: module.AiLab })))
+const AiLab = lazy(async () => {
+  if (typeof window !== "undefined") await import("./components/aibrain-demo.css")
+  return { default: (await import("./pages/AiLab")).AiLab }
+})
 
 function RootRedirect() {
   return <Navigate to="/ca" replace />
