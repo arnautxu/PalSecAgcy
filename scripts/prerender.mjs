@@ -21,8 +21,9 @@ function criticalResources(route, body) {
   const source = picture?.[0].match(/<source[^>]*>/)?.[0]
   const srcset = source?.match(/srcSet="([^"]+)"/)?.[1]
   const sizes = source?.match(/sizes="([^"]+)"/)?.[1]
+  const type = source?.match(/type="([^"]+)"/)?.[1] ?? 'image/webp'
   const href = srcset?.split(", ").at(-1)?.split(" ")[0]
-  if (href) resources.push(`<link rel="preload" as="image" type="image/webp" href="${href}" imagesrcset="${srcset}" imagesizes="${sizes ?? '100vw'}" fetchpriority="high"/>`)
+  if (href) resources.push(`<link rel="preload" as="image" type="${type}" href="${href}" imagesrcset="${srcset}" imagesizes="${sizes ?? '100vw'}" fetchpriority="high"/>`)
   function visit(key) {
     if (seen.has(key)) return
     seen.add(key)
@@ -43,7 +44,9 @@ for (const route of routes) {
   const html = template
     .replace(/<html([^>]*)lang="[^"]*"/, `<html$1lang="${route.lang}"`)
     .replace(/<title>[^<]*<\/title>\s*/, '')
-    .replace('</head>', `${criticalResources(route, body)}\n${head}\n</head>`)
+    // Responsive image preloads must see the mobile viewport before selecting a candidate.
+    .replace(/(<meta name="viewport"[^>]*>)/, `$1\n${criticalResources(route, body)}`)
+    .replace('</head>', `${head}\n</head>`)
     .replace('<div id="root"></div>', `<div id="root">${body}</div>`)
   const output = path.join(DIST, route.distPath)
   fs.mkdirSync(path.dirname(output), { recursive: true })

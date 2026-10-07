@@ -6,6 +6,8 @@ import { SiteFooter } from "@/components/SiteFooter"
 import { useInquiry } from "@/components/Inquiry"
 import { getCommercialPageByPath, getCommercialPages } from "@/content/commercialPages"
 import { getGuideSummaries } from "@/content/guideCatalog"
+import { getServiceSummaries } from "@/content/serviceCatalog"
+import { SERVICE_DISCIPLINES, SERVICE_ORIENTATION } from "@/content/serviceOrientation"
 import { useLang } from "@/i18n/useLang"
 
 const LABELS = {
@@ -25,12 +27,16 @@ export function CommercialLanding() {
   const labels = LABELS[lang]
   const guides = lang === "en" ? [] : getGuideSummaries(lang).filter(guide => guide.relatedService.includes(page.id)).slice(0, 3)
   const relatedServices = getCommercialPages(lang).filter((service) => service.id !== page.id)
+  const orientation = SERVICE_ORIENTATION[lang][page.id]
+  const counterpart = relatedServices.find(service => service.id === (page.id === "web-design" ? "web-development" : page.id === "web-development" ? "web-design" : ""))
+  const disciplines = getServiceSummaries(lang).filter(service => SERVICE_DISCIPLINES[page.id].includes(service.slug))
 
   return (
     <PageFrame className="relative">
       <Seo title={page.seoTitle} bare description={page.description} path={page.path} lang={lang} />
       <article key={page.path} className="editorial-scroll"><div className="editorial-wrap">
         <header><Link to={`/${lang}/services`} className="editorial-eyebrow">PALSEC / {labels.services}</Link><h1 className="editorial-title">{page.title}</h1><p className="editorial-lead">{page.intro}</p><div className="mt-8 flex flex-wrap items-center gap-6"><button type="button" onClick={() => openInquiry("quote", page.id === "branding" ? "branding" : page.id === "graphic-design" ? "other" : "web")} className="editorial-cta">{page.ctaLabel}<Arrow /></button><a href="#commercial-projects" className="inline-flex min-h-12 items-center gap-3 text-[12px]">{labels.projects}<Arrow down /></a></div></header>
+        <section className="editorial-section editorial-split"><h2 className="editorial-heading">{orientation.title}</h2><div><p className="editorial-copy text-ink/70">{orientation.text}</p><nav aria-label={lang === 'ca' ? 'Disciplines del servei' : lang === 'es' ? 'Disciplinas del servicio' : 'Service disciplines'} className="mt-6 flex flex-wrap gap-6 text-[14px]">{disciplines.map(service => <Link key={service.slug} to={`/${lang}/services/${service.slug}`} className="inline-flex min-h-12 items-center gap-4 underline underline-offset-4">{service.title}<Arrow /></Link>)}</nav>{counterpart && <Link to={counterpart.path} className="mt-4 inline-flex min-h-12 items-center gap-4 text-[14px] underline underline-offset-4">{counterpart.label}<Arrow /></Link>}</div></section>
         <Reveal className="editorial-section"><section id="commercial-projects" className="scroll-mt-24"><span className="editorial-eyebrow">01 / {labels.projects}</span><h2 className="editorial-heading">{page.proofTitle}</h2><p className="editorial-lead mb-8">{page.proofIntro}</p><WorkStrip slugs={page.relatedProjects.map(item => item.slug)} lang={lang} notes={Object.fromEntries(page.relatedProjects.map(item => [item.slug, item.note]))} /></section></Reveal>
         <section className="editorial-section editorial-split"><div><span className="editorial-eyebrow">02 / {labels.services}</span><h2 className="editorial-heading">{labels.deliverables}</h2></div><div><ul className="mb-10 space-y-3 text-[18px] tracking-[-.02em]">{page.deliverables.map(item => <li key={item}>{item}</li>)}</ul>{page.sections.map(section => <Disclosure key={section.title} title={section.title}>{section.paragraphs.map(paragraph => <p key={paragraph}>{paragraph}</p>)}</Disclosure>)}</div></section>
         <section className="editorial-section editorial-split"><div><span className="editorial-eyebrow">03 / PALSEC</span><h2 className="editorial-heading">{labels.process}</h2></div><div><ol>{page.process.map((step,index) => <li className="editorial-step" key={step.title}><span className="text-[11px] opacity-50">0{index+1}</span><div><h3>{step.title}</h3><p>{step.text}</p></div></li>)}</ol><Disclosure title={labels.scope}><p>{page.scope}</p></Disclosure></div></section>

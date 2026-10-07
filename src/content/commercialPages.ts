@@ -95,7 +95,7 @@ const ES: Record<CommercialId, PageCopy> = {
   },
   "web-development": {
     label: "Desarrollo web en Girona",
-    title: "Desarrollo web en Girona, del diseño a una web real",
+    title: "Desarrollo y programación web a medida en Girona",
     seoTitle: "Desarrollo web en Girona | Webs a medida — PALSEC",
     description: "Desarrollo web a medida en Girona. Implementación fiel al diseño, adaptación móvil, rendimiento, gestión de contenidos y preparación para el lanzamiento.",
     serviceType: "Desarrollo web",
@@ -137,7 +137,7 @@ const ES: Record<CommercialId, PageCopy> = {
   },
   branding: {
     label: "Branding en Girona",
-    title: "Branding en Girona para marcas que quieren significar algo",
+    title: "Estudio de branding en Girona y Costa Brava",
     seoTitle: "Branding en Girona | Estrategia e identidad de marca — PALSEC",
     description: "Estrategia, identidad visual y dirección de arte en Girona. Creamos marcas con personalidad y sistemas que funcionan en aplicaciones físicas y digitales.",
     serviceType: "Branding e identidad visual",
@@ -270,7 +270,7 @@ const CA: Record<CommercialId, PageCopy> = {
   },
   "web-development": {
     label: "Desenvolupament web a Girona",
-    title: "Desenvolupament web a Girona, del disseny a una web real",
+    title: "Desenvolupament i programació web a mida a Girona",
     seoTitle: "Desenvolupament web a Girona | Webs a mida — PALSEC",
     description: "Desenvolupament web a mida a Girona. Implementació fidel al disseny, adaptació mòbil, rendiment, gestió de continguts i preparació per al llançament.",
     serviceType: "Desenvolupament web",
@@ -312,7 +312,7 @@ const CA: Record<CommercialId, PageCopy> = {
   },
   branding: {
     label: "Branding a Girona",
-    title: "Branding a Girona per a marques que volen significar alguna cosa",
+    title: "Estudi de branding a Girona i la Costa Brava",
     seoTitle: "Branding a Girona | Estratègia i identitat de marca — PALSEC",
     description: "Estratègia, identitat visual i direcció d'art a Girona. Creem marques amb personalitat i sistemes que funcionen en aplicacions físiques i digitals.",
     serviceType: "Branding i identitat visual",
@@ -445,7 +445,7 @@ const EN: Record<CommercialId, PageCopy> = {
   },
   "web-development": {
     label: "Web development in Girona",
-    title: "Web development in Girona, from design to a working website",
+    title: "Bespoke web development in Girona",
     seoTitle: "Web Development in Girona | Bespoke Websites — PALSEC",
     description: "Bespoke web development in Girona. Faithful implementation, mobile layouts, performance, content management and preparation for launch.",
     serviceType: "Web development",
@@ -487,7 +487,7 @@ const EN: Record<CommercialId, PageCopy> = {
   },
   branding: {
     label: "Branding in Girona",
-    title: "Branding in Girona for brands that want to mean something",
+    title: "Branding studio in Girona and Costa Brava",
     seoTitle: "Branding in Girona | Strategy & Visual Identity — PALSEC",
     description: "Brand strategy, visual identity and art direction in Girona. We create brands with personality and systems for physical and digital applications.",
     serviceType: "Branding and visual identity",

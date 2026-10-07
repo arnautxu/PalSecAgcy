@@ -21,6 +21,7 @@ const ROOT = path.resolve(__dirname, "..")
 const TARGET = path.join(ROOT, "public", "media", "projects")
 
 const RASTER_EXT = /\.(png|jpe?g)$/i
+const AVIF_COVERS = new Set(['vira/01.png', 'gent-gran/01.png', 'pocket-voice/cover.png'])
 
 function* walk(dir) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -47,6 +48,13 @@ async function run() {
 
     try {
       const srcStat = fs.statSync(file)
+      if (AVIF_COVERS.has(path.relative(TARGET, file).split(path.sep).join('/'))) {
+        const avif = file.replace(RASTER_EXT, '.avif')
+        if (!fs.existsSync(avif) || fs.statSync(avif).mtimeMs < srcStat.mtimeMs) {
+          await sharp(file).avif({ quality: 55 }).toFile(avif)
+          console.log(`[convert-images] AVIF cover: ${path.relative(ROOT, avif)}`)
+        }
+      }
       if (fs.existsSync(out)) {
         const outStat = fs.statSync(out)
         if (outStat.mtimeMs >= srcStat.mtimeMs) {

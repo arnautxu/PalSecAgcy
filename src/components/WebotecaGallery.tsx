@@ -6,7 +6,7 @@ import { PORTFOLIO_WEBSITES } from "@/data/websites"
 import type { Lang } from "@/i18n/lang"
 import { publicUrl } from "@/utils/publicUrl"
 import { WEBSITE_NOTES } from "@/content/studioProof"
-import { getCommercialPage } from "@/content/commercialPages"
+import { getCommercialSummary as getCommercialPage } from "@/content/serviceCatalog"
 
 const CONTEXT = {
   ca: { title: "Què pots valorar en aquests exemples", text: "Compara com cada web ordena els serveis, presenta els projectes i facilita el contacte. Les captures mostren dues escales de pantalla; els enllaços permeten explorar la navegació i el contingut publicat. Per preparar una web pròpia, concreta les pàgines, els idiomes i les accions que ha de poder completar una visita. A partir d’aquest abast es poden definir el disseny, el desenvolupament i els materials necessaris per publicar.", links: "Serveis per al teu projecte web" },

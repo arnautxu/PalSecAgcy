@@ -33,26 +33,28 @@ function intrinsicDimensions(src: string): ImageDimension | undefined {
   return (imageDimensions as Record<string, ImageDimension>)[localPath]
 }
 
-function responsiveWebpSrcSet(src: string): string | undefined {
+function responsiveImageSrcSet(src: string, format: 'webp' | 'avif'): string | undefined {
   const localPath = src.split("?")[0]
   if (!localPath.startsWith("/media/projects/")) return undefined
 
   const preferredWebp = webpSiblingOf(localPath) ?? (/\.webp$/i.test(localPath) ? localPath : null)
-  const dimensions = intrinsicDimensions(preferredWebp ?? localPath)
-  if (!preferredWebp || !dimensions) return undefined
+  const preferred = format === 'avif' ? preferredWebp?.replace(/\.webp$/i, '.avif') : preferredWebp
+  const dimensions = preferred ? intrinsicDimensions(preferred) : undefined
+  if (!preferred || !dimensions) return undefined
 
   const candidates = [160, 720, 1280]
     .filter((width) => dimensions.width > width)
-    .map((width) => `${preferredWebp.replace(/\.webp$/i, `.${width}.webp`)} ${width}w`)
+    .map((width) => `${preferred.replace(/\.(webp|avif)$/i, `.${width}.${format}`)} ${width}w`)
 
-  candidates.push(`${preferredWebp} ${dimensions.width}w`)
+  candidates.push(`${preferred} ${dimensions.width}w`)
   return candidates.join(", ")
 }
 
 export function Picture({ src, alt = "", fetchPriority, ...imgProps }: PictureProps) {
   const webp = webpSiblingOf(src)
   const dimensions = intrinsicDimensions(src)
-  const responsiveSrcSet = responsiveWebpSrcSet(src)
+  const responsiveSrcSet = responsiveImageSrcSet(src, 'webp')
+  const avifSrcSet = responsiveImageSrcSet(src, 'avif')
   const width = imgProps.width ?? dimensions?.width
   const height = imgProps.height ?? dimensions?.height
   // React 18 passes the lowercase HTML attribute without an unknown-prop warning.
@@ -63,6 +65,7 @@ export function Picture({ src, alt = "", fetchPriority, ...imgProps }: PicturePr
   }
   return (
     <picture>
+      {avifSrcSet && <source srcSet={avifSrcSet} sizes={imgProps.sizes} type="image/avif" />}
       <source srcSet={responsiveSrcSet ?? webp} sizes={imgProps.sizes} type="image/webp" />
       {/* eslint-disable-next-line jsx-a11y/alt-text */}
       <img src={src} alt={alt} {...props} />

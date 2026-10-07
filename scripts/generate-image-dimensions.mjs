@@ -14,7 +14,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, "..")
 const PUBLIC_DIR = path.join(ROOT, "public")
 const OUTPUT = path.join(ROOT, "src", "data", "imageDimensions.json")
-const RASTER_EXT = /\.(png|jpe?g|webp|gif)$/i
+const RASTER_EXT = /\.(png|jpe?g|webp|avif|gif)$/i
 const RESPONSIVE_ROOT = path.join(PUBLIC_DIR, "media", "projects")
 const RESPONSIVE_WIDTHS = [160, 720, 1280]
 
@@ -32,7 +32,7 @@ async function run() {
 
   for (const file of walk(PUBLIC_DIR)) {
     if (!RASTER_EXT.test(file)) continue
-    if (/\.\d+\.webp$/i.test(file)) continue
+    if (/\.\d+\.(webp|avif)$/i.test(file)) continue
 
     const metadata = await sharp(file, { animated: false }).metadata()
     if (!metadata.width || !metadata.height) continue
@@ -41,18 +41,20 @@ async function run() {
     dimensions[publicPath] = { width: metadata.width, height: metadata.height }
 
     const isResponsiveSource = file.startsWith(RESPONSIVE_ROOT)
-      && /\.webp$/i.test(file)
+      && /\.(webp|avif)$/i.test(file)
 
     if (isResponsiveSource) {
       const sourceStat = fs.statSync(file)
       for (const width of RESPONSIVE_WIDTHS) {
         if (metadata.width <= width) continue
 
-        const output = file.replace(/\.webp$/i, `.${width}.webp`)
+        const avif = /\.avif$/i.test(file)
+        const output = file.replace(/\.(webp|avif)$/i, `.${width}.${avif ? 'avif' : 'webp'}`)
         const outputIsCurrent = fs.existsSync(output) && fs.statSync(output).mtimeMs >= sourceStat.mtimeMs
         if (outputIsCurrent) continue
 
-        await sharp(file).resize({ width, withoutEnlargement: true }).webp({ quality: 78 }).toFile(output)
+        const image = sharp(file).resize({ width, withoutEnlargement: true })
+        await (avif ? image.avif({ quality: 55 }) : image.webp({ quality: 78 })).toFile(output)
         responsiveGenerated++
       }
     }

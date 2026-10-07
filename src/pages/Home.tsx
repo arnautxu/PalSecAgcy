@@ -7,7 +7,7 @@ import { useLang } from '@/i18n/useLang'
 import { t } from '@/i18n/strings'
 import { Seo } from '@/components/Seo'
 import { SiteFooter } from '@/components/SiteFooter'
-import { commercialNavLabel, getCommercialPages } from '@/content/commercialPages'
+import { getCommercialSummaries as getCommercialPages } from '@/content/serviceCatalog'
 import { EDITORIAL } from '@/content/editorialCopy'
 import { EDITORIAL_CONTEXT } from '@/content/editorialContext'
 import { Arrow, Reveal, WorkStrip } from '@/components/Editorial'
@@ -83,7 +83,7 @@ export function Home() {
       </Reveal>
       <Reveal className="editorial-section editorial-split">
         <div><span className="editorial-eyebrow">02 / {copy.scope}</span><h2 className="editorial-heading whitespace-pre-line">{copy.services}</h2></div>
-        <div>{services.map((service, index) => <Link key={service.id} to={service.path} className="editorial-service-row"><span className="text-[11px] opacity-50">0{index + 1}</span><div><h3>{commercialNavLabel(lang, service.id)}</h3><p>{context.services[service.id]}</p></div><Arrow /></Link>)}</div>
+        <div>{services.map((service, index) => <Link key={service.id} to={service.path} className="editorial-service-row"><span className="text-[11px] opacity-50">0{index + 1}</span><div><h3>{service.label}</h3><p>{context.services[service.id]}</p></div><Arrow /></Link>)}</div>
       </Reveal>
       <Reveal className="editorial-section"><h2 className="editorial-title">{copy.contact}</h2><p className="editorial-lead">{lang === "ca" ? "Per començar, explica’ns què fa la teva empresa, a qui es dirigeix i què vols canviar. Indica si parteixes d’una marca o una web existent, quins materials tens i quan necessites publicar. Amb aquest context podem ordenar les prioritats i definir l’abast del projecte." : lang === "es" ? "Para empezar, cuéntanos qué hace tu empresa, a quién se dirige y qué quieres cambiar. Indica si partes de una marca o una web existente, qué materiales tienes y cuándo necesitas publicar. Con ese contexto podemos ordenar las prioridades y definir el alcance del proyecto." : "To get started, tell us what your business does, who it serves and what you want to change. Let us know whether you have an existing brand or website, which materials are ready and when you need to launch. That context helps us agree on priorities and define the project’s scope."}</p><button type="button" onClick={() => openInquiry('quote')} className="editorial-cta mt-8 !bg-white !text-black">{copy.cta}<Arrow /></button></Reveal>
       <SiteFooter />

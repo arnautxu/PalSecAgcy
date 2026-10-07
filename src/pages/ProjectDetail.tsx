@@ -21,7 +21,8 @@ import type { Lang } from "@/i18n/lang"
 import { Seo } from "@/components/Seo"
 import { getProjectSeoMeta, isPublishedProjectSlug } from "@/lib/seoMeta"
 import { getProjectCase, PROJECT_CASE_LABELS, type ProjectCase } from "@/content/projectCases"
-import { getCommercialPage } from "@/content/commercialPages"
+import { getCommercialSummary, getServiceSummaries } from "@/content/serviceCatalog"
+import { SERVICE_DISCIPLINES } from "@/content/serviceOrientation"
 
 function neighbors(current: ProjectSlug): { prev: Project; next: Project } {
   const activeProjects = PROJECTS.filter((project) => !project.comingSoon)
@@ -255,6 +256,7 @@ export function getProjectCopy(slug: ProjectSlug, lang: Lang) {
 
 function ProjectStory({ entry, lang, includeIntro = true }: { entry: ProjectCase; lang: Lang; includeIntro?: boolean }) {
   const labels = PROJECT_CASE_LABELS[lang]
+  const disciplines = getServiceSummaries(lang).filter(service => entry.services.some(id => SERVICE_DISCIPLINES[id].includes(service.slug)))
   return (
     <article className="normal-case text-[14px] leading-[1.8] tracking-normal text-ink/80 md:text-[15px]">
       <dl className="mb-7 grid grid-cols-2 gap-6 text-[11px] leading-[1.7]">
@@ -268,9 +270,12 @@ function ProjectStory({ entry, lang, includeIntro = true }: { entry: ProjectCase
         <h2 className="mb-3 text-[11px] uppercase tracking-nav text-ink/55">{labels.services}</h2>
         <ul className="flex flex-wrap gap-x-5 gap-y-3">
           {entry.services.map((id) => {
-            const service = getCommercialPage(id, lang)
+            const service = getCommercialSummary(id, lang)
             return <li key={id}><Link to={service.path} className="underline underline-offset-4 transition-opacity hover:opacity-60">{service.label}</Link></li>
           })}
+        </ul>
+        <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-3">
+          {disciplines.map(service => <li key={service.slug}><Link to={`/${lang}/services/${service.slug}`} className="underline underline-offset-4 transition-opacity hover:opacity-60">{service.title}</Link></li>)}
         </ul>
       </nav>
     </article>
@@ -435,6 +440,7 @@ export function ProjectDetail() {
                           alt=""
                           className="h-full w-auto object-contain bg-white"
                           sizes="76px"
+                          loading="lazy"
                         />
                       </button>
                     ))}

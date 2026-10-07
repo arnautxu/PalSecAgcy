@@ -3,7 +3,8 @@ import { PageFrame } from '@/components/PageFrame'
 import { Seo } from '@/components/Seo'
 import { SiteFooter } from '@/components/SiteFooter'
 import { getBuyingGuides, getBuyingGuide } from '@/content/buyingGuides'
-import { getCommercialPage } from '@/content/commercialPages'
+import { getCommercialSummary as getCommercialPage, getServiceSummaries } from '@/content/serviceCatalog'
+import { SERVICE_DISCIPLINES } from '@/content/serviceOrientation'
 import { useInquiry } from '@/components/Inquiry'
 import { NotFound } from '@/pages/NotFound'
 
@@ -20,6 +21,7 @@ export function BuyingGuide() {
   const guide = guideSlug ? getBuyingGuide(guideSlug, lang) : undefined
   if (!guide || pathname !== guide.path) return <NotFound />
   const copy = COPY[lang]
+  const disciplines = getServiceSummaries(lang).filter(service => guide.relatedService.some(id => SERVICE_DISCIPLINES[id].includes(service.slug)))
   const related = getBuyingGuides(lang).filter(item => item.id !== guide.id).sort((a, b) => Number(b.category === guide.category) - Number(a.category === guide.category)).slice(0, 4)
   const published = new Intl.DateTimeFormat(lang === 'ca' ? 'ca-ES' : 'es-ES', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${guide.publishedAt}T00:00:00Z`))
 
@@ -48,6 +50,7 @@ export function BuyingGuide() {
             <p className="mt-4 text-[15px] leading-[1.85] text-ink/75">{guide.ctaText}</p>
             <button type="button" onClick={() => guide.category === 'branding' ? openInquiry('audit') : openInquiry('quote', guide.category === 'apps' ? 'apps' : 'web')} className="mt-5 inline-flex min-h-12 items-center rounded-full border border-ink/20 px-5 py-3 text-[12px] underline underline-offset-4 transition-colors hover:bg-ink hover:text-white">{guide.category === 'branding' ? copy.audit : copy.quote} →</button>
             {!!guide.relatedService.length && <nav aria-label={copy.related} className="mt-7 flex flex-wrap gap-x-6 gap-y-3 border-t border-frame pt-5 text-[13px]">{guide.relatedService.map(id => { const service = getCommercialPage(id, lang); return <Link key={id} to={service.path} className="underline underline-offset-4">{service.label}</Link> })}</nav>}
+            {!!disciplines.length && <nav aria-label={lang === 'ca' ? 'Disciplines del projecte' : 'Disciplinas del proyecto'} className="mt-4 flex flex-wrap gap-x-6 gap-y-3 text-[13px]">{disciplines.map(service => <Link key={service.slug} to={`/${lang}/services/${service.slug}`} className="underline underline-offset-4">{service.title}</Link>)}</nav>}
           </section>
         </article>
         <aside className="mt-12 border-t border-frame pt-7" aria-label={copy.more}>
