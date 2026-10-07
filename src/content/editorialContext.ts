@@ -3,7 +3,6 @@ import type { CommercialId } from './commercialPages'
 
 type EditorialContext = {
   home: string
-  selected: string
   projects: string
   collections: string
   steps: readonly [string, string, string]
@@ -15,7 +14,6 @@ type EditorialContext = {
 export const EDITORIAL_CONTEXT: Record<Lang, EditorialContext> = {
   ca: {
     home: 'Una marca necessita un llenguatge propi; una web, continguts i recorreguts que es puguin entendre i utilitzar. Treballem aquestes decisions conjuntament, amb un abast acordat des del principi.',
-    selected: 'PocketVoice connecta marca i presentació digital d’un teclat de veu. El Xiringuito porta una identitat visual a les peces d’un projecte de restauració. Dos contextos per veure com una idea es concreta en aplicacions.',
     projects: 'Una selecció d’identitats, sistemes gràfics, webs i interfícies. Entra als casos per veure les peces i consultar l’àmbit de cada treball.',
     collections: 'La Weboteca reuneix webs amb vistes d’escriptori i mòbil i enllaços per explorar-les. La Logoteca presenta treballs de logotip. PALSEC AI LAB mostra un prototip interactiu d’AiBrain amb dades fictícies de demostració.',
     steps: [
@@ -33,7 +31,6 @@ export const EDITORIAL_CONTEXT: Record<Lang, EditorialContext> = {
   },
   es: {
     home: 'Una marca necesita un lenguaje propio; una web, contenidos y recorridos que se puedan entender y utilizar. Trabajamos estas decisiones conjuntamente, con un alcance acordado desde el principio.',
-    selected: 'PocketVoice conecta marca y presentación digital de un teclado de voz. El Xiringuito lleva una identidad visual a las piezas de un proyecto de restauración. Dos contextos para ver cómo una idea se concreta en aplicaciones.',
     projects: 'Una selección de identidades, sistemas gráficos, webs e interfaces. Entra en los casos para ver las piezas y consultar el alcance de cada trabajo.',
     collections: 'La Weboteca reúne webs con vistas de escritorio y móvil y enlaces para explorarlas. La Logoteca presenta trabajos de logotipo. PALSEC AI LAB muestra un prototipo interactivo de AiBrain con datos ficticios de demostración.',
     steps: [
@@ -51,7 +48,6 @@ export const EDITORIAL_CONTEXT: Record<Lang, EditorialContext> = {
   },
   en: {
     home: 'A brand needs a language of its own; a website needs content and navigation that people can understand and use. We work on those decisions together, with the scope agreed from the start.',
-    selected: 'PocketVoice connects branding and the digital presentation of a voice keyboard. El Xiringuito applies a visual identity to materials for a hospitality project. Two contexts that show how an idea takes shape through its applications.',
     projects: 'A selection of identities, graphic systems, websites and interfaces. Open the cases to see the work and read about the scope of each project.',
     collections: 'Weboteca brings together websites with desktop and mobile views and links to explore them. Logoteca presents logo work. PALSEC AI LAB shows an interactive AiBrain prototype with fictional demonstration data.',
     steps: [

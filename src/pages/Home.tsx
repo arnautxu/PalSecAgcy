@@ -77,7 +77,6 @@ export function Home() {
       <Reveal className="editorial-section">
         <span className="editorial-eyebrow">01 / {copy.selected}</span>
         <h2 className="editorial-heading">{copy.work}</h2>
-        <p className="editorial-lead mb-8">{context.selected}</p>
         <WorkStrip slugs={projects} lang={lang} />
         <Link to={`/${lang}/projects`} className="mt-10 inline-flex min-h-12 items-center gap-6 text-[13px]">{copy.all}<Arrow /></Link>
       </Reveal>
